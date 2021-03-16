@@ -6,9 +6,9 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from "react-native";
-import Button from "../components/Button";
+import RoundedButton from "./RoundedButton";
 import { Dimensions } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import Colors from "../../constants/colors";
 const CartItem = () => {
   return (
@@ -28,15 +28,15 @@ const CartItem = () => {
           <Text style={{ color: Colors.gray }}>1kg, prices</Text>
         </View>
         <View style={styles.quantityAjustContainer}>
-          <Button style={{ backgroundColor: Colors.green }}>
-            <AntDesign name="minus" size={14} color="gray" />
-          </Button>
+          <RoundedButton>
+            <Entypo name="minus" size={17} color={Colors.gray} />
+          </RoundedButton>
           <View style={{ marginLeft: 12, marginRight: 12 }}>
             <Text style={(styles.titleText, { fontSize: 16 })}>1</Text>
           </View>
-          <Button>
-            <AntDesign name="plus" size={14} color="green" />
-          </Button>
+          <RoundedButton style={styles.buttonClickable}>
+            <Entypo name="plus" size={17} color="white" />
+          </RoundedButton>
         </View>
       </View>
       <View style={styles.cartAmount}>
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   cartAmount: {
     justifyContent: "space-between",
     alignItems: "flex-end",
-    width: Dimensions.get("window").width * 0.2 - 20,
+    width: Dimensions.get("window").width * 0.2,
     height: 100,
   },
   titleText: {
@@ -92,5 +92,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
   },
+  buttonClickable: { backgroundColor: Colors.green },
 });
 export default CartItem;

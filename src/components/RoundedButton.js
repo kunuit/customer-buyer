@@ -1,19 +1,23 @@
 import React from "react";
-import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { View, StyleSheet, TouchableWithoutFeedback, Text } from "react-native";
 import Colors from "../../constants/colors";
 const Button = (props) => {
   return (
     <TouchableWithoutFeedback onPress={props.onPress}>
-      <View style={styles.button}>{props.children}</View>
+      <View style={[styles.button, props.style]}>
+        <Text style={{ textAlign: "center" }}>{props.children}</Text>
+      </View>
     </TouchableWithoutFeedback>
   );
 };
 const styles = StyleSheet.create({
   button: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: 35,
+    height: 35,
     borderRadius: 10,
     color: "black",
-    paddingVertical: 5,
-    paddingHorizontal: 5,
     borderColor: Colors.gray,
     borderStyle: "solid",
     borderWidth: 1,
