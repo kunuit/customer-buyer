@@ -9,6 +9,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Profile from '../../screens/Profile';
 import { theme } from '../../../common/theme';
 import { Dimensions } from 'react-native';
+import TabProfile from '../TopTab/TabProfile';
 
 const Tab = createBottomTabNavigator();
 
@@ -88,7 +89,7 @@ const BottomTab = () => {
           />
           <Tab.Screen
             name='Profile'
-            component={Profile}
+            component={TabProfile}
             showIcon={true}
             options={{
               tabBarIcon: ({ focused, tintColor }) => (
