@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button as PaperButton } from 'react-native-paper';
 import { theme } from '../common/theme';
 
@@ -15,7 +15,7 @@ const Button = ({ mode, style, children, ...props }) => (
     labelStyle={styles.text}
     mode={mode}
     {...props}>
-    {children}
+        {children}
   </PaperButton>
 );
 
@@ -25,14 +25,14 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 15,
     elevation: 0,
-    borderWidth: 0
+    borderWidth: 0,
   },
   text: {
-    fontWeight: 'bold',
+    fontFamily: 'gilroy-bold',
     fontSize: 15,
     lineHeight: 26,
-    textTransform: 'none',
-    // fontFamily: 'gilroy-bold'
+    width: '100%',
+    textTransform: 'none'
   },
 });
 

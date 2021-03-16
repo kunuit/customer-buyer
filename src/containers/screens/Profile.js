@@ -1,8 +1,11 @@
 import React from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
+
 import { theme } from '../../common/theme';
 import InfoCard from '../../components/profile.components/InfoCard';
 import InfoProfile from '../../components/profile.components/InfoProfile';
+import { FlatList } from 'react-native-gesture-handler';
+import ButtonLogOut from '../../components/profile.components/ButtonLogOut';
 
 
 const Profile = () => {
@@ -18,22 +21,34 @@ const Profile = () => {
   ]
 
   return (
-    <View style={styles.root}>
-      <InfoProfile/>
-      {arrInfoCard.map((e,i) => {
-        return (
-          <InfoCard nameIcon={e.nameIcon} name={e.name} key={i} />
-        )
-      })}
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.root}>
+        {/* <InfoProfile/> */}
+        <FlatList
+        data={arrInfoCard}
+        renderItem={({ item }) => {
+          return (
+              <InfoCard nameIcon={item.nameIcon} name={item.name} />
+          )
+  
+        }}
+        keyExtractor={(item) => item.name}
+        ListHeaderComponent={InfoProfile}
+        ListFooterComponent={ButtonLogOut}
+      />
+              
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   root: {
     backgroundColor: theme.backgrounds.white,
-    height:  Dimensions.get('window').height
-  }
+    height:  '100%',
+    paddingBottom: '15%'
+  },
+
 })
 
 export default Profile;

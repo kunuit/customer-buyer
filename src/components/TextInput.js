@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     color: theme.colors.error,
     paddingHorizontal: 4,
     paddingTop: 4,
+    fontFamily: 'gilroy-light'
   },
 });
 

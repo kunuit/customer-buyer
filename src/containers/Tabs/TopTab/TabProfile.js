@@ -2,15 +2,16 @@ import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Profile from '../../screens/Profile';
 import { ForgotPasswordScreen, HomeScreen, LoginScreen, RegisterScreen } from '../../screens/auth.screens';
+import { useSelector } from 'react-redux';
 
 const TabTop = createMaterialTopTabNavigator();
 
 const TabProfile = () => {
-  const token = 'abc'
+  const { token } = useSelector((state) => state);
   return (
     <TabTop.Navigator tabBar={() => null}>
       {
-        !token ?
+        token ?
         <TabTop.Screen name='ProfileMain' component={Profile} />
         :
         <>
@@ -20,7 +21,6 @@ const TabProfile = () => {
           <TabTop.Screen name='ForgotPasswordScreen' component={ForgotPasswordScreen} />
         </>
       }
-      {/* <TabTop.Screen name='Account' component={AccountScreen} /> */}
     </TabTop.Navigator>
   );
 }

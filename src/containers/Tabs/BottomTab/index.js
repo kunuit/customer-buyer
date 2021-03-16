@@ -40,10 +40,10 @@ const BottomTab = () => {
             options={{
               tabBarIcon: ({ focused, tintColor }) => (
                 <Fontisto
-              name='shopping-store'
-              size={25}
-              color={focused ? theme.colors.primary : theme.colors.notBlack}
-            />
+                  name='shopping-store'
+                  size={25}
+                  color={focused ? theme.colors.primary : theme.colors.notBlack}
+                />
               ),
             }}
           />
