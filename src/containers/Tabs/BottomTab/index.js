@@ -1,10 +1,14 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Fontisto } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { Zocial } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Profile from '../../screens/Profile';
 import { theme } from '../../../common/theme';
-import { Dimensions, Image } from 'react-native';
+import { Dimensions } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -14,7 +18,8 @@ const BottomTab = () => {
           tabBarOptions={{
             keyboardHidesTabBar: true,
             activeTintColor: theme.colors.primary,
-            labelStyle: { fontSize: 12, },
+            inactiveTintColor:  theme.colors.notBlack,
+            labelStyle: { fontSize: 12, fontFamily: 'gilroy-bold' },
             style: {
               backgroundColor: theme.backgrounds.white,
               paddingBottom: 15,
@@ -33,8 +38,8 @@ const BottomTab = () => {
             showIcon={true}
             options={{
               tabBarIcon: ({ focused, tintColor }) => (
-                <Icon
-              name='md-nutrition-outline'
+                <Fontisto
+              name='shopping-store'
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -46,11 +51,10 @@ const BottomTab = () => {
             component={Profile}
             options={{
               tabBarIcon: ({ focused, tintColor }) => (
-                <Icon
-              name='md-rocket-outline'
-              size={25}
-              color={focused ? theme.colors.primary : theme.colors.notBlack}
-            />
+                <MaterialCommunityIcons name="briefcase-search-outline" 
+                  size={24}
+                  color={focused ? theme.colors.primary : theme.colors.notBlack} 
+                />
               ),
             }}
           />
@@ -60,8 +64,8 @@ const BottomTab = () => {
             showIcon={true}
             options={{
               tabBarIcon: ({ focused, tintColor }) => (
-                <Icon
-              name='md-cart-outline'
+                <Zocial
+              name='cart'
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -74,8 +78,8 @@ const BottomTab = () => {
             showIcon={true}
             options={{
               tabBarIcon: ({ focused, tintColor }) => (
-                <Icon
-              name='md-heart-half-outline'
+                <MaterialIcons
+              name='favorite-outline'
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -88,8 +92,8 @@ const BottomTab = () => {
             showIcon={true}
             options={{
               tabBarIcon: ({ focused, tintColor }) => (
-                <Icon
-              name='md-person-outline'
+                <MaterialCommunityIcons
+              name='face-profile'
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
