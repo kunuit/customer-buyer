@@ -55,13 +55,14 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontFamily: 'gilroy-bold',
     color: theme.colors.notBlack
   },
   email: {
     color: theme.colors.notGray,
     marginTop: -5,
-    fontSize: 16
+    fontFamily: 'gilroy-light',
+    fontSize: 15
   }
 
 })
