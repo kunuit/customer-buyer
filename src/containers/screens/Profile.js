@@ -16,6 +16,7 @@ const Profile = () => {
     {nameIcon: 'ios-help-circle-outline', name:'Help'},
     {nameIcon: 'ios-alert-circle-outline', name:'About'},
   ]
+
   return (
     <View style={styles.root}>
       <InfoProfile/>
