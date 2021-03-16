@@ -2,9 +2,11 @@ import React from 'react';
 
 const Product = () => {
   return (
-    <div>
-      Product
-    </div>
+    <View>
+      <Text>
+        Product
+      </Text>
+    </View>
   );
 }
 
