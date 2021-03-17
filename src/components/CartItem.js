@@ -18,12 +18,12 @@ const CartItem = () => {
           style={styles.cartImage}
           source={{
             uri:
-              "https://lh3.googleusercontent.com/proxy/4wkUXj1_6DNuhxnL49YT7_gQCMCF9LQwxY5VRJIm4hBFBvmbOgdFSG-_twtPkY-n2WiLVS3sOwWHWUPtUFgGv4acpPEbtV6rQWz5QBlq5KHaTURklGZeERuy8vzIz-zhajSbug",
+              "https://www.pngkey.com/png/full/164-1643396_reb-bell-pepper-png-1-red-bell-pepper.png",
           }}
         />
       </View>
       <View style={styles.cartDetailContainer}>
-        <View>
+        <View style={{ marginBottom: 5 }}>
           <Text style={styles.titleText}>Bell Pepper Red</Text>
           <Text style={{ color: Colors.gray }}>1kg, prices</Text>
         </View>
@@ -34,8 +34,13 @@ const CartItem = () => {
           <View style={{ marginLeft: 12, marginRight: 12 }}>
             <Text style={(styles.titleText, { fontSize: 16 })}>1</Text>
           </View>
-          <RoundedButton style={styles.buttonClickable}>
-            <Entypo name="plus" size={17} color="white" />
+          <RoundedButton>
+            <Entypo
+              name="plus"
+              size={17}
+              color="white"
+              style={styles.buttonClickable}
+            />
           </RoundedButton>
         </View>
       </View>
@@ -57,13 +62,15 @@ const CartItem = () => {
 };
 const styles = StyleSheet.create({
   cartItemContainer: {
+    marginVertical: 8,
     paddingVertical: 10,
-    paddingHorizontal: 20,
-    width: Dimensions.get("window").width,
+    paddingHorizontal: 15,
+    width: "100%",
     flexDirection: "row",
   },
   cartImageContainer: {
-    width: Dimensions.get("window").width * 0.3 - 20,
+    padding: 5,
+    width: "30%",
   },
   cartImage: {
     width: "100%",
@@ -73,13 +80,13 @@ const styles = StyleSheet.create({
   cartDetailContainer: {
     padding: 6,
     justifyContent: "space-between",
-    width: Dimensions.get("window").width * 0.5 - 20,
+    width: "50%",
     height: 100,
   },
   cartAmount: {
     justifyContent: "space-between",
     alignItems: "flex-end",
-    width: Dimensions.get("window").width * 0.2,
+    width: "20%",
     height: 100,
   },
   titleText: {
@@ -92,6 +99,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
   },
-  buttonClickable: { backgroundColor: Colors.green },
+  buttonClickable: { color: Colors.green },
 });
 export default CartItem;
