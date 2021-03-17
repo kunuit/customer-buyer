@@ -12,7 +12,7 @@ const TabProfile = () => {
     <TabTop.Navigator tabBar={() => null}>
       {
         token ?
-        <TabTop.Screen name='ProfileMain' component={Profile} />
+        <TabTop.Screen   name='ProfileMain' component={Profile} />
         :
         <>
           <TabTop.Screen name='HomeScreen' component={HomeScreen} />
