@@ -1,11 +1,13 @@
-import React from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { Fontisto } from '@expo/vector-icons'; 
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import { Zocial } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from "react";
+import Icon from "react-native-vector-icons/Ionicons";
+import { Fontisto } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Zocial } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
+
+import Cart from "../../screens/CartScreen"
 import Profile from '../../screens/Profile';
 import { theme } from '../../../common/theme';
 import { Dimensions } from 'react-native';
@@ -62,7 +64,7 @@ const BottomTab = () => {
           />
           <Tab.Screen
             name='Cart'
-            component={Profile}
+            component={Cart}
             showIcon={true}
             options={{
               tabBarIcon: ({ focused, tintColor }) => (
@@ -71,39 +73,39 @@ const BottomTab = () => {
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name='Favorite'
-            component={Profile}
-            showIcon={true}
-            options={{
-              tabBarIcon: ({ focused, tintColor }) => (
-                <MaterialIcons
-              name='favorite-outline'
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Favorite"
+        component={Profile}
+        showIcon={true}
+        options={{
+          tabBarIcon: ({ focused, tintColor }) => (
+            <MaterialIcons
+              name="favorite-outline"
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name='Profile'
-            component={TabProfile}
-            showIcon={true}
-            options={{
-              tabBarIcon: ({ focused, tintColor }) => (
-                <MaterialCommunityIcons
-              name='face-profile'
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={TabProfile}
+        showIcon={true}
+        options={{
+          tabBarIcon: ({ focused, tintColor }) => (
+            <MaterialCommunityIcons
+              name="face-profile"
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
-              ),
-            }}
-          />
-        </Tab.Navigator>
-      );
-    }
-    
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
+
 export default BottomTab;

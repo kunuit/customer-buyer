@@ -14,12 +14,11 @@ const Button = ({ mode, style, children, ...props }) => (
     ]}
     labelStyle={styles.text}
     mode={mode}
-    {...props}>
-      {/* <View style={styles.buttonLogOut}> */}
 
-        {children}
-      {/* </View> */}
-  </TouchableOpacity>
+    {...props}
+  >
+    {children}
+  </PaperButton>
 );
 
 const styles = StyleSheet.create({
