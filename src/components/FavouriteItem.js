@@ -17,8 +17,7 @@ const FavouriteItem = () => {
         <Image
           style={styles.cartImage}
           source={{
-            uri:
-              "http://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c1d9.png",
+            uri: "https://pngimg.com/uploads/pepsi/pepsi_PNG8956.png",
           }}
         />
       </View>

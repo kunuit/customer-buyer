@@ -39,7 +39,14 @@ const CartScreen = () => {
           </View>
         )}
       />
-      <Button style={{ backgroundColor: Colors.green, width: "90%" }}>
+      <Button
+        style={{
+          backgroundColor: Colors.green,
+          width: "90%",
+          position: "absolute",
+          bottom: Dimensions.get("window").height * 0.08,
+        }}
+      >
         <Text style={{ color: "white", fontFamily: "gilroy-bold" }}>
           Go to Checkout
         </Text>
@@ -52,9 +59,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    width: Dimensions.get("window").width,
     alignItems: "center",
-    paddingBottom: "15%",
+    paddingBottom: "23%",
   },
   listCartItemContainer: {
     width: "90%",
