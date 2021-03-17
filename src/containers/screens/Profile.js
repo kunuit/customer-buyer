@@ -10,15 +10,15 @@ import ButtonLogOut from '../../components/profile.components/ButtonLogOut';
 
 const Profile = () => {
   const arrInfoCard = [
-    {nameIcon: 'basket-outline', name:'Orders'},
-    {nameIcon: 'newspaper-outline', name:'My Details'},
-    {nameIcon: 'ios-location-outline', name:'Delivery Address'},
-    {nameIcon: 'ios-card-outline', name:'Payment Methods'},
-    {nameIcon: 'ios-barcode-outline', name:'Promo Card'},
-    {nameIcon: 'notifications-outline', name:'Notifications'},
-    {nameIcon: 'ios-help-circle-outline', name:'Help'},
-    {nameIcon: 'ios-alert-circle-outline', name:'About'},
-  ]
+    { nameIcon: "basket-outline", name: "Orders" },
+    { nameIcon: "newspaper-outline", name: "My Details" },
+    { nameIcon: "ios-location-outline", name: "Delivery Address" },
+    { nameIcon: "ios-card-outline", name: "Payment Methods" },
+    { nameIcon: "ios-barcode-outline", name: "Promo Card" },
+    { nameIcon: "notifications-outline", name: "Notifications" },
+    { nameIcon: "ios-help-circle-outline", name: "Help" },
+    { nameIcon: "ios-alert-circle-outline", name: "About" },
+  ];
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -40,7 +40,7 @@ const Profile = () => {
       </View>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   root: {
@@ -50,5 +50,6 @@ const styles = StyleSheet.create({
   },
 
 })
+
 
 export default Profile;

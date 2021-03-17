@@ -9,19 +9,20 @@ const Button = ({ mode, style, children, ...props }) => (
   <PaperButton
     style={[
       styles.button,
-      mode === 'outlined' && { backgroundColor: theme.backgrounds.white },
+      mode === "outlined" && { backgroundColor: theme.backgrounds.white },
       style,
     ]}
     labelStyle={styles.text}
     mode={mode}
-    {...props}>
-        {children}
+    {...props}
+  >
+    {children}
   </PaperButton>
 );
 
 const styles = StyleSheet.create({
   button: {
-    width: '100%',
+    width: "100%",
     marginVertical: 10,
     borderRadius: 15,
     elevation: 0,
