@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import Background from '../../../components/auth.components/Background';
 import Logo from '../../../components/Logo';
 import Button from '../../../components/Button';
-import { Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { theme } from '../../../common/theme';
 
 const HomeScreen = ({ navigation }) => (
@@ -16,15 +16,27 @@ const HomeScreen = ({ navigation }) => (
       mode='contained'
       style={{ backgroundColor: theme.colors.primary }}
       onPress={() => navigation.navigate('LoginScreen')}>
-      Login
+      <Text style={styles.text}>
+        Login
+      </Text>
     </Button>
     <Button
       mode='outlined'
-      color={theme.colors.primary}
+      style={{backgroundColor: theme.backgrounds.paper}}
       onPress={() => navigation.navigate('RegisterScreen')}>
-      Sign Up
+        <Text style={[styles.text, {color: theme.colors.primary}]}>
+          Sign Up
+        </Text>
     </Button>
   </Background>
 );
+
+const styles = StyleSheet.create({
+  text: {
+    fontFamily: 'gilroy-bold',
+    fontSize: 15,
+    color: theme.backgrounds.white,
+  }
+})
 
 export default memo(HomeScreen);

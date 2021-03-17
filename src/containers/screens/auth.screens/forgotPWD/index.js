@@ -52,7 +52,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
         mode='contained'
         style={{ backgroundColor: theme.colors.primary }}
         onPress={_onSendPressed}>
-          <Text>
+          <Text style={styles.text}>
             Send Reset Instructions
           </Text>
       </Button>
@@ -79,6 +79,11 @@ const styles = StyleSheet.create({
     width: '100%',
     fontFamily: 'gilroy-bold',
   },
+  text: {
+    fontFamily: 'gilroy-bold',
+    fontSize: 15,
+    color: theme.backgrounds.white,
+  }
 });
 
 export default memo(ForgotPasswordScreen);

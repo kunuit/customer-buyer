@@ -81,7 +81,7 @@ const RegisterScreen = ({ navigation }) => {
         mode='contained'
         style={{ backgroundColor: theme.colors.primary }}
         onPress={_onSignUpPressed}>
-          <Text>
+          <Text style={styles.text}>
             Sign Up
           </Text>
       </Button>
@@ -101,8 +101,10 @@ const styles = StyleSheet.create({
     color: theme.colors.secondary,
     fontFamily: 'gilroy-light',
   },
-  button: {
-    // marginTop: 24,
+  text: {
+    fontFamily: 'gilroy-bold',
+    fontSize: 15,
+    color: theme.backgrounds.white,
   },
   row: {
     flexDirection: 'row',
