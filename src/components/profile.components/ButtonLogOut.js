@@ -9,19 +9,25 @@ const ButtonLogOut = () => {
   return (
     <View style={styles.buttonLogOutContainer}>
           <Button 
-            mode='contained' 
+            // mode='contained' 
             style={{ backgroundColor: theme.backgrounds.paper, }}
             onPress={() => console.log('log out')}
             >
-
-            <View style={styles.buttonLogOut}>
-              <Icon
-                name='md-log-out-outline'
-                size={25}
-                color={theme.colors.primary}
-                />
-              <Text style={styles.text}>Log Out</Text>
-            </View>
+              
+              <View style={styles.buttonLogOut}>
+                <Icon
+                  name='md-log-out-outline'
+                  size={25}
+                  color={theme.colors.primary}
+                  />
+                <Text style={styles.text}>Log Out</Text>
+                <Icon
+                  name='md-log-out-outline'
+                  size={25}
+                  color={theme.backgrounds.paper}
+                  />
+              </View>
+            
           </Button>
 
         </View>
@@ -41,7 +47,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: 'gilroy-bold',
-    flex: 1,
+    fontSize: 15,
     color: theme.colors.primary,
   }
 })

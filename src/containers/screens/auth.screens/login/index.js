@@ -72,7 +72,7 @@ const LoginScreen = ({ navigation }) => {
         mode='contained'
         style={{ backgroundColor: theme.colors.primary }}
         onPress={_onLoginPressed}>
-          <Text>
+          <Text style={styles.text}>
             Login
           </Text>
       </Button>
@@ -105,6 +105,11 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
     fontFamily: 'gilroy-bold'
   },
+  text: {
+    fontFamily: 'gilroy-bold',
+    fontSize: 15,
+    color: theme.backgrounds.white,
+  }
 });
 
 export default memo(LoginScreen);
