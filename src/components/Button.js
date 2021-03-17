@@ -1,7 +1,7 @@
-import React, { memo } from "react";
-import { StyleSheet } from "react-native";
-import { Button as PaperButton } from "react-native-paper";
-import { theme } from "../common/theme";
+import React, { memo } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Button as PaperButton } from 'react-native-paper';
+import { theme } from '../common/theme';
 
 // type Props = React.ComponentProps<typeof PaperButton>;
 
@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
     borderWidth: 0,
   },
   text: {
-    fontWeight: "bold",
+    fontFamily: 'gilroy-bold',
     fontSize: 15,
     lineHeight: 26,
-    textTransform: "none",
-    // fontFamily: 'gilroy-bold'
+    width: '100%',
+    textTransform: 'none'
   },
 });
 

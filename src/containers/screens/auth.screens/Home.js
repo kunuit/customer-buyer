@@ -1,16 +1,9 @@
 import React, { memo } from 'react';
 import Background from '../../../components/auth.components/Background';
 import Logo from '../../../components/Logo';
-import Header from '../../../components/Header';
 import Button from '../../../components/Button';
 import { Text } from 'react-native';
 import { theme } from '../../../common/theme';
-// import Paragraph from '../components/Paragraph';
-// import { Navigation } from '../types';
-
-// type Props = {
-//   navigation: Navigation;
-// };
 
 const HomeScreen = ({ navigation }) => (
   <Background>

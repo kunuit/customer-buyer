@@ -9,12 +9,8 @@ import Button from '../../../../components/Button';
 import TextInput from '../../../../components/TextInput';
 import { theme } from '../../../../common/theme';
 import { emailValidator, passwordValidator } from '../../../../common/validation';
-// import * as authStyle from '../../../constants/auth.constants';
-// import { Navigation } from '../types';
+import * as authStyle from '../../../../constants/auth.constants';
 
-// type Props = {
-//   navigation: Navigation;
-// };
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -31,14 +27,12 @@ const LoginScreen = ({ navigation }) => {
       return;
     }
 
-    // dispatch({ type: authStyle.IS_LOGIN });
+    dispatch({ type: authStyle.IS_LOGIN, payload: 'abc' });
 
-    // navigation.navigate('Dashboard');
   };
 
   return (
     <Background>
-      {/* <BackButton goBack={() => navigation.navigate('HomeScreen')} /> */}
 
       <Logo />
 
@@ -78,7 +72,9 @@ const LoginScreen = ({ navigation }) => {
         mode='contained'
         style={{ backgroundColor: theme.colors.primary }}
         onPress={_onLoginPressed}>
-        Login
+          <Text>
+            Login
+          </Text>
       </Button>
 
       <View style={styles.row}>
@@ -103,10 +99,11 @@ const styles = StyleSheet.create({
   },
   label: {
     color: theme.colors.secondary,
+    fontFamily: 'gilroy-light'
   },
   link: {
-    fontWeight: 'bold',
     color: theme.colors.primary,
+    fontFamily: 'gilroy-bold'
   },
 });
 

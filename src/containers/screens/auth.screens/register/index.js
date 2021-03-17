@@ -40,7 +40,6 @@ const RegisterScreen = ({ navigation }) => {
 
   return (
     <Background>
-      {/* <BackButton goBack={() => navigation.navigate('HomeScreen')} /> */}
 
       <Logo />
 
@@ -82,7 +81,9 @@ const RegisterScreen = ({ navigation }) => {
         mode='contained'
         style={{ backgroundColor: theme.colors.primary }}
         onPress={_onSignUpPressed}>
-        Sign Up
+          <Text>
+            Sign Up
+          </Text>
       </Button>
 
       <View style={styles.row}>
@@ -98,6 +99,7 @@ const RegisterScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   label: {
     color: theme.colors.secondary,
+    fontFamily: 'gilroy-light',
   },
   button: {
     // marginTop: 24,
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   link: {
-    fontWeight: 'bold',
+    fontFamily: 'gilroy-bold',
     color: theme.colors.primary,
   },
 });

@@ -30,7 +30,6 @@ const ForgotPasswordScreen = ({ navigation }) => {
 
   return (
     <Background>
-      {/* <BackButton goBack={() => navigation.navigate('LoginScreen')} /> */}
 
       <Logo />
 
@@ -53,7 +52,9 @@ const ForgotPasswordScreen = ({ navigation }) => {
         mode='contained'
         style={{ backgroundColor: theme.colors.primary }}
         onPress={_onSendPressed}>
-        Send Reset Instructions
+          <Text>
+            Send Reset Instructions
+          </Text>
       </Button>
 
       <TouchableOpacity
@@ -76,6 +77,7 @@ const styles = StyleSheet.create({
   label: {
     color: theme.colors.secondary,
     width: '100%',
+    fontFamily: 'gilroy-bold',
   },
 });
 

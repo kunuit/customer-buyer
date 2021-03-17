@@ -14,8 +14,6 @@ import { theme } from '../../common/theme';
 
 const Background = ({ children }) => (
   <View
-    // source={require('../../../assets/background_dot.png')}
-    // resizeMode='repeat'
     style={styles.background}>
     <KeyboardAvoidingView style={styles.container} behavior='height'>
       {children}
