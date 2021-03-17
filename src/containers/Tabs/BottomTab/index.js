@@ -13,6 +13,7 @@ import { theme } from '../../../common/theme';
 import { Dimensions } from 'react-native';
 import TabProfile from '../TopTab/TabProfile';
 import ProductDetail from '../../screens/ProductDetail';
+import Explore from "../../screens/auth.screens/Explore";
 
 const Tab = createBottomTabNavigator();
 

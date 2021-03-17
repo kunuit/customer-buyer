@@ -15,16 +15,15 @@ const ButtonContainer = () => {
 const styles = StyleSheet.create({
     buttonContainer: {
         alignItems: 'center',
+        paddingBottom: "10%",
     },
     buttonAddToBasket: {
-        // backgroundColor: "#53B175",
         width: "90%",
-        bottom: "15%",
         backgroundColor: theme.colors.primary,
     },
     buttonText: {
-        fontFamily: "gilroy-light",
-        fontSize: 18,
+        fontFamily: "gilroy-bold",
+        fontSize: 15,
         color: theme.backgrounds.white,
     },
 })

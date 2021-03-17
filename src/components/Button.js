@@ -18,7 +18,7 @@ const Button = ({ mode, style, children, ...props }) => (
     {...props}
   >
     {children}
-  </PaperButton>
+  </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
