@@ -10,6 +10,7 @@ import Profile from '../../screens/Profile';
 import { theme } from '../../../common/theme';
 import { Dimensions } from 'react-native';
 import TabProfile from '../TopTab/TabProfile';
+import ProductDetail from '../../screens/ProductDetail';
 
 const Tab = createBottomTabNavigator();
 
@@ -49,7 +50,7 @@ const BottomTab = () => {
           />
           <Tab.Screen
             name='Explore'
-            component={Profile}
+            component={ProductDetail}
             options={{
               tabBarIcon: ({ focused, tintColor }) => (
                 <MaterialCommunityIcons name="briefcase-search-outline" 
