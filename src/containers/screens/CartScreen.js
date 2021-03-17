@@ -1,5 +1,12 @@
 import React from "react";
-import { Dimensions, View, Text, StyleSheet, FlatList } from "react-native";
+import {
+  Dimensions,
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  SafeAreaView,
+} from "react-native";
 import Button from "../../components/Button";
 import CartItem from "../../components/CartItem";
 import Colors from "../../../constants/colors";
@@ -14,25 +21,27 @@ const Line = () => {
   );
 };
 const CartScreen = () => {
-  const fakeData = [1, 2, 3, 4];
+  const fakeData = [1, 2, 3, 4, 5, 6, 7];
   return (
     <View style={styles.container}>
       <View style={styles.titleTextContainer}>
         <Text style={styles.titleText}>My Cart</Text>
       </View>
-      <View style={styles.listCartItemContainer}>
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          data={fakeData}
-          keyExtractor={(item, index) => item.toString()}
-          renderItem={({ item }) => (
-            <View>
-              <CartItem />
-              <Line />
-            </View>
-          )}
-        />
-      </View>
+      <FlatList
+        style={styles.listCartItemContainer}
+        showsVerticalScrollIndicator={false}
+        data={fakeData}
+        keyExtractor={(item, index) => item.toString()}
+        renderItem={({ item }) => (
+          <View>
+            <CartItem />
+            <Line />
+          </View>
+        )}
+      />
+      <Button style={{ backgroundColor: Colors.green, width: "90%" }}>
+        <Text style={{ color: "white" }}>Checkout</Text>
+      </Button>
     </View>
   );
 };
@@ -43,6 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: Dimensions.get("window").width,
     alignItems: "center",
+    paddingBottom: "15%",
   },
   listCartItemContainer: {
     width: "90%",
