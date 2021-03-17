@@ -1,12 +1,11 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import React from "react";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 
-import { theme } from '../../common/theme';
-import InfoCard from '../../components/profile.components/InfoCard';
-import InfoProfile from '../../components/profile.components/InfoProfile';
-import { FlatList } from 'react-native-gesture-handler';
-import ButtonLogOut from '../../components/profile.components/ButtonLogOut';
-
+import { theme } from "../../common/theme";
+import InfoCard from "../../components/profile.components/InfoCard";
+import InfoProfile from "../../components/profile.components/InfoProfile";
+import { FlatList } from "react-native-gesture-handler";
+import ButtonLogOut from "../../components/profile.components/ButtonLogOut";
 
 const Profile = () => {
   const arrInfoCard = [
@@ -25,18 +24,14 @@ const Profile = () => {
       <View style={styles.root}>
         {/* <InfoProfile/> */}
         <FlatList
-        data={arrInfoCard}
-        renderItem={({ item }) => {
-          return (
-              <InfoCard nameIcon={item.nameIcon} name={item.name} />
-          )
-  
-        }}
-        keyExtractor={(item) => item.name}
-        ListHeaderComponent={InfoProfile}
-        ListFooterComponent={ButtonLogOut}
-      />
-              
+          data={arrInfoCard}
+          renderItem={({ item }) => {
+            return <InfoCard nameIcon={item.nameIcon} name={item.name} />;
+          }}
+          keyExtractor={(item) => item.name}
+          ListHeaderComponent={InfoProfile}
+          ListFooterComponent={ButtonLogOut}
+        />
       </View>
     </SafeAreaView>
   );
@@ -45,11 +40,9 @@ const Profile = () => {
 const styles = StyleSheet.create({
   root: {
     backgroundColor: theme.backgrounds.white,
-    height:  '100%',
-    paddingBottom: '15%'
+    height: "100%",
+    paddingBottom: "15%",
   },
-
-})
-
+});
 
 export default Profile;

@@ -18,8 +18,10 @@ const store = createStore(reducer);
 
 function App() {
   let [fontsLoaded] = useFonts({
+    "gilroy-medium": require("./assets/fonts/Gilroy-Medium.ttf"),
     "gilroy-light": require("./assets/fonts/Gilroy-Light.otf"),
     "gilroy-bold": require("./assets/fonts/Gilroy-ExtraBold.otf"),
+    "gilroy-semiBold": require("./assets/fonts/Gilroy-SemiBold.ttf"),
   });
   if (!fontsLoaded) return <View />;
   return (
