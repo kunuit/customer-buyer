@@ -1,17 +1,19 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useDispatch } from 'react-redux';
 
 import { theme } from '../../common/theme';
 import Button from '../Button';
+import * as authStyle from '../../constants/auth.constants';
 
 const ButtonLogOut = () => {
+  const dispatch = useDispatch();
   return (
     <View style={styles.buttonLogOutContainer}>
           <Button 
-            // mode='contained' 
             style={{ backgroundColor: theme.backgrounds.paper, }}
-            onPress={() => console.log('log out')}
+            onPress={() => {dispatch({ type: authStyle.IS_LOGIN, payload: null });}}
             >
               
               <View style={styles.buttonLogOut}>

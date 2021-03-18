@@ -5,6 +5,8 @@ import {
   KeyboardAvoidingView,
   View,
   Dimensions,
+  ScrollView,
+  SafeAreaView,
 } from 'react-native';
 import { theme } from '../../common/theme';
 
@@ -13,28 +15,29 @@ import { theme } from '../../common/theme';
 // };
 
 const Background = ({ children }) => (
-  <View
-    style={styles.background}>
-    <KeyboardAvoidingView style={styles.container} behavior='height'>
-      {children}
-    </KeyboardAvoidingView>
+  <View style={styles.background}>
+    <SafeAreaView
+      style={styles.container}>
+        <ScrollView showsVerticalScrollIndicator={false} >
+          <View style={{alignItems: 'center'}}>
+            {children}
+          </View>
+        </ScrollView>
+    </SafeAreaView>
   </View>
 );
 
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    width: '100%',
     backgroundColor: theme.backgrounds.white,
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingBottom: Dimensions.get('screen').height * 0.12
   },
   container: {
-    flex: 1,
-    padding: 20,
-    width: '100%',
-    maxWidth: 340,
+    width: '90%',
     alignSelf: 'center',
-    alignItems: 'center',
     justifyContent: 'center',
   },
 });

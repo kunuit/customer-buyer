@@ -8,7 +8,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import Button from "../../components/Button";
-import CartItem from "../../components/CartItem";
+import FavouriteItem from "../../components/FavouriteItem";
 import Colors from "../../../constants/colors";
 const Line = () => {
   return (
@@ -25,7 +25,7 @@ const CartScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.titleTextContainer}>
-        <Text style={styles.titleText}>My Cart</Text>
+        <Text style={styles.titleText}>Favourite</Text>
       </View>
       <FlatList
         style={styles.listCartItemContainer}
@@ -34,8 +34,8 @@ const CartScreen = () => {
         keyExtractor={(item, index) => item.toString()}
         renderItem={({ item }) => (
           <View>
-            <CartItem />
-            <Line /> 
+            <FavouriteItem />
+            <Line />
           </View>
         )}
       />
@@ -48,7 +48,7 @@ const CartScreen = () => {
         }}
       >
         <Text style={{ color: "white", fontFamily: "gilroy-bold" }}>
-          Go to Checkout
+          Add All To Cart
         </Text>
       </Button>
     </View>
