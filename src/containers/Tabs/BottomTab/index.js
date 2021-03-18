@@ -13,7 +13,9 @@ import { theme } from '../../../common/theme';
 import { Dimensions } from 'react-native';
 import TabProfile from '../TopTab/TabProfile';
 import ProductDetail from '../../screens/ProductDetail';
-import Explore from "../../screens/auth.screens/Explore";
+import Explore from "../../screens/Explore";
+import CartScreen from "../../screens/CartScreen";
+import CardItem from "../../../components/CardItem";
 
 const Tab = createBottomTabNavigator();
 
@@ -53,7 +55,7 @@ const BottomTab = () => {
           />
           <Tab.Screen
             name='Explore'
-            component={ProductDetail}
+            component={Explore}
             options={{
               tabBarIcon: ({ focused, tintColor }) => (
                 <MaterialCommunityIcons name="briefcase-search-outline" 
@@ -65,7 +67,7 @@ const BottomTab = () => {
           />
           <Tab.Screen
             name='Cart'
-            component={Cart}
+            component={CardItem}
             showIcon={true}
             options={{
               tabBarIcon: ({ focused, tintColor }) => (
