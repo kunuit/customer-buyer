@@ -4,7 +4,7 @@ import Constants from "expo-constants";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createStore } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import { Provider, useSelector } from "react-redux";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
@@ -13,8 +13,11 @@ import BottomTab from "./src/containers/Tabs/BottomTab";
 import { theme } from "./src/common/theme";
 import { reducer } from "./src/reducers/stateInReducers";
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+
 const Router = createStackNavigator();
-const store = createStore(reducer);
+const store = createStore(reducer, composeEnhancers());
 
 function App() {
   let [fontsLoaded] = useFonts({
