@@ -21,7 +21,7 @@ const BottomTab = () => {
   return (
     <Tab.Navigator
       tabBarOptions={{
-        keyboardHidesTabBar: true,
+        // keyboardHidesTabBar: true,
         activeTintColor: theme.colors.primary,
         inactiveTintColor: theme.colors.notBlack,
         labelStyle: { fontSize: 12, fontFamily: "gilroy-bold" },

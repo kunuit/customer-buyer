@@ -35,7 +35,7 @@ const CartScreen = () => {
         renderItem={({ item }) => (
           <View>
             <CartItem />
-            <Line />
+            <Line /> 
           </View>
         )}
       />
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     alignItems: "center",
-    paddingBottom: "23%",
+    paddingBottom: Dimensions.get("window").height * 0.09 + 37,
   },
   listCartItemContainer: {
     width: "90%",

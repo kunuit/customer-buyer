@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   nameItem: {
     flex: 1,
     marginLeft: 20,
-    fontFamily: 'gilroy-light',
+    fontFamily: 'gilroy-medium',
     fontSize: 17,
     color: theme.colors.notBlack
   }
