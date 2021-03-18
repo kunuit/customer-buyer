@@ -62,8 +62,8 @@ const CartItem = () => {
 };
 const styles = StyleSheet.create({
   cartItemContainer: {
-    marginVertical: 8,
-    paddingVertical: 10,
+    marginVertical: 5,
+    paddingVertical: 8,
     paddingHorizontal: 15,
     width: "100%",
     flexDirection: "row",
