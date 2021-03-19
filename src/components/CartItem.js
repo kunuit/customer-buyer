@@ -9,7 +9,7 @@ import {
 import RoundedButton from "./RoundedButton";
 import { Dimensions } from "react-native";
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
-import Colors from "../../constants/colors";
+import Colors from "../constants/colors";
 const CartItem = () => {
   return (
     <View style={styles.cartItemContainer}>

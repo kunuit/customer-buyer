@@ -5,19 +5,28 @@ import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createStore, applyMiddleware, compose } from "redux";
+import createSagaMiddleware from "redux-saga";
+import rootSaga from "./src/sagas";
 import { Provider, useSelector } from "react-redux";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
+
 import CardItem from "./src/components/CardItem";
 import BottomTab from "./src/containers/Tabs/BottomTab";
 import { theme } from "./src/common/theme";
-import { reducer } from "./src/reducers/stateInReducers";
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
+import reducers from "./src/reducers";
 
 const Router = createStackNavigator();
-const store = createStore(reducer, composeEnhancers());
+
+// create redux redux-saga redux-dev-tool
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const sagaMiddleware = createSagaMiddleware();
+const middleware = [sagaMiddleware];
+const enhancers = [applyMiddleware(...middleware)];
+const store = createStore(reducers, composeEnhancers(...enhancers));
+
+sagaMiddleware.run(rootSaga);
 
 function App() {
   let [fontsLoaded] = useFonts({
@@ -29,9 +38,9 @@ function App() {
   if (!fontsLoaded) return <View />;
   return (
     <View style={styles.container}>
-      <Router.Navigator initialRouteName="MainUX" headerMode="none">
-        <Router.Screen name="MainUX" component={BottomTab} />
-        <Router.Screen name="asd" component={BottomTab} />
+      <Router.Navigator initialRouteName='MainUX' headerMode='none'>
+        <Router.Screen name='MainUX' component={BottomTab} />
+        <Router.Screen name='asd' component={BottomTab} />
       </Router.Navigator>
     </View>
   );

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Button from "../../components/Button";
 import CartItem from "../../components/CartItem";
-import Colors from "../../../constants/colors";
+import Colors from "../../constants/colors";
 const Line = () => {
   return (
     <View

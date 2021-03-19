@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Colors from "../../constants/colors";
+import Colors from "../constants/colors";
 import {
   View,
   StyleSheet,

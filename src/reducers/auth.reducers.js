@@ -2,9 +2,9 @@ const initState = {
   token: null,
 };
 
-import * as actionTypes from '../constants/auth.constants';
+import * as actionTypes from "../constants/auth.constants";
 
-export const reducer = (state = initState, action) => {
+const reducer = (state = initState, action) => {
   switch (action.type) {
     case actionTypes.IS_LOGIN:
       return {
@@ -15,3 +15,5 @@ export const reducer = (state = initState, action) => {
       return state;
   }
 };
+
+export default reducer;
