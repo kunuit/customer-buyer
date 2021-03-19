@@ -10,15 +10,17 @@ import RoundedButton from "./RoundedButton";
 import { Dimensions } from "react-native";
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import Colors from "../constants/colors";
-const CartItem = () => {
+const CartItem = (props) => {
+  const { urlImages } = props.product;
   return (
     <View style={styles.cartItemContainer}>
       <View style={styles.cartImageContainer}>
         <Image
           style={styles.cartImage}
           source={{
-            uri:
-              "https://www.pngkey.com/png/full/164-1643396_reb-bell-pepper-png-1-red-bell-pepper.png",
+            uri: urlImages.length
+              ? urlImages[0].url
+              : "https://theme.hstatic.net/1000273444/1000452469/14/no-img.png?v=1804",
           }}
         />
       </View>
