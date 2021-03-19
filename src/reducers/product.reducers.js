@@ -1,8 +1,10 @@
+import { isLoaded } from "expo-font";
 import * as productTask from "../constants/product.constants";
 // import { toastError, toastSuccess } from '../helpers/toast.Helper';
 
 const initialState = {
-  products: [],
+  data: [],
+  isLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -10,7 +12,7 @@ const reducer = (state = initialState, action) => {
     case "GET_PRODUCTS":
       return {
         ...state,
-        products: action.payload,
+        data: action.payload,
       };
     default:
       return state;

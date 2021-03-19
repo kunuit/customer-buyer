@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Dimensions,
   View,
@@ -21,6 +22,15 @@ const Line = () => {
   );
 };
 const CartScreen = () => {
+  const { products } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const dispatchGetAllProducts = () =>
+    dispatch({
+      type: "FETCH_PRODUCTS",
+    });
+  useEffect(() => {
+    dispatchGetAllProducts();
+  }, []);
   const fakeData = [1, 2, 3, 4, 5, 6, 7];
   return (
     <View style={styles.container}>
@@ -30,12 +40,12 @@ const CartScreen = () => {
       <FlatList
         style={styles.listCartItemContainer}
         showsVerticalScrollIndicator={false}
-        data={fakeData}
-        keyExtractor={(item, index) => item.toString()}
+        data={products.data}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View>
-            <CartItem />
-            <Line /> 
+            <CartItem product={item} />
+            <Line />
           </View>
         )}
       />

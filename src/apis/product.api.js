@@ -1,8 +1,8 @@
 // import qs from 'query-string';
-import axiosService from '../commons/axiosService';
-import { API_ENDPOINT } from '../constants/product.constants';
+import axiosService from "../common/axiosService";
+import { API_ENDPOINT } from "../constants/product.constants";
 
-const url = '/product';
+const url = "/product";
 
 // export const getList = (params = {}) => {
 //   let queryParams = '';
@@ -13,7 +13,7 @@ const url = '/product';
 // };
 
 export const getProducts = () => {
-  return axiosService.get(`${API_ENDPOINT}${url}`);
+  return axiosService.get(`http://localhost:3000/product`);
 };
 
 export const addProduct = (data) => {
