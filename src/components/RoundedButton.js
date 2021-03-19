@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, TouchableWithoutFeedback, Text } from "react-native";
-import Colors from "../../constants/colors";
+import Colors from "../constants/colors";
 const Button = (props) => {
   return (
     <TouchableWithoutFeedback onPress={props.onPress}>
