@@ -5,6 +5,10 @@ import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createStore, applyMiddleware, compose } from "redux";
+// import {
+//   composeWithDevTools,
+//   devToolsEnhancer,
+// } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./src/sagas";
 import { Provider, useSelector } from "react-redux";
@@ -18,13 +22,20 @@ import reducers from "./src/reducers";
 
 const Router = createStackNavigator();
 
-// create redux redux-saga redux-dev-tool
+// create redux redux-saga redux-dev-tool for browser
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// create redux redux-saga for mobile
+const composeEnhancersRNDebugger =
+  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+        // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+      })
+    : compose;
 
 const sagaMiddleware = createSagaMiddleware();
 const middleware = [sagaMiddleware];
 const enhancers = [applyMiddleware(...middleware)];
-const store = createStore(reducers, composeEnhancers(...enhancers));
+const store = createStore(reducers, composeEnhancersRNDebugger(...enhancers));
 
 sagaMiddleware.run(rootSaga);
 

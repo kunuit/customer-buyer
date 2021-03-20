@@ -18,9 +18,11 @@ const CartItem = (props) => {
         <Image
           style={styles.cartImage}
           source={{
-            uri: urlImages.length
-              ? urlImages[0].url
-              : "https://theme.hstatic.net/1000273444/1000452469/14/no-img.png?v=1804",
+            uri:
+              //  urlImages.length
+              //   ? urlImages[0].url
+              //   :
+              "https://theme.hstatic.net/1000273444/1000452469/14/no-img.png?v=1804",
           }}
         />
       </View>
@@ -31,16 +33,16 @@ const CartItem = (props) => {
         </View>
         <View style={styles.quantityAjustContainer}>
           <RoundedButton>
-            <Entypo name="minus" size={17} color={Colors.gray} />
+            <Entypo name='minus' size={17} color={Colors.gray} />
           </RoundedButton>
           <View style={{ marginLeft: 12, marginRight: 12 }}>
             <Text style={(styles.titleText, { fontSize: 16 })}>1</Text>
           </View>
           <RoundedButton>
             <Entypo
-              name="plus"
+              name='plus'
               size={17}
-              color="white"
+              color='white'
               style={styles.buttonClickable}
             />
           </RoundedButton>
@@ -50,10 +52,10 @@ const CartItem = (props) => {
         <TouchableWithoutFeedback>
           <View>
             <AntDesign
-              name="close"
+              name='close'
               style={{ paddingVertical: 5, paddingHorizontal: 5 }}
               size={16}
-              color="black"
+              color='black'
             />
           </View>
         </TouchableWithoutFeedback>

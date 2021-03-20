@@ -1,10 +1,13 @@
 import { takeEvery, put, call } from "redux-saga/effects";
 import { getProducts } from "../apis/product.api";
 function* fetchAllProducts(action) {
-  const products = yield call(getProducts);
+  // const products = yield call(getProducts);
   yield put({
     type: "GET_PRODUCTS",
-    payload: products.data,
+    payload: [
+      { name: "kun", lv: 10 },
+      { name: "kong", lv: 10 },
+    ],
   });
 }
 function* rootSaga() {
