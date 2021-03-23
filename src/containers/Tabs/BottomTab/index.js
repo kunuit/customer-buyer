@@ -8,14 +8,15 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Cart from "../../screens/CartScreen";
 import Favorite from "../../screens/FavouriteScreen";
-import Profile from '../../screens/Profile';
-import { theme } from '../../../common/theme';
-import { Dimensions } from 'react-native';
-import TabProfile from '../TopTab/TabProfile';
-import ProductDetail from '../../screens/ProductDetail';
+import Profile from "../../screens/Profile";
+import { theme } from "../../../common/theme";
+import { Dimensions } from "react-native";
+import TabProfile from "../TopTab/TabProfile";
+import ProductDetail from "../../screens/ProductDetail";
 import Explore from "../../screens/Explore";
 import CartScreen from "../../screens/CartScreen";
 import CardItem from "../../../components/CardItem";
+import ListCardItem from "../../../components/ListCardItem";
 
 const Tab = createBottomTabNavigator();
 
@@ -56,7 +57,7 @@ const BottomTab = () => {
       />
       <Tab.Screen
         name="Explore"
-        component={ProductDetail}
+        component={Explore}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <MaterialCommunityIcons
