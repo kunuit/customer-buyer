@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 class AxiosService {
   constructor() {
@@ -12,6 +12,8 @@ class AxiosService {
   }
 
   handleError(error) {
+    if (error.response) return Promise.reject(error.response);
+    if (error.request) return Promise.reject(error.request);
     return Promise.reject(error);
   }
 
