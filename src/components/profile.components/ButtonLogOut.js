@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import { theme } from '../../common/theme';
 import Button from '../Button';
-import * as authStyle from '../../constants/auth.constants';
+import {logout} from '../../actions/auth.action.js';
 
 const ButtonLogOut = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const ButtonLogOut = () => {
     <View style={styles.buttonLogOutContainer}>
           <Button 
             style={{ backgroundColor: theme.backgrounds.paper, }}
-            onPress={() => {dispatch({ type: authStyle.IS_LOGIN, payload: null });}}
+            onPress={() => {dispatch(logout())}}
             >
               
               <View style={styles.buttonLogOut}>
