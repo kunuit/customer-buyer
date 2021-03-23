@@ -1,6 +1,6 @@
-import React, { memo } from 'react';
-import { StyleSheet, Text } from 'react-native';
-import { theme } from '../common/theme';
+import React, { memo } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { theme } from "../common/theme";
 
 // type Props = {
 //   children: React.ReactNode,
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     color: theme.colors.primary,
     paddingVertical: 14,
-    fontFamily: 'gilroy-bold'
+    fontFamily: "gilroy-bold",
   },
 });
 

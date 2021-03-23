@@ -6,11 +6,12 @@ import {
   LOGIN_FAIL,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  RESET_REGISTER,
 } from "../constants/auth.constants";
 
 // import { STATUSES } from "../constants";
 
-export const login = (data) => {
+export const loginACT = (data) => {
   return {
     type: LOGIN,
     payload: {
@@ -19,7 +20,7 @@ export const login = (data) => {
   };
 };
 
-export const loginSuccess = (data) => {
+export const loginSuccessACT = (data) => {
   return {
     type: LOGIN_SUCCESS,
     payload: {
@@ -28,7 +29,7 @@ export const loginSuccess = (data) => {
   };
 };
 
-export const loginFail = (error) => {
+export const loginFailACT = (error) => {
   console.log(error, "action login fail");
   return {
     type: LOGIN_FAIL,
@@ -38,7 +39,7 @@ export const loginFail = (error) => {
   };
 };
 
-export const register = (data) => {
+export const registerACT = (data) => {
   return {
     type: REGISTER,
     payload: {
@@ -47,7 +48,7 @@ export const register = (data) => {
   };
 };
 
-export const registerSuccess = (data) => {
+export const registerSuccessACT = (data) => {
   return {
     type: REGISTER_SUCCESS,
     payload: {
@@ -56,7 +57,7 @@ export const registerSuccess = (data) => {
   };
 };
 
-export const registerFail = (error) => {
+export const registerFailACT = (error) => {
   return {
     type: REGISTER_FAIL,
     payload: {
@@ -65,8 +66,14 @@ export const registerFail = (error) => {
   };
 };
 
-export const logout = () => {
+export const logoutACT = () => {
   return {
     type: LOGOUT,
+  };
+};
+
+export const resetRegisterACT = () => {
+  return {
+    type: RESET_REGISTER,
   };
 };

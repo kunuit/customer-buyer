@@ -12,10 +12,10 @@ const url = "/product";
 //   return axiosService.get(`${API_ENDPOINT}${url}${queryParams}`);
 // };
 
-export const getProducts = () => {
+export const getProductsAPI = () => {
   return axiosService.get(`http://localhost:3000/product`);
 };
 
-export const addProduct = (data) => {
+export const addProductAPI = (data) => {
   return axiosService.post(`${API_ENDPOINT}${url}`, data);
 };
