@@ -8,6 +8,7 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
+import CategoriesList from "../../components/CategoriesList";
 import { Searchbar } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
 import ListCardItem from "../../components/ListCardItem";
@@ -17,7 +18,7 @@ const Explore = () => {
   const onChangeSearch = (query) => setSearchQuery(query);
   return (
     <SafeAreaView style={styles.exploreContainer}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.searchContainer}>
           <Text style={styles.titleText}>Find Products</Text>
           <Searchbar
@@ -37,7 +38,7 @@ const Explore = () => {
             on
           />
         </View>
-        <ListCardItem />
+        {searchQuery == "" ? <CategoriesList /> : <ListCardItem />}
       </ScrollView>
     </SafeAreaView>
   );
