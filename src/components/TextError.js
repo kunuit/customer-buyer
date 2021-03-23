@@ -4,10 +4,9 @@ import { theme } from "../common/theme";
 
 const TextError = (props) => {
   const { error } = props;
-  console.log(error, "check error");
   return (
     <View style={styles.root}>
-      <Text style={styles.text}>{error}</Text>
+      <Text style={styles.text}>Error: {error}</Text>
     </View>
   );
 };

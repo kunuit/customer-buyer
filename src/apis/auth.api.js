@@ -12,10 +12,10 @@ import { API_ENDPOINT } from "../constants/product.constants";
 //   return axiosService.get(`${API_ENDPOINT}${url}${queryParams}`);
 // };
 
-export const login = (data) => {
+export const loginAPI = (data) => {
   return axiosService.post(`${API_ENDPOINT}/customer/login`, data);
 };
 
-export const register = (data) => {
+export const registerAPI = (data) => {
   return axiosService.post(`${API_ENDPOINT}/customer/register`, data);
 };

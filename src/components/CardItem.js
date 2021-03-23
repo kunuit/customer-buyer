@@ -33,9 +33,8 @@ const CardItem = (props) => {
           style={{
             backgroundColor: Colors.green,
             borderColor: Colors.grayWhite,
-          }}
-        >
-          <Entypo name="plus" size={17} color="white" />
+          }}>
+          <Entypo name='plus' size={17} color='white' />
         </RoundedButton>
       </View>
     </View>
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
     fontFamily: "gilroy-light",
     fontSize: 16,
-    color: "Colors.gray",
+    color: Colors.gray,
   },
   addToCartContainer: {
     paddingVertical: 10,

@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     padding: 10,
     height: 230,
-    borderColor: "#53B17",
+    borderColor: "#53B174",
     backgroundColor: "rgba(83, 177, 117, 0.1)",
     borderRadius: 20,
     borderWidth: 1,
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
     fontFamily: "gilroy-light",
     fontSize: 16,
-    color: "Colors.gray",
+    color: Colors.gray,
   },
   addToCartContainer: {
     paddingVertical: 10,

@@ -22,14 +22,14 @@ const Explore = () => {
         <View style={styles.searchContainer}>
           <Text style={styles.titleText}>Find Products</Text>
           <Searchbar
-            placeholder="Search Store"
+            placeholder='Search Store'
             onChangeText={onChangeSearch}
             value={searchQuery}
             style={styles.searchBar}
             clearIcon={() => (
-              <MaterialIcons name="clear" size={20} color="black" />
+              <MaterialIcons name='clear' size={20} color='black' />
             )}
-            icon={() => <MaterialIcons name="search" size={20} color="black" />}
+            icon={() => <MaterialIcons name='search' size={20} color='black' />}
             inputStyle={[
               { fontFamily: "gilroy-bold" },
               { fontSize: 13 },
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     alignItems: "center",
     width: "100%",
-    height: Dimensions.get("screen") * 0.3,
+    height: Dimensions.get("window").height * 0.3,
     paddingTop: "10%",
   },
   titleText: {

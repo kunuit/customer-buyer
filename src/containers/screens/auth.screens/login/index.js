@@ -10,11 +10,12 @@ import TextInput from "../../../../components/TextInput";
 import { theme } from "../../../../common/theme";
 import {
   emailValidator,
+  infoValidator,
   passwordValidator,
 } from "../../../../common/validation";
 import * as authStyle from "../../../../constants/auth.constants";
 
-import { login } from "../../../../actions/auth.action";
+import { loginACT } from "../../../../actions/auth.action";
 import TextError from "../../../../components/TextError";
 
 const LoginScreen = ({ navigation }) => {
@@ -25,7 +26,7 @@ const LoginScreen = ({ navigation }) => {
   const { errorLogin } = useSelector((state) => state.auth);
 
   const _onLoginPressed = () => {
-    const emailError = emailValidator(email.value);
+    const emailError = infoValidator(email.value);
     const passwordError = passwordValidator(password.value);
 
     if (emailError || passwordError) {
@@ -33,8 +34,9 @@ const LoginScreen = ({ navigation }) => {
       setPassword({ ...password, error: passwordError });
       return;
     }
-    console.log("press");
-    dispatch(login({ info: email.value, password: password.value }));
+
+    //! dispatch to check loginACT
+    dispatch(loginACT({ info: email.value, password: password.value }));
   };
 
   return (
@@ -43,10 +45,10 @@ const LoginScreen = ({ navigation }) => {
 
       <Header>Welcome back.</Header>
 
-      {errorLogin ? <TextError error={errorLogin} /> : <> </>}
+      {/* {errorLogin ? <TextError error={errorLogin} /> : <> </>} */}
 
       <TextInput
-        label='Email'
+        label='Email or Username'
         returnKeyType='next'
         value={email.value}
         onChangeText={(text) => setEmail({ value: text, error: "" })}
