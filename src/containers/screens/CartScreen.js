@@ -40,7 +40,7 @@ const CartScreen = () => {
       <FlatList
         style={styles.listCartItemContainer}
         showsVerticalScrollIndicator={false}
-        data={fakeData}
+        data={products.data}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View>
@@ -55,7 +55,8 @@ const CartScreen = () => {
           width: "90%",
           position: "absolute",
           bottom: Dimensions.get("window").height * 0.08,
-        }}>
+        }}
+      >
         <Text style={{ color: "white", fontFamily: "gilroy-bold" }}>
           Go to Checkout
         </Text>
