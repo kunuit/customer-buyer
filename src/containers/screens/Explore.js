@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     alignItems: "center",
     width: "100%",
-    height: Dimensions.get("window").height * 0.3,
+    height: Dimensions.get("window").height * 0.2,
     paddingTop: "10%",
   },
   titleText: {

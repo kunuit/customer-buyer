@@ -10,6 +10,7 @@ import {
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import RoundedButton from "../components/RoundedButton";
 const CategoryItem = ({ item }) => {
+  console.log(item)
   return (
     <View style={styles.cardContainer}>
       <View style={{ flex: 1 }}>
@@ -17,13 +18,13 @@ const CategoryItem = ({ item }) => {
           <Image
             style={styles.cardImage}
             source={{
-              uri: "https://pngimg.com/uploads/olive_oil/olive_oil_PNG9.png",
+              uri: "",
             }}
           />
         </View>
         <View style={styles.cardDetailContainer}>
           <Text numberOfLines={2} style={styles.titleText}>
-            {`Straw berry ${item}`}
+            {}
           </Text>
         </View>
       </View>
@@ -52,24 +53,14 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     flexGrow: 1,
+    justifyContent: 'center',
   },
   titleText: {
     textAlign: "center",
     fontFamily: "gilroy-bold",
     fontSize: 18,
     color: "black",
-  },
-  descriptionText: {
-    marginTop: 3,
-    fontFamily: "gilroy-light",
-    fontSize: 16,
-    color: Colors.gray,
-  },
-  addToCartContainer: {
-    paddingVertical: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    height: 'auto',
   },
 });
 
