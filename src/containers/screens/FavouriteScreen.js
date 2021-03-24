@@ -72,9 +72,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     backgroundColor: "white",
     paddingVertical: 20,
+    alignItems: "center",
   },
   titleText: {
-    textAlign: "center",
     fontSize: 18,
     fontFamily: "gilroy-bold",
   },
