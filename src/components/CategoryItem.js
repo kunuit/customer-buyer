@@ -10,7 +10,7 @@ import {
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import RoundedButton from "../components/RoundedButton";
 const CategoryItem = ({ item }) => {
-  console.log(item)
+  console.log(item);
   return (
     <View style={styles.cardContainer}>
       <View style={styles.cardImageContainer}>
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     padding: 10,
     height: 230,
     borderColor: "#53B174",
-    backgroundColor: "rgba(83, 177, 117, 0.1)",
+    backgroundColor: "white",
     borderRadius: 20,
     borderWidth: 1,
   },
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     flexGrow: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   titleText: {
     textAlign: "center",
