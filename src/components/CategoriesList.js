@@ -11,8 +11,8 @@ import {
 } from "react-native";
 import CategoryItem from "../components/CategoryItem";
 import Colors from "../constants/colors";
-import {itemData} from "../components/data/data"
-import Button from "../components/Button"
+import { itemData } from "../components/data/data";
+import Button from "../components/Button";
 const CategoriesList = (props) => {
   const { categories } = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const CategoriesList = (props) => {
     dispatch({
       type: "FETCH_CATEGORIES",
     });
-  const [item, setItem] = useState(itemData)
+  const [item, setItem] = useState(itemData);
   return (
     <View style={styles.container}>
       <FlatList
@@ -31,7 +31,15 @@ const CategoriesList = (props) => {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={styles.cardItemContainer}>
-            <Button style={[styles.cardContainer, {backgroundColor: `${item.itemColor}`}]}>
+            <Button
+              style={[
+                styles.cardContainer,
+                {
+                  backgroundColor: `${item.itemColor}`,
+                  borderColor: `${item.itemColor}`,
+                },
+              ]}
+            >
               <View style={{ flex: 1 }}>
                 <View style={styles.cardImageContainer}>
                   <Image
@@ -87,14 +95,14 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     flexGrow: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   titleText: {
     textAlign: "center",
     fontFamily: "gilroy-bold",
     fontSize: 18,
     color: "black",
-    height: 'auto',
+    height: "auto",
   },
 });
 
