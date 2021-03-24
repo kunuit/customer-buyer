@@ -5,6 +5,7 @@ const initState = {
   isRegister: false,
   errorLogin: null,
   errorRegister: null,
+  isAuthLoading: false,
 };
 
 import {
@@ -14,6 +15,8 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   RESET_REGISTER,
+  SHOW_AUTH_LOADING,
+  HIDE_AUTH_LOADING,
 } from "../constants/auth.constants";
 
 const reducer = (state = initState, action) => {
@@ -54,6 +57,16 @@ const reducer = (state = initState, action) => {
         isLogin: false,
         errorLogin: null,
         dataCustomer: null,
+      };
+    case SHOW_AUTH_LOADING:
+      return {
+        ...state,
+        isAuthLoading: true,
+      };
+    case HIDE_AUTH_LOADING:
+      return {
+        ...state,
+        isAuthLoading: false,
       };
     default:
       return state;

@@ -7,6 +7,8 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   RESET_REGISTER,
+  SHOW_AUTH_LOADING,
+  HIDE_AUTH_LOADING,
 } from "../constants/auth.constants";
 
 // import { STATUSES } from "../constants";
@@ -75,5 +77,17 @@ export const logoutACT = () => {
 export const resetRegisterACT = () => {
   return {
     type: RESET_REGISTER,
+  };
+};
+
+export const showAuthLoadingACT = () => {
+  return {
+    type: SHOW_AUTH_LOADING,
+  };
+};
+
+export const hideAuthLoadingACT = () => {
+  return {
+    type: HIDE_AUTH_LOADING,
   };
 };

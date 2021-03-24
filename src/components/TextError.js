@@ -6,7 +6,7 @@ const TextError = (props) => {
   const { error } = props;
   return (
     <View style={styles.root}>
-      <Text style={styles.text}>Error: {error}</Text>
+      <Text style={styles.text}>{error}</Text>
     </View>
   );
 };
