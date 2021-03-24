@@ -22,7 +22,6 @@ import {
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case REGISTER_SUCCESS:
-      console.log(action);
       return {
         ...state,
         isRegister: true,

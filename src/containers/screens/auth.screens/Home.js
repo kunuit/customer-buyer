@@ -38,7 +38,7 @@ const HomeScreen = ({ navigation }) => {
         style={{ backgroundColor: theme.backgrounds.paper }}
         onPress={() => navigation.navigate("RegisterScreen")}>
         <Text style={[styles.text, { color: theme.colors.primary }]}>
-          Sign Up
+          Register
         </Text>
       </Button>
     </Background>

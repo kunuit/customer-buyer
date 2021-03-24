@@ -1,5 +1,11 @@
-import React, { memo, useState } from "react";
-import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
+import React, { memo, useEffect, useState } from "react";
+import {
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 import Background from "../../../../components/auth.components/Background";
@@ -23,7 +29,7 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
 
-  const { errorLogin } = useSelector((state) => state.auth);
+  const { errorLogin, isAuthLoading } = useSelector((state) => state.auth);
 
   const _onLoginPressed = () => {
     const emailError = infoValidator(email.value);
@@ -80,14 +86,24 @@ const LoginScreen = ({ navigation }) => {
       <Button
         mode='contained'
         style={{ backgroundColor: theme.colors.primary }}
-        onPress={_onLoginPressed}>
-        <Text style={styles.text}>Login</Text>
+        onPress={_onLoginPressed}
+        disabled={isAuthLoading}>
+        {isAuthLoading ? (
+          <ActivityIndicator
+            style={{ opacity: 1 }}
+            animating={true}
+            size='small'
+            color='#fff'
+          />
+        ) : (
+          <Text style={styles.text}>Login</Text>
+        )}
       </Button>
 
       <View style={styles.row}>
         <Text style={styles.label}>Don’t have an account? </Text>
         <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")}>
-          <Text style={styles.link}>Sign up</Text>
+          <Text style={styles.link}>Register</Text>
         </TouchableOpacity>
       </View>
     </Background>
