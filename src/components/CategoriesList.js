@@ -13,7 +13,7 @@ import CategoryItem from "../components/CategoryItem";
 const CategoriesList = (props) => {
   const { categories } = useSelector((state) => state);
   const dispatch = useDispatch();
-  console.log(categories);
+  // console.log(categories);
   const dispatchGetAllCategories = () =>
     dispatch({
       type: "FETCH_CATEGORIES",

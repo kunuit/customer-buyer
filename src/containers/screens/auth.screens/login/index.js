@@ -45,7 +45,7 @@ const LoginScreen = ({ navigation }) => {
 
       <Header>Welcome back.</Header>
 
-      {/* {errorLogin ? <TextError error={errorLogin} /> : <> </>} */}
+      {errorLogin ? <TextError error={errorLogin} /> : <></>}
 
       <TextInput
         label='Email or Username'
