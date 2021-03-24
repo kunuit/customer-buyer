@@ -10,6 +10,7 @@ import {
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import RoundedButton from "../components/RoundedButton";
 const CategoryItem = ({ item }) => {
+  console.log(item)
   return (
     <View style={styles.cardContainer}>
       <View style={styles.cardImageContainer}>
@@ -50,6 +51,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     flexGrow: 1,
+    justifyContent: 'center',
   },
   titleText: {
     textAlign: "center",
