@@ -23,9 +23,6 @@ const CategoriesList = (props) => {
     <View style={styles.container}>
       <FlatList
         showsVerticalScrollIndicator={false}
-        columnWrapperStyle={{
-          flex: 1,
-        }}
         numColumns={2}
         data={fakeData}
         keyExtractor={(item, index) => index.toString()}
@@ -41,15 +38,14 @@ const CategoriesList = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 10,
     backgroundColor: "white",
-    width: "100%",
-    flex: 1,
+    width: "95%",
+    margin: "auto",
     paddingBottom: Dimensions.get("window").height * 0.09,
   },
   cardItemContainer: {
-    padding: 5,
-    flexBasis: "50%",
+    margin: 10,
+    flex: 1,
   },
 });
 

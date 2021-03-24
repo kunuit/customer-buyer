@@ -49,9 +49,9 @@ function App() {
   if (!fontsLoaded) return <View />;
   return (
     <View style={styles.container}>
-      <Router.Navigator initialRouteName='MainUX' headerMode='none'>
-        <Router.Screen name='MainUX' component={BottomTab} />
-        <Router.Screen name='asd' component={BottomTab} />
+      <Router.Navigator initialRouteName="MainUX" headerMode="none">
+        <Router.Screen name="MainUX" component={BottomTab} />
+        <Router.Screen name="asd" component={BottomTab} />
       </Router.Navigator>
     </View>
   );

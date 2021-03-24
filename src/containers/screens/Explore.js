@@ -12,24 +12,27 @@ import CategoriesList from "../../components/CategoriesList";
 import { Searchbar } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
 import ListCardItem from "../../components/ListCardItem";
+import Colors from "../../constants/colors";
 const Explore = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const onChangeSearch = (query) => setSearchQuery(query);
   return (
     <SafeAreaView style={styles.exploreContainer}>
+      <View style={styles.titleTextContainer}>
+        <Text style={styles.titleText}>Find Products</Text>
+      </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.searchContainer}>
-          <Text style={styles.titleText}>Find Products</Text>
           <Searchbar
-            placeholder='Search Store'
+            placeholder="Search Store"
             onChangeText={onChangeSearch}
             value={searchQuery}
             style={styles.searchBar}
             clearIcon={() => (
-              <MaterialIcons name='clear' size={20} color='black' />
+              <MaterialIcons name="clear" size={20} color="black" />
             )}
-            icon={() => <MaterialIcons name='search' size={20} color='black' />}
+            icon={() => <MaterialIcons name="search" size={20} color="black" />}
             inputStyle={[
               { fontFamily: "gilroy-bold" },
               { fontSize: 13 },
@@ -52,8 +55,6 @@ const styles = StyleSheet.create({
   searchContainer: {
     alignItems: "center",
     width: "100%",
-    height: Dimensions.get("window").height * 0.3,
-    paddingTop: "10%",
   },
   titleText: {
     fontFamily: "gilroy-bold",
@@ -65,6 +66,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#F2F3F2",
     borderRadius: 15,
     marginVertical: "5%",
+  },
+  titleTextContainer: {
+    alignItems: "center",
+    width: "100%",
+    borderBottomColor: Colors.grayWhite,
+    borderBottomWidth: 1,
+    backgroundColor: "white",
+    paddingVertical: 20,
   },
 });
 export default Explore;
