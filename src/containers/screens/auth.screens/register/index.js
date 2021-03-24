@@ -1,5 +1,11 @@
 import React, { memo, useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import Background from "../../../../components/auth.components/Background";
 import Logo from "../../../../components/Logo";
 import Header from "../../../../components/Header";
@@ -31,7 +37,9 @@ const RegisterScreen = ({ navigation }) => {
   const [phone, setPhone] = useState({ value: "", error: "" });
   const [address, setAddress] = useState({ value: "", error: "" });
 
-  const { errorRegister, isRegister } = useSelector((state) => state.auth);
+  const { errorRegister, isRegister, isAuthLoading } = useSelector(
+    (state) => state.auth,
+  );
 
   const _onSignUpPressed = () => {
     const nameError = nameValidator(name.value);
@@ -135,8 +143,18 @@ const RegisterScreen = ({ navigation }) => {
       <Button
         mode='contained'
         style={{ backgroundColor: theme.colors.primary }}
-        onPress={_onSignUpPressed}>
-        <Text style={styles.text}>Sign Up</Text>
+        onPress={_onSignUpPressed}
+        disabled={isAuthLoading}>
+        {isAuthLoading ? (
+          <ActivityIndicator
+            style={{ opacity: 1 }}
+            animating={true}
+            size='small'
+            color='#fff'
+          />
+        ) : (
+          <Text style={styles.text}>Register</Text>
+        )}
       </Button>
 
       <View style={styles.row}>
