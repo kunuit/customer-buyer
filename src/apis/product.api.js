@@ -12,10 +12,11 @@ const url = "/product";
 //   return axiosService.get(`${API_ENDPOINT}${url}${queryParams}`);
 // };
 
-export const getProductsAPI = () => {
-  return axiosService.get(`http://localhost:3000/product`);
+export const getProductsAPI = (token) => {
+  console.log(token, "check token");
+  return axiosService.getWithToken(`http://localhost:3000/product`, token);
 };
 
-export const addProductAPI = (data) => {
-  return axiosService.post(`${API_ENDPOINT}${url}`, data);
+export const addProductAPI = (data, token) => {
+  return axiosService.postWithToken(`${API_ENDPOINT}${url}`, data, token);
 };

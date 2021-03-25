@@ -1,8 +1,10 @@
 const initState = {
   dataCustomer: null,
   token: null,
+  refreshToken: null,
   isLogin: false,
   isRegister: false,
+  errorRefreshToken: null,
   errorLogin: null,
   errorRegister: null,
   isAuthLoading: false,
@@ -17,6 +19,8 @@ import {
   RESET_REGISTER,
   SHOW_AUTH_LOADING,
   HIDE_AUTH_LOADING,
+  REFRESH_TOKEN_SUCCESS,
+  REFRESH_TOKEN_FAIL,
 } from "../constants/auth.constants";
 
 const reducer = (state = initState, action) => {
@@ -41,6 +45,7 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         token: action.payload.data.token,
+        refreshToken: action.payload.data.refreshToken,
         dataCustomer: action.payload.data,
         isLogin: true,
       };
@@ -66,6 +71,16 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         isAuthLoading: false,
+      };
+    case REFRESH_TOKEN_SUCCESS:
+      return {
+        ...state,
+        token: action.payload.data.accessToken,
+      };
+    case REFRESH_TOKEN_FAIL:
+      return {
+        ...state,
+        errorRefreshToken: action.payload.error,
       };
     default:
       return state;

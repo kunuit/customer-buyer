@@ -9,6 +9,8 @@ import {
   RESET_REGISTER,
   SHOW_AUTH_LOADING,
   HIDE_AUTH_LOADING,
+  REFRESH_TOKEN_SUCCESS,
+  REFRESH_TOKEN_FAIL,
 } from "../constants/auth.constants";
 
 // import { STATUSES } from "../constants";
@@ -89,5 +91,23 @@ export const showAuthLoadingACT = () => {
 export const hideAuthLoadingACT = () => {
   return {
     type: HIDE_AUTH_LOADING,
+  };
+};
+
+export const refreshTokenSuccessACT = (data) => {
+  return {
+    type: REFRESH_TOKEN_SUCCESS,
+    payload: {
+      data,
+    },
+  };
+};
+
+export const refreshTokenFailACT = (error) => {
+  return {
+    type: REFRESH_TOKEN_FAIL,
+    payload: {
+      error,
+    },
   };
 };

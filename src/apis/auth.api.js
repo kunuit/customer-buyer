@@ -2,20 +2,16 @@
 import axiosService from "../common/axiosService";
 import { API_ENDPOINT } from "../constants/product.constants";
 
-// const url = "/product";
-
-// export const getList = (params = {}) => {
-//   let queryParams = '';
-//   if (Object.keys(params).length > 0) {
-//     queryParams = `?${qs.stringify(params)}`;
-//   }
-//   return axiosService.get(`${API_ENDPOINT}${url}${queryParams}`);
-// };
+const route = "customer";
 
 export const loginAPI = (data) => {
-  return axiosService.post(`${API_ENDPOINT}/customer/login`, data);
+  return axiosService.post(`${API_ENDPOINT}/${route}/login`, data);
 };
 
 export const registerAPI = (data) => {
-  return axiosService.post(`${API_ENDPOINT}/customer/register`, data);
+  return axiosService.post(`${API_ENDPOINT}/${route}/register`, data);
+};
+
+export const refreshTokenAPI = (data) => {
+  return axiosService.post(`${API_ENDPOINT}/${route}/refreshToken`, data);
 };
