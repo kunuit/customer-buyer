@@ -55,8 +55,7 @@ const CartScreen = () => {
           width: "90%",
           position: "absolute",
           bottom: Dimensions.get("window").height * 0.08,
-        }}
-      >
+        }}>
         <Text style={{ color: "white", fontFamily: "gilroy-bold" }}>
           Go to Checkout
         </Text>

@@ -21,8 +21,25 @@ class AxiosService {
     return this.instance.get(url);
   }
 
+  getWithToken(url, token) {
+    console.log(url, token, "check api");
+    return this.instance.get(url, {
+      headers: {
+        authorization: "Bearer " + token,
+      },
+    });
+  }
+
   post(url, body) {
     return this.instance.post(url, body);
+  }
+
+  postWithToken(url, body, token) {
+    return this.instance.post(url, body, {
+      headers: {
+        authorization: "Bearer " + token, //the token is a variable which holds the token
+      },
+    });
   }
 
   put(url, body) {
