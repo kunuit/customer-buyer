@@ -8,13 +8,16 @@ import {
   RegisterScreen,
 } from "../../screens/auth.screens";
 import { useSelector } from "react-redux";
+import { createStackNavigator } from "@react-navigation/stack";
 
-const TabTop = createMaterialTopTabNavigator();
+// const TabTop = createMaterialTopTabNavigator();
+
+const TabTop = createStackNavigator();
 
 const TabProfile = () => {
   const { isLogin } = useSelector((state) => state.auth);
   return (
-    <TabTop.Navigator tabBar={() => null}>
+    <TabTop.Navigator headerMode='none'>
       {isLogin ? (
         <TabTop.Screen name='ProfileMain' component={Profile} />
       ) : (
