@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Colors from "../../constants/colors";
+import Colors from "../constants/colors";
 import {
   View,
   StyleSheet,
@@ -17,13 +17,13 @@ const CardItem = (props) => {
           style={styles.cardImage}
           source={{
             uri:
-              "https://lh3.googleusercontent.com/proxy/Bo2jK1aYpGE29Lz8FIMuAY8yuwFZhOCeETa0ep5cXgZDBG07Hc5tcbQ5hij_46D4F_lK9WFf7IXtDr0tI3GagCOq3H46d480sgf8kQ",
+              "https://i.pinimg.com/originals/eb/d4/de/ebd4deb64c74e2f1246626d5a290274d.png",
           }}
         />
       </View>
       <View style={styles.cardDetailContainer}>
         <Text numberOfLines={2} style={styles.titleText}>
-          Organic Bananas asdasd
+          {`Straw berry ${props.item}`}
         </Text>
         <Text style={styles.descriptionText}>7pcs, Price</Text>
       </View>
@@ -33,9 +33,8 @@ const CardItem = (props) => {
           style={{
             backgroundColor: Colors.green,
             borderColor: Colors.grayWhite,
-          }}
-        >
-          <Entypo name="plus" size={17} color="white" />
+          }}>
+          <Entypo name='plus' size={17} color='white' />
         </RoundedButton>
       </View>
     </View>
@@ -44,13 +43,14 @@ const CardItem = (props) => {
 const styles = StyleSheet.create({
   cardContainer: {
     padding: 10,
-    width: "43%",
+    width: "100%",
     height: 250,
     borderColor: Colors.gray,
     borderRadius: 20,
     borderWidth: 1,
   },
   cardImageContainer: {
+    marginBottom: 20,
     height: "45%",
   },
   cardImage: {
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   cardDetailContainer: {
-    height: "30%",
+    flexGrow: 1,
     alignItems: "flex-start",
   },
   titleText: {

@@ -1,13 +1,13 @@
-import React, { memo, useState } from 'react';
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { emailValidator } from '../../../../common/validation';
-import Background from '../../../../components/auth.components/Background';
+import React, { memo, useState } from "react";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
+import { emailValidator } from "../../../../common/validation";
+import Background from "../../../../components/auth.components/Background";
 // import BackButton from '../../../components/BackButton';
-import Logo from '../../../../components/Logo';
-import Header from '../../../../components/Header';
-import TextInput from '../../../../components/TextInput';
-import { theme } from '../../../../common/theme';
-import Button from '../../../../components/Button';
+import Logo from "../../../../components/Logo";
+import Header from "../../../../components/Header";
+import TextInput from "../../../../components/TextInput";
+import { theme } from "../../../../common/theme";
+import Button from "../../../../components/Button";
 // import { Navigation } from '../types';
 
 // type Props = {
@@ -15,7 +15,7 @@ import Button from '../../../../components/Button';
 // };
 
 const ForgotPasswordScreen = ({ navigation }) => {
-  const [email, setEmail] = useState({ value: '', error: '' });
+  const [email, setEmail] = useState({ value: "", error: "" });
 
   const _onSendPressed = () => {
     const emailError = emailValidator(email.value);
@@ -25,12 +25,11 @@ const ForgotPasswordScreen = ({ navigation }) => {
       return;
     }
 
-    navigation.navigate('LoginScreen');
+    navigation.navigate("LoginScreen");
   };
 
   return (
     <Background>
-
       <Logo />
 
       <Header>Restore Password</Header>
@@ -39,7 +38,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
         label='E-mail address'
         returnKeyType='done'
         value={email.value}
-        onChangeText={(text) => setEmail({ value: text, error: '' })}
+        onChangeText={(text) => setEmail({ value: text, error: "" })}
         error={!!email.error}
         errorText={email.error}
         autoCapitalize='none'
@@ -52,14 +51,12 @@ const ForgotPasswordScreen = ({ navigation }) => {
         mode='contained'
         style={{ backgroundColor: theme.colors.primary }}
         onPress={_onSendPressed}>
-          <Text style={styles.text}>
-            Send Reset Instructions
-          </Text>
+        <Text style={styles.text}>Send Reset Instructions</Text>
       </Button>
 
       <TouchableOpacity
         style={styles.back}
-        onPress={() => navigation.navigate('LoginScreen')}>
+        onPress={() => navigation.navigate("LoginScreen")}>
         <Text style={styles.label}>← Back to login</Text>
       </TouchableOpacity>
     </Background>
@@ -68,7 +65,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   back: {
-    width: '100%',
+    width: "100%",
     marginTop: 12,
   },
   button: {
@@ -76,14 +73,14 @@ const styles = StyleSheet.create({
   },
   label: {
     color: theme.colors.secondary,
-    width: '100%',
-    fontFamily: 'gilroy-bold',
+    width: "100%",
+    fontFamily: "gilroy-bold",
   },
   text: {
-    fontFamily: 'gilroy-bold',
+    fontFamily: "gilroy-bold",
     fontSize: 15,
     color: theme.backgrounds.white,
-  }
+  },
 });
 
 export default memo(ForgotPasswordScreen);

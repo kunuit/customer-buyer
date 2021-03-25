@@ -1,24 +1,38 @@
-import React, { memo, useState } from 'react';
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { memo, useEffect, useState } from "react";
+import {
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+} from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
-import Background from '../../../../components/auth.components/Background';
-import Logo from '../../../../components/Logo';
-import Header from '../../../../components/Header';
-import Button from '../../../../components/Button';
-import TextInput from '../../../../components/TextInput';
-import { theme } from '../../../../common/theme';
-import { emailValidator, passwordValidator } from '../../../../common/validation';
-import * as authStyle from '../../../../constants/auth.constants';
+import Background from "../../../../components/auth.components/Background";
+import Logo from "../../../../components/Logo";
+import Header from "../../../../components/Header";
+import Button from "../../../../components/Button";
+import TextInput from "../../../../components/TextInput";
+import { theme } from "../../../../common/theme";
+import {
+  emailValidator,
+  infoValidator,
+  passwordValidator,
+} from "../../../../common/validation";
+import * as authStyle from "../../../../constants/auth.constants";
 
+import { loginACT } from "../../../../actions/auth.action";
+import TextError from "../../../../components/TextError";
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState({ value: '', error: '' });
-  const [password, setPassword] = useState({ value: '', error: '' });
+  const [email, setEmail] = useState({ value: "", error: "" });
+  const [password, setPassword] = useState({ value: "", error: "" });
+
+  const { errorLogin, isAuthLoading } = useSelector((state) => state.auth);
 
   const _onLoginPressed = () => {
-    const emailError = emailValidator(email.value);
+    const emailError = infoValidator(email.value);
     const passwordError = passwordValidator(password.value);
 
     if (emailError || passwordError) {
@@ -27,22 +41,23 @@ const LoginScreen = ({ navigation }) => {
       return;
     }
 
-    dispatch({ type: authStyle.IS_LOGIN, payload: 'abc' });
-
+    //! dispatch to check loginACT
+    dispatch(loginACT({ info: email.value, password: password.value }));
   };
 
   return (
     <Background>
-
       <Logo />
 
       <Header>Welcome back.</Header>
 
+      {errorLogin ? <TextError error={errorLogin} /> : <></>}
+
       <TextInput
-        label='Email'
+        label='Email or Username'
         returnKeyType='next'
         value={email.value}
-        onChangeText={(text) => setEmail({ value: text, error: '' })}
+        onChangeText={(text) => setEmail({ value: text, error: "" })}
         error={!!email.error}
         errorText={email.error}
         autoCapitalize='none'
@@ -55,7 +70,7 @@ const LoginScreen = ({ navigation }) => {
         label='Password'
         returnKeyType='done'
         value={password.value}
-        onChangeText={(text) => setPassword({ value: text, error: '' })}
+        onChangeText={(text) => setPassword({ value: text, error: "" })}
         error={!!password.error}
         errorText={password.error}
         secureTextEntry
@@ -63,7 +78,7 @@ const LoginScreen = ({ navigation }) => {
 
       <View style={styles.forgotPassword}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('ForgotPasswordScreen')}>
+          onPress={() => navigation.navigate("ForgotPasswordScreen")}>
           <Text style={styles.label}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
@@ -71,16 +86,24 @@ const LoginScreen = ({ navigation }) => {
       <Button
         mode='contained'
         style={{ backgroundColor: theme.colors.primary }}
-        onPress={_onLoginPressed}>
-          <Text style={styles.text}>
-            Login
-          </Text>
+        onPress={_onLoginPressed}
+        disabled={isAuthLoading}>
+        {isAuthLoading ? (
+          <ActivityIndicator
+            style={{ opacity: 1 }}
+            animating={true}
+            size='small'
+            color='#fff'
+          />
+        ) : (
+          <Text style={styles.text}>Login</Text>
+        )}
       </Button>
 
       <View style={styles.row}>
         <Text style={styles.label}>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
-          <Text style={styles.link}>Sign up</Text>
+        <TouchableOpacity onPress={() => navigation.navigate("RegisterScreen")}>
+          <Text style={styles.link}>Register</Text>
         </TouchableOpacity>
       </View>
     </Background>
@@ -89,27 +112,27 @@ const LoginScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   forgotPassword: {
-    width: '100%',
-    alignItems: 'flex-end',
+    width: "100%",
+    alignItems: "flex-end",
     marginBottom: 24,
   },
   row: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 4,
   },
   label: {
     color: theme.colors.secondary,
-    fontFamily: 'gilroy-light'
+    fontFamily: "gilroy-light",
   },
   link: {
     color: theme.colors.primary,
-    fontFamily: 'gilroy-bold'
+    fontFamily: "gilroy-bold",
   },
   text: {
-    fontFamily: 'gilroy-bold',
+    fontFamily: "gilroy-bold",
     fontSize: 15,
     color: theme.backgrounds.white,
-  }
+  },
 });
 
 export default memo(LoginScreen);

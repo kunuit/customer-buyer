@@ -2,7 +2,7 @@ import React from 'react';
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import RoundedButton from "../RoundedButton";
 import {View, StyleSheet, Text, } from 'react-native';
-import Colors from "../../../constants/colors";
+import Colors from "../../constants/colors";
 
 class QuantityAjustContainer extends React.Component {
     constructor(props) {

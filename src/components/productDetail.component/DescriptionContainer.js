@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import {View, StyleSheet, Text, } from 'react-native';
 import RoundedButton from '../RoundedButton'

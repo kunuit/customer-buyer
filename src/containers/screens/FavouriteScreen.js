@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import {
   Dimensions,
   View,
@@ -9,7 +8,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import Button from "../../components/Button";
-import CartItem from "../../components/CartItem";
+import FavouriteItem from "../../components/FavouriteItem";
 import Colors from "../../constants/colors";
 const Line = () => {
   return (
@@ -22,29 +21,20 @@ const Line = () => {
   );
 };
 const CartScreen = () => {
-  const { products } = useSelector((state) => state);
-  const dispatch = useDispatch();
-  const dispatchGetAllProducts = () =>
-    dispatch({
-      type: "FETCH_PRODUCTS",
-    });
-  useEffect(() => {
-    dispatchGetAllProducts();
-  }, []);
   const fakeData = [1, 2, 3, 4, 5, 6, 7];
   return (
     <View style={styles.container}>
       <View style={styles.titleTextContainer}>
-        <Text style={styles.titleText}>My Cart</Text>
+        <Text style={styles.titleText}>Favourite</Text>
       </View>
       <FlatList
         style={styles.listCartItemContainer}
         showsVerticalScrollIndicator={false}
-        data={products.data}
-        keyExtractor={(item, index) => index.toString()}
+        data={fakeData}
+        keyExtractor={(item, index) => item.toString()}
         renderItem={({ item }) => (
           <View>
-            <CartItem product={item} />
+            <FavouriteItem />
             <Line />
           </View>
         )}
@@ -58,7 +48,7 @@ const CartScreen = () => {
         }}
       >
         <Text style={{ color: "white", fontFamily: "gilroy-bold" }}>
-          Go to Checkout
+          Add All To Cart
         </Text>
       </Button>
     </View>
@@ -82,9 +72,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     backgroundColor: "white",
     paddingVertical: 20,
+    alignItems: "center",
   },
   titleText: {
-    textAlign: "center",
     fontSize: 18,
     fontFamily: "gilroy-bold",
   },
