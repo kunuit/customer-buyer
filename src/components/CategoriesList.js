@@ -31,31 +31,7 @@ const CategoriesList = (props) => {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={styles.cardItemContainer}>
-            <Button
-              style={[
-                styles.cardContainer,
-                {
-                  backgroundColor: `${item.itemColor}`,
-                  borderColor: `${item.itemColor}`,
-                },
-              ]}
-            >
-              <View style={{ flex: 1 }}>
-                <View style={styles.cardImageContainer}>
-                  <Image
-                    style={styles.cardImage}
-                    source={{
-                      uri: `${item.itemImage}`,
-                    }}
-                  />
-                </View>
-                <View style={styles.cardDetailContainer}>
-                  <Text numberOfLines={2} style={styles.titleText}>
-                    {item.nameItem}
-                  </Text>
-                </View>
-              </View>
-            </Button>
+            <CategoryItem item={item} />
           </View>
         )}
       />
