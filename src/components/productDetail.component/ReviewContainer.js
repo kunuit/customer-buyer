@@ -1,62 +1,29 @@
 import React from 'react';
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import {View, StyleSheet, Text, } from 'react-native';
-import RoundedButton from '../RoundedButton'
-class ReviewContainer extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            name: 'right',
-            productReview: '',
-            isExtend: false,
-        }
-    }
-    extend = () => {
-        const productReview = 'Love you guys kong and kun'
-        if (!this.state.isExtend) {
-            this.setState({
-                'name': 'down',
-                'productReview': productReview,
-                'isExtend': true,
-            })
-        } else {
-            this.setState({
-                'name': 'right',
-                'productReview': '',
-                'isExtend': false,
-            })
-        }
-    }
-    render() {
-        return (
-            <View style={styles.reviewContainer}>
-                <View style={styles.reviewTittleContainer}>
-                    <Text style={styles.reviewTittle}>Review</Text>
-                    <View style={styles.ratingContainer}>
-                        <View style={styles.star}>
-                            <AntDesign onPress={() => console.log('star1Clicked')} name="star" size={18} color="#F3603F" />
-                            <AntDesign onPress={() => console.log('star2Clicked')} name="star" size={18} color="#F3603F" />
-                            <AntDesign onPress={() => console.log('star3Clicked')} name="star" size={18} color="#F3603F" />
-                            <AntDesign onPress={() => console.log('star4Clicked')} name="star" size={18} color="#F3603F" />
-                            <AntDesign onPress={() => console.log('star5Clicked')} name="star" size={18} color="#F3603F" />
-                        </View>
-                        <RoundedButton style={styles.buttonExtend} onPress={this.extend}>
-                            <AntDesign name={this.state.name} size={24} color="black" />
-                        </RoundedButton>
-                    </View>
+
+const ReviewContainer = () => {
+    return (
+        <View style={styles.reviewContainer}>
+            <Text style={styles.reviewTittle}>Review</Text>
+            <View style={styles.ratingContainer}>
+                <View style={styles.star}>
+                    <AntDesign onPress={() => console.log('star1Clicked')} name="star" size={18} color="#F3603F" />
+                    <AntDesign onPress={() => console.log('star2Clicked')} name="star" size={18} color="#F3603F" />
+                    <AntDesign onPress={() => console.log('star3Clicked')} name="star" size={18} color="#F3603F" />
+                    <AntDesign onPress={() => console.log('star4Clicked')} name="star" size={18} color="#F3603F" />
+                    <AntDesign onPress={() => console.log('star5Clicked')} name="star" size={18} color="#F3603F" />
                 </View>
-                <Text numberOfLines={3} style={styles.reviewText}>{this.state.productReview}</Text>
+                <AntDesign name="right" size={24} color="black" />
             </View>
-        )
-    }
+        </View>
+    )
 }
 const styles = StyleSheet.create({
     reviewContainer: {
         marginHorizontal: "5%",
         borderTopWidth: 1,
         borderTopColor: "rgba(226, 226, 226, 0.7)",
-    },
-    reviewTittleContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
@@ -81,15 +48,6 @@ const styles = StyleSheet.create({
         marginRight: "15%",
         paddingVertical: "5%",
     },
-    buttonExtend: {
-        borderWidth: 0,
-    },
-    reviewText: {
-        fontFamily: "gilroy-light",
-        fontSize: 14,
-        color: "#7C7C7C",
-        paddingBottom: "5%",
-    }
 })
 
 export default ReviewContainer;
