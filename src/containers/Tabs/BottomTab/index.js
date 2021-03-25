@@ -57,7 +57,7 @@ const BottomTab = () => {
       />
       <Tab.Screen
         name="Explore"
-        component={Explore}
+        component={ProductDetail}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <MaterialCommunityIcons
