@@ -41,6 +41,7 @@ const CategoriesList = (props) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: "white",
     width: "95%",
     margin: "auto",

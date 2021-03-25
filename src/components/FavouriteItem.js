@@ -5,6 +5,7 @@ import {
   Text,
   Image,
   TouchableWithoutFeedback,
+  TouchableOpacity,
 } from "react-native";
 import RoundedButton from "./RoundedButton";
 import { Dimensions } from "react-native";
@@ -12,7 +13,7 @@ import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import Colors from "../constants/colors";
 const FavouriteItem = () => {
   return (
-    <View style={styles.cartItemContainer}>
+    <TouchableOpacity style={styles.cartItemContainer}>
       <View style={styles.cartImageContainer}>
         <Image
           style={styles.cartImage}
@@ -29,13 +30,13 @@ const FavouriteItem = () => {
       </View>
       <View style={styles.cartAmount}>
         <Text style={styles.titleText}>$1.50</Text>
-        <TouchableWithoutFeedback>
+        <TouchableOpacity>
           <View>
             <AntDesign name="right" size={20} color="black" />
           </View>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({

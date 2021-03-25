@@ -5,6 +5,7 @@ import {
   Text,
   Image,
   TouchableWithoutFeedback,
+  TouchableOpacity,
 } from "react-native";
 import RoundedButton from "./RoundedButton";
 import { Dimensions } from "react-native";
@@ -13,7 +14,7 @@ import Colors from "../constants/colors";
 const CartItem = (props) => {
   const { urlImages } = props.product;
   return (
-    <View style={styles.cartItemContainer}>
+    <TouchableOpacity style={styles.cartItemContainer}>
       <View style={styles.cartImageContainer}>
         <Image
           style={styles.cartImage}
@@ -33,35 +34,35 @@ const CartItem = (props) => {
         </View>
         <View style={styles.quantityAjustContainer}>
           <RoundedButton>
-            <Entypo name='minus' size={17} color={Colors.gray} />
+            <Entypo name="minus" size={17} color={Colors.gray} />
           </RoundedButton>
           <View style={{ marginLeft: 12, marginRight: 12 }}>
             <Text style={(styles.titleText, { fontSize: 16 })}>1</Text>
           </View>
           <RoundedButton>
             <Entypo
-              name='plus'
+              name="plus"
               size={17}
-              color='white'
+              color="white"
               style={styles.buttonClickable}
             />
           </RoundedButton>
         </View>
       </View>
       <View style={styles.cartAmount}>
-        <TouchableWithoutFeedback>
+        <TouchableOpacity>
           <View>
             <AntDesign
-              name='close'
+              name="close"
               style={{ paddingVertical: 5, paddingHorizontal: 5 }}
-              size={16}
-              color='black'
+              size={20}
+              color="black"
             />
           </View>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
         <Text style={styles.titleText}>$4.99</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({

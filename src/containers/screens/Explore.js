@@ -22,27 +22,25 @@ const Explore = () => {
       <View style={styles.titleTextContainer}>
         <Text style={styles.titleText}>Find Products</Text>
       </View>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.searchContainer}>
-          <Searchbar
-            placeholder="Search Store"
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-            style={styles.searchBar}
-            clearIcon={() => (
-              <MaterialIcons name="clear" size={20} color="black" />
-            )}
-            icon={() => <MaterialIcons name="search" size={20} color="black" />}
-            inputStyle={[
-              { fontFamily: "gilroy-bold" },
-              { fontSize: 13 },
-              { borderWidth: 0 },
-            ]}
-            on
-          />
-        </View>
-        {searchQuery == "" ? <CategoriesList /> : <ListCardItem />}
-      </ScrollView>
+      <View style={styles.searchContainer}>
+        <Searchbar
+          placeholder="Search Store"
+          onChangeText={onChangeSearch}
+          value={searchQuery}
+          style={styles.searchBar}
+          clearIcon={() => (
+            <MaterialIcons name="clear" size={20} color="black" />
+          )}
+          icon={() => <MaterialIcons name="search" size={20} color="black" />}
+          inputStyle={[
+            { fontFamily: "gilroy-bold" },
+            { fontSize: 13 },
+            { borderWidth: 0 },
+          ]}
+          on
+        />
+      </View>
+      {searchQuery == "" ? <CategoriesList /> : <ListCardItem />}
     </SafeAreaView>
   );
 };
@@ -50,6 +48,7 @@ const Explore = () => {
 const styles = StyleSheet.create({
   exploreContainer: {
     flex: 1,
+    alignItems: "center",
     backgroundColor: "white",
   },
   searchContainer: {
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
     width: "90%",
     backgroundColor: "#F2F3F2",
     borderRadius: 15,
-    marginVertical: "5%",
+    marginVertical: "3%",
   },
   titleTextContainer: {
     alignItems: "center",

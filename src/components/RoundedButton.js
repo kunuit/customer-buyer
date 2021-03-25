@@ -1,13 +1,13 @@
 import React from "react";
-import { View, StyleSheet, TouchableWithoutFeedback, Text } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import Colors from "../constants/colors";
 const Button = (props) => {
   return (
-    <TouchableWithoutFeedback onPress={props.onPress}>
+    <TouchableOpacity onPress={props.onPress}>
       <View style={[styles.button, props.style]}>
         <Text style={{ textAlign: "center" }}>{props.children}</Text>
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({

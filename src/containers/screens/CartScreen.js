@@ -40,7 +40,7 @@ const CartScreen = () => {
       <FlatList
         style={styles.listCartItemContainer}
         showsVerticalScrollIndicator={false}
-        data={products.data}
+        data={fakeData}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View>

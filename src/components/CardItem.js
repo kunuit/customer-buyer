@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Colors from "../constants/colors";
-import {
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import RoundedButton from "../components/RoundedButton";
 const CardItem = (props) => {
   return (
-    <View style={styles.cardContainer}>
+    <TouchableOpacity style={styles.cardContainer}>
       <View style={styles.cardImageContainer}>
         <Image
           style={styles.cardImage}
@@ -33,11 +27,12 @@ const CardItem = (props) => {
           style={{
             backgroundColor: Colors.green,
             borderColor: Colors.grayWhite,
-          }}>
-          <Entypo name='plus' size={17} color='white' />
+          }}
+        >
+          <Entypo name="plus" size={17} color="white" />
         </RoundedButton>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({

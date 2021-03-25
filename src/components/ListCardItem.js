@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
     paddingBottom: Dimensions.get("window").height * 0.09,
   },
   cardItemContainer: {
-    padding: 5,
-    flexBasis: "50%",
+    margin: 10,
+    flex: 1,
   },
 });
 
