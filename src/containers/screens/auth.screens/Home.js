@@ -1,19 +1,23 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import Background from "../../../components/auth.components/Background";
 import Logo from "../../../components/Logo";
 import Button from "../../../components/Button";
 import { StyleSheet, Text } from "react-native";
 import { theme } from "../../../common/theme";
 import { useDispatch, useSelector } from "react-redux";
-import { resetRegisterACT } from "../../../actions/auth.action";
+import {
+  resetRegisterACT,
+  switchIsAdminACT,
+} from "../../../actions/auth.action";
+import SwitchInput from "../../../components/SwitchInput";
 
 const HomeScreen = ({ navigation }) => {
-  const { isRegister } = useSelector((state) => state.auth);
+  const { isRegister, isAdmin } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  // if (isRegister) {
-  //   dispatch(resetRegisterACT());
-  // }
+  const onToggleSwitch = () => {
+    dispatch(switchIsAdminACT());
+  };
 
   return (
     <Background>
@@ -41,6 +45,7 @@ const HomeScreen = ({ navigation }) => {
           Register
         </Text>
       </Button>
+      <SwitchInput name='Admin' value={isAdmin} handleSwitch={onToggleSwitch} />
     </Background>
   );
 };

@@ -16,7 +16,8 @@ import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 
 import CardItem from "./src/components/CardItem";
-import BottomTab from "./src/containers/Tabs/BottomTab";
+import MainUX from "./src/containers/Tabs/BottomTab/mainUX";
+import AdminUX from "./src/containers/Tabs/BottomTab/adminUX";
 import { theme } from "./src/common/theme";
 import reducers from "./src/reducers";
 
@@ -40,6 +41,8 @@ const store = createStore(reducers, composeEnhancersRNDebugger(...enhancers));
 sagaMiddleware.run(rootSaga);
 
 function App() {
+  const { isAdminLogin } = useSelector((state) => state.auth);
+  console.log(isAdminLogin, "check in app");
   let [fontsLoaded] = useFonts({
     "gilroy-medium": require("./assets/fonts/Gilroy-Medium.ttf"),
     "gilroy-light": require("./assets/fonts/Gilroy-Light.otf"),
@@ -47,12 +50,17 @@ function App() {
     "gilroy-semiBold": require("./assets/fonts/Gilroy-SemiBold.ttf"),
   });
   if (!fontsLoaded) return <View />;
+
   return (
     <View style={styles.container}>
-      <Router.Navigator initialRouteName="MainUX" headerMode="none">
-        <Router.Screen name="MainUX" component={BottomTab} />
-        <Router.Screen name="asd" component={BottomTab} />
-      </Router.Navigator>
+      {/* <Router.Navigator headerMode='none'>
+        {isAdminLogin ? (
+          <Router.Screen name='AdminUX' component={AdminUX} />
+        ) : (
+          <Router.Screen name='MainUX' component={MainUX} />
+        )}
+      </Router.Navigator> */}
+      {isAdminLogin ? <AdminUX /> : <MainUX />}
     </View>
   );
 }
