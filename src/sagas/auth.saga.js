@@ -1,5 +1,5 @@
-import { takeEvery, put, call, takeLatest } from "redux-saga/effects";
-import { loginAPI, registerAPI } from "../apis/auth.api";
+import { takeEvery, put, call, takeLatest, select } from "redux-saga/effects";
+import { loginAdminAPI, loginAPI, registerAPI } from "../apis/auth.api";
 
 import { LOGIN, REGISTER } from "../constants/auth.constants";
 import {
@@ -12,12 +12,17 @@ import {
 } from "../actions/auth.action";
 
 function* loginSaga({ payload }) {
+  // get is customer or admin login
+  const { isAdmin } = yield select((state) => state.auth);
   // show loading and block button
   yield put(showAuthLoadingACT());
   //call api
-  const loginRes = yield call(loginAPI, payload.data);
+  const loginRes = isAdmin ? loginAdminAPI() : loginAPI();
+  // ? yield call(loginAPI, payload.data)
+  // : yield call(loginAdminAPI, payload.data);
 
   const { data, statusCode } = loginRes.data;
+
   if (statusCode == 200) {
     // go to my profile
     yield put(loginSuccessACT(data));

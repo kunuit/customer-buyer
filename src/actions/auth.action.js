@@ -11,6 +11,7 @@ import {
   HIDE_AUTH_LOADING,
   REFRESH_TOKEN_SUCCESS,
   REFRESH_TOKEN_FAIL,
+  SWITCH_IS_ADMIN,
 } from "../constants/auth.constants";
 
 // import { STATUSES } from "../constants";
@@ -109,5 +110,11 @@ export const refreshTokenFailACT = (error) => {
     payload: {
       error,
     },
+  };
+};
+
+export const switchIsAdminACT = () => {
+  return {
+    type: SWITCH_IS_ADMIN,
   };
 };

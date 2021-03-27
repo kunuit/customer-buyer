@@ -15,8 +15,7 @@ const ProductDetailImageContainer = () => {
         showsButtons={false}
         autoplay={true}
         autoplayTimeout={4}
-        activeDot={<View style={styles.activeDot} />}
-      >
+        activeDot={<View style={styles.activeDot} />}>
         {images.map((item, index) => (
           <Image
             key={index}

@@ -8,6 +8,8 @@ const initState = {
   errorLogin: null,
   errorRegister: null,
   isAuthLoading: false,
+  isAdmin: false,
+  isAdminLogin: false,
 };
 
 import {
@@ -21,6 +23,7 @@ import {
   HIDE_AUTH_LOADING,
   REFRESH_TOKEN_SUCCESS,
   REFRESH_TOKEN_FAIL,
+  SWITCH_IS_ADMIN,
 } from "../constants/auth.constants";
 
 const reducer = (state = initState, action) => {
@@ -46,7 +49,9 @@ const reducer = (state = initState, action) => {
         ...state,
         token: action.payload.data.token,
         refreshToken: action.payload.data.refreshToken,
-        dataCustomer: action.payload.data,
+        dataCustomer: state.isAdmin ? null : action.payload.data,
+        dataAdmin: state.isAdmin ? action.payload.data : null,
+        isAdminLogin: state.isAdmin ? true : false,
         isLogin: true,
       };
     case LOGIN_FAIL:
@@ -59,8 +64,11 @@ const reducer = (state = initState, action) => {
         ...state,
         token: null,
         isLogin: false,
+        isAdminLogin: false,
         errorLogin: null,
         dataCustomer: null,
+        dataAdmin: null,
+        isAdmin: false,
       };
     case SHOW_AUTH_LOADING:
       return {
@@ -81,6 +89,11 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         errorRefreshToken: action.payload.error,
+      };
+    case SWITCH_IS_ADMIN:
+      return {
+        ...state,
+        isAdmin: !state.isAdmin,
       };
     default:
       return state;

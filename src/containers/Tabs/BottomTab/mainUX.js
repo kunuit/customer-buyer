@@ -20,7 +20,7 @@ import ListCardItem from "../../../components/ListCardItem";
 
 const Tab = createBottomTabNavigator();
 
-const BottomTab = () => {
+const MainUX = () => {
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -39,16 +39,15 @@ const BottomTab = () => {
         },
         showIcon: true,
         showLabel: true,
-      }}
-    >
+      }}>
       <Tab.Screen
-        name="Shop"
+        name='Shop'
         component={Profile}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <Fontisto
-              name="shopping-store"
+              name='shopping-store'
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -56,12 +55,12 @@ const BottomTab = () => {
         }}
       />
       <Tab.Screen
-        name="Explore"
+        name='Explore'
         component={ProductDetail}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <MaterialCommunityIcons
-              name="briefcase-search-outline"
+              name='briefcase-search-outline'
               size={24}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -69,13 +68,13 @@ const BottomTab = () => {
         }}
       />
       <Tab.Screen
-        name="Cart"
+        name='Cart'
         component={Cart}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <Zocial
-              name="cart"
+              name='cart'
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -83,13 +82,13 @@ const BottomTab = () => {
         }}
       />
       <Tab.Screen
-        name="Favorite"
+        name='Favorite'
         component={Favorite}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <MaterialIcons
-              name="favorite-outline"
+              name='favorite-outline'
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -97,13 +96,13 @@ const BottomTab = () => {
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name='Profile'
         component={TabProfile}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <MaterialCommunityIcons
-              name="face-profile"
+              name='face-profile'
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -114,4 +113,4 @@ const BottomTab = () => {
   );
 };
 
-export default BottomTab;
+export default MainUX;
