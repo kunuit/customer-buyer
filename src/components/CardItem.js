@@ -3,7 +3,9 @@ import Colors from "../constants/colors";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import RoundedButton from "../components/RoundedButton";
+import { useSelector } from "react-redux";
 const CardItem = (props) => {
+  const { isAdminLogin } = useSelector((state) => state.auth);
   return (
     <TouchableOpacity style={styles.cardContainer}>
       <View style={styles.cardImageContainer}>
@@ -27,9 +29,12 @@ const CardItem = (props) => {
           style={{
             backgroundColor: Colors.green,
             borderColor: Colors.grayWhite,
-          }}
-        >
-          <Entypo name="plus" size={17} color="white" />
+          }}>
+          <Entypo
+            name={isAdminLogin ? "pencil" : "plus"}
+            size={17}
+            color='white'
+          />
         </RoundedButton>
       </View>
     </TouchableOpacity>
