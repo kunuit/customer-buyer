@@ -37,9 +37,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  // wrapper: {
+  //   width: Dimensions.get("screen").width,
+  //   height: Dimensions.get("screen").height * 0.4,
+  // },
   productDetailImage: {
-    width: Dimensions.get("screen").width * 0.9,
-    height: Dimensions.get("screen").height * 0.35,
+    width: Dimensions.get("screen").width,
+    height: Dimensions.get("screen").height * 0.3,
     resizeMode: "contain",
   },
   activeDot: {
@@ -47,10 +51,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 8,
     borderRadius: 4,
-    marginLeft: 3,
-    marginRight: 3,
-    marginTop: 3,
-    marginBottom: 3,
+    marginHorizontal: 3,
   },
 });
 export default ProductDetailImageContainer;
