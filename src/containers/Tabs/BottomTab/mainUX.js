@@ -39,15 +39,16 @@ const MainUX = () => {
         },
         showIcon: true,
         showLabel: true,
-      }}>
+      }}
+    >
       <Tab.Screen
-        name='Shop'
+        name="Shop"
         component={Profile}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <Fontisto
-              name='shopping-store'
+              name="shopping-store"
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -55,12 +56,12 @@ const MainUX = () => {
         }}
       />
       <Tab.Screen
-        name='Explore'
-        component={ProductDetail}
+        name="Explore"
+        component={Explore}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <MaterialCommunityIcons
-              name='briefcase-search-outline'
+              name="briefcase-search-outline"
               size={24}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -68,13 +69,13 @@ const MainUX = () => {
         }}
       />
       <Tab.Screen
-        name='Cart'
+        name="Cart"
         component={Cart}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <Zocial
-              name='cart'
+              name="cart"
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -82,13 +83,13 @@ const MainUX = () => {
         }}
       />
       <Tab.Screen
-        name='Favorite'
+        name="Favorite"
         component={Favorite}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <MaterialIcons
-              name='favorite-outline'
+              name="favorite-outline"
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -96,13 +97,13 @@ const MainUX = () => {
         }}
       />
       <Tab.Screen
-        name='Profile'
+        name="Profile"
         component={TabProfile}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <MaterialCommunityIcons
-              name='face-profile'
+              name="face-profile"
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
