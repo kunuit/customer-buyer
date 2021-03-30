@@ -14,6 +14,16 @@ import Colors from "../constants/colors";
 import { itemData } from "../components/data/data";
 import Button from "../components/Button";
 const CategoriesList = (props) => {
+  const multipleRowsFlatListFormat = (dataList, numColumns) => {
+    const totalRows = Math.floor(dataList.length / numColumns);
+    let totalItemLastRow = dataList.length - totalRows * numColumns;
+    console.log(totalRows, totalItemLastRow);
+    while (totalItemLastRow !== 0 && totalItemLastRow !== numColumns) {
+      dataList.push("empty");
+      totalItemLastRow++;
+    }
+    return dataList;
+  };
   const { categories } = useSelector((state) => state);
   const dispatch = useDispatch();
   // console.log(categories);
@@ -27,13 +37,17 @@ const CategoriesList = (props) => {
       <FlatList
         showsVerticalScrollIndicator={false}
         numColumns={2}
-        data={item}
+        data={multipleRowsFlatListFormat(item, 2)}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.cardItemContainer}>
-            <CategoryItem item={item} />
-          </View>
-        )}
+        renderItem={({ item }) =>
+          item == "empty" ? (
+            <View style={styles.cardItemContainer}></View>
+          ) : (
+            <View style={styles.cardItemContainer}>
+              <CategoryItem item={item} />
+            </View>
+          )
+        }
       />
     </View>
   );
