@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 import CardItem from "../components/CardItem";
-const ListCardItem = ({ onSetScrollY }) => {
+const ListCardItem = () => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   return (
     <View style={styles.container}>
@@ -26,9 +26,6 @@ const ListCardItem = ({ onSetScrollY }) => {
             <CardItem item={item} />
           </View>
         )}
-        onScroll={(e) => {
-          onSetScrollY(e.nativeEvent.contentOffset.y);
-        }}
       />
     </View>
   );

@@ -21,6 +21,8 @@ import ProductAdmin from "../../screens/admin.screens/Product.admin";
 import SupplierAdmin from "../../screens/admin.screens/Supplier.admin";
 import CartAdmin from "../../screens/admin.screens/Cart.admin";
 import StockAdmin from "../../screens/admin.screens/Stock.admin";
+import TabProductAdmin from "../TopTab/TabProduct.admin";
+import TabSupplier from "../TopTab/TabSupplier";
 
 const Tab = createBottomTabNavigator();
 
@@ -46,7 +48,7 @@ const AdminUX = () => {
       }}>
       <Tab.Screen
         name='Product'
-        component={ProductAdmin}
+        component={TabProductAdmin}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
@@ -60,7 +62,7 @@ const AdminUX = () => {
       />
       <Tab.Screen
         name='Supplier'
-        component={SupplierAdmin}
+        component={TabSupplier}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <FontAwesome5
