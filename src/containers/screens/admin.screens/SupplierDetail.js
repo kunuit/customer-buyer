@@ -4,10 +4,11 @@ import { StyleSheet } from "react-native";
 import { View } from "react-native";
 import ButtonBottomAdmin from "../../../components/admin.components/ButtonBottomAdmin";
 import DetailContainer from "../../../components/admin.components/DetailContainer";
+import ButtonBack from "../../../components/ButtonBack";
 import ProductDetailImageContainer from "../../../components/productDetail.component/ProductDetailImageContainer";
 import ProductUnitContainer from "../../../components/productDetail.component/ProductUnitContainer";
 
-const SupplierDetail = () => {
+const SupplierDetail = ({ navigation }) => {
   return (
     <View style={styles.root}>
       <ScrollView>
@@ -23,6 +24,7 @@ const SupplierDetail = () => {
           }}
         />
       </ScrollView>
+      <ButtonBack navigation={navigation} />
       <ButtonBottomAdmin />
     </View>
   );

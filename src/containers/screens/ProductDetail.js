@@ -16,8 +16,9 @@ import ReviewContainer from "../../components/productDetail.component/ReviewCont
 import ButtonContainer from "../../components/productDetail.component/ButtonContainer";
 import ButtonBottomAdmin from "../../components/admin.components/ButtonBottomAdmin";
 import { useSelector } from "react-redux";
+import ButtonBack from "../../components/ButtonBack";
 
-const ProductDetail = () => {
+const ProductDetail = ({ navigation }) => {
   const { isAdminLogin } = useSelector((state) => state.auth);
 
   return (
@@ -32,6 +33,7 @@ const ProductDetail = () => {
           <ReviewContainer />
         </View>
       </ScrollView>
+      <ButtonBack navigation={navigation} />
       {isAdminLogin ? <ButtonBottomAdmin /> : <ButtonContainer />}
     </View>
   );
