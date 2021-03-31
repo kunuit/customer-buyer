@@ -14,21 +14,25 @@ import DescriptionContainer from "../../components/productDetail.component/Descr
 import NutritionContainer from "../../components/productDetail.component/NutritionContainer";
 import ReviewContainer from "../../components/productDetail.component/ReviewContainer";
 import ButtonContainer from "../../components/productDetail.component/ButtonContainer";
+import ButtonBottomAdmin from "../../components/admin.components/ButtonBottomAdmin";
+import { useSelector } from "react-redux";
 
 const ProductDetail = () => {
+  const { isAdminLogin } = useSelector((state) => state.auth);
+
   return (
     <View style={styles.productDetailContainer}>
       <ScrollView>
         <ProductDetailImageContainer />
         <View style={styles.productDetailInfoContainer}>
-          <ProductUnitContainer />
+          <ProductUnitContainer isEdit={isAdminLogin ? true : false} />
           <QuantityAjustContainer />
           <DescriptionContainer />
           <NutritionContainer />
           <ReviewContainer />
         </View>
       </ScrollView>
-      <ButtonContainer />
+      {isAdminLogin ? <ButtonBottomAdmin /> : <ButtonContainer />}
     </View>
   );
 };

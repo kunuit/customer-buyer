@@ -60,7 +60,7 @@ function App() {
           <Router.Screen name='MainUX' component={MainUX} />
         )}
       </Router.Navigator> */}
-      <MainUX />
+      {isAdminLogin ? <AdminUX /> : <MainUX />}
     </View>
   );
 }

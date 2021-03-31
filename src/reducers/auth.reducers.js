@@ -9,7 +9,7 @@ const initState = {
   errorRegister: null,
   isAuthLoading: false,
   isAdmin: false,
-  isAdminLogin: true,
+  isAdminLogin: false,
 };
 
 import {
