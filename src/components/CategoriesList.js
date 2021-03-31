@@ -13,6 +13,8 @@ import CategoryItem from "../components/CategoryItem";
 import Colors from "../constants/colors";
 import { itemData } from "../components/data/data";
 import Button from "../components/Button";
+import ProductLoader from "./Loader/ProductLoader";
+import ProductItem from "./Loader/ProductItem";
 import { multipleRowsFlatListFormat } from "../common/format/FlatListDataFormat";
 const CategoriesList = (props) => {
   const { categories } = useSelector((state) => state);
@@ -23,23 +25,32 @@ const CategoriesList = (props) => {
       type: "FETCH_CATEGORIES",
     });
   const [item, setItem] = useState(itemData);
+  const [isLoaded, setIsLoaded] = useState(false);
+  useEffect(() => {
+    const timing = setTimeout(() => setIsLoaded(true), 2000);
+    return () => clearTimeout(timing);
+  }, []);
   return (
     <View style={styles.container}>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        numColumns={2}
-        data={multipleRowsFlatListFormat(item, 2)}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) =>
-          item == "empty" ? (
-            <View style={styles.cardItemContainer}></View>
-          ) : (
-            <View style={styles.cardItemContainer}>
-              <CategoryItem item={item} />
-            </View>
-          )
-        }
-      />
+      {isLoaded ? (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          numColumns={2}
+          data={multipleRowsFlatListFormat(item, 2)}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) =>
+            item == "empty" ? (
+              <View style={styles.cardItemContainer}></View>
+            ) : (
+              <View style={styles.cardItemContainer}>
+                <CategoryItem item={item} />
+              </View>
+            )
+          }
+        />
+      ) : (
+        <ProductLoader />
+      )}
     </View>
   );
 };
