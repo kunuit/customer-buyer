@@ -42,7 +42,6 @@ sagaMiddleware.run(rootSaga);
 
 function App() {
   const { isAdminLogin } = useSelector((state) => state.auth);
-  console.log(isAdminLogin, "check in app");
   let [fontsLoaded] = useFonts({
     "gilroy-medium": require("./assets/fonts/Gilroy-Medium.ttf"),
     "gilroy-light": require("./assets/fonts/Gilroy-Light.otf"),
