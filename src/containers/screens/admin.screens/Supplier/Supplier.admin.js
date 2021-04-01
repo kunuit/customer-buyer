@@ -1,24 +1,21 @@
 import React from "react";
-import { Dimensions } from "react-native";
-import { FlatList } from "react-native";
+import { FlatList, SafeAreaView } from "react-native";
 import { StyleSheet } from "react-native";
-import { SafeAreaView, Text, View } from "react-native";
+import { Dimensions } from "react-native";
+import { Text, View } from "react-native";
 import { FAB } from "react-native-paper";
-import Animated from "react-native-reanimated";
-import { theme } from "../../../common/theme";
-import CardMyProduct from "../../../components/admin.components/CardMyProduct.admin";
-import ListCardItem from "../../../components/ListCardItem";
-import SearchView from "../../../components/SearchView";
-import TitleScreen from "../../../components/TitleScreen";
+import { theme } from "../../../../common/theme";
+import CardMySupplier from "../../../../components/admin.components/CardMySupplier.admin";
+import SearchView from "../../../../components/SearchView";
+import TitleScreen from "../../../../components/TitleScreen";
 
-const ProductAdmin = ({ navigation }) => {
+const SupplierAdmin = ({ navigation }) => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
   return (
     <SafeAreaView style={styles.exploreContainer}>
-      <TitleScreen isBorder={false}>My Products</TitleScreen>
+      <TitleScreen isBorder={false}>My Suppliers</TitleScreen>
 
-      <SearchView holSearch='my product' />
+      <SearchView holSearch='my supplier' />
 
       <FlatList
         style={styles.listCardItemContainer}
@@ -26,12 +23,12 @@ const ProductAdmin = ({ navigation }) => {
         data={fakeData}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <CardMyProduct item={item} navigation={navigation} />
+          <CardMySupplier item={item} navigation={navigation} />
         )}
       />
 
       <FAB
-        onPress={() => navigation.navigate("Create Product")}
+        onPress={() => navigation.navigate("Create Supplier")}
         style={styles.fab}
         small={false}
         theme={{ colors: { accent: theme.colors.primary } }}
@@ -58,4 +55,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductAdmin;
+export default SupplierAdmin;
