@@ -17,6 +17,7 @@ import Explore from "../../screens/Explore";
 import CartScreen from "../../screens/CartScreen";
 import CardItem from "../../../components/CardItem";
 import ListCardItem from "../../../components/ListCardItem";
+import Home from "../../screens/Home";
 
 const Tab = createBottomTabNavigator();
 
@@ -43,7 +44,7 @@ const MainUX = () => {
     >
       <Tab.Screen
         name="Shop"
-        component={Profile}
+        component={Home}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (

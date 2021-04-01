@@ -16,17 +16,8 @@ const SearchView = ({ holSearch }) => {
         onChangeText={onChangeSearch}
         value={searchQuery}
         style={styles.searchBar}
-        clearIcon={() => (
-          <MaterialIcons
-            onPress={() => {
-              console.log("clear icon");
-            }}
-            name='clear'
-            size={20}
-            color='black'
-          />
-        )}
-        icon={() => <MaterialIcons name='search' size={20} color='black' />}
+        clearIcon={() => <MaterialIcons name="clear" size={20} color="black" />}
+        icon={() => <MaterialIcons name="search" size={20} color="black" />}
         inputStyle={[
           { fontFamily: "gilroy-bold" },
           { fontSize: 13 },
