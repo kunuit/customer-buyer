@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
   buttonItem: {
     borderWidth: 0,
-    backgroundColor: theme.backgrounds.white,
+    // backgroundColor: theme.backgrounds.white,
   },
   descriptionText: {
     fontFamily: "gilroy-light",

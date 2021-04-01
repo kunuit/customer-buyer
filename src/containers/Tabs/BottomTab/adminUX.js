@@ -1,28 +1,16 @@
 import React from "react";
-import Icon from "react-native-vector-icons/Ionicons";
 import { Entypo, FontAwesome5, Fontisto, Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Zocial } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import Cart from "../../screens/CartScreen";
-import Favorite from "../../screens/FavouriteScreen";
-import Profile from "../../screens/Profile";
 import { theme } from "../../../common/theme";
 import { Dimensions } from "react-native";
 import TabProfile from "../TopTab/TabProfile";
-import ProductDetail from "../../screens/ProductDetail";
-import Explore from "../../screens/Explore";
-import CartScreen from "../../screens/CartScreen";
-import CardItem from "../../../components/CardItem";
-import ListCardItem from "../../../components/ListCardItem";
-import ProductAdmin from "../../screens/admin.screens/Product.admin";
-import SupplierAdmin from "../../screens/admin.screens/Supplier.admin";
-import CartAdmin from "../../screens/admin.screens/Cart.admin";
-import StockAdmin from "../../screens/admin.screens/Stock.admin";
 import TabProductAdmin from "../TopTab/TabProduct.admin";
 import TabSupplier from "../TopTab/TabSupplier";
+import TabStock from "../TopTab/TabStock";
+import TabCartAdmin from "../TopTab/TabCart.admin";
 
 const Tab = createBottomTabNavigator();
 
@@ -75,7 +63,7 @@ const AdminUX = () => {
       />
       <Tab.Screen
         name='Stock'
-        component={StockAdmin}
+        component={TabStock}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
@@ -89,7 +77,7 @@ const AdminUX = () => {
       />
       <Tab.Screen
         name='Cart'
-        component={CartAdmin}
+        component={TabCartAdmin}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (

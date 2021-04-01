@@ -2,11 +2,11 @@ import React from "react";
 import { Dimensions, ScrollView } from "react-native";
 import { StyleSheet } from "react-native";
 import { View } from "react-native";
-import ButtonBottomAdmin from "../../../components/admin.components/ButtonBottomAdmin";
-import DetailContainer from "../../../components/admin.components/DetailContainer";
-import ButtonBack from "../../../components/ButtonBack";
-import ProductDetailImageContainer from "../../../components/productDetail.component/ProductDetailImageContainer";
-import ProductUnitContainer from "../../../components/productDetail.component/ProductUnitContainer";
+import ButtonBottomAdmin from "../../../../components/admin.components/ButtonBottomAdmin";
+import DetailContainer from "../../../../components/admin.components/DetailContainer";
+import ButtonBack from "../../../../components/ButtonBack";
+import ProductDetailImageContainer from "../../../../components/productDetail.component/ProductDetailImageContainer";
+import ProductUnitContainer from "../../../../components/productDetail.component/ProductUnitContainer";
 
 const SupplierDetail = ({ navigation }) => {
   return (

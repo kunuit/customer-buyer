@@ -3,12 +3,12 @@ import { Text } from "react-native";
 import { StyleSheet } from "react-native";
 import { ActivityIndicator } from "react-native";
 import { View } from "react-native";
-import { theme } from "../../../common/theme";
-import Background from "../../../components/auth.components/Background";
-import ButtonBack from "../../../components/ButtonBack";
-import Button from "../../../components/Button";
-import TextInput from "../../../components/TextInput";
-import TitleScreen from "../../../components/TitleScreen";
+import { theme } from "../../../../common/theme";
+import Background from "../../../../components/auth.components/Background";
+import ButtonBack from "../../../../components/ButtonBack";
+import Button from "../../../../components/Button";
+import TextInput from "../../../../components/TextInput";
+import TitleScreen from "../../../../components/TitleScreen";
 
 const CreateSupplier = ({ navigation }) => {
   const [name, setName] = useState({ value: "", error: "" });

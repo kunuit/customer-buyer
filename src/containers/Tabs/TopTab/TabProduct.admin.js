@@ -1,8 +1,8 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import ProductAdmin from "../../screens/admin.screens/Product.admin";
 import ProductDetail from "../../screens/ProductDetail";
-import CreateProduct from "../../screens/admin.screens/CreateProduct";
+import ProductAdmin from "../../screens/admin.screens/Product/Product.admin";
+import CreateProduct from "../../screens/admin.screens/Product/CreateProduct";
 
 const TabTop = createStackNavigator();
 
