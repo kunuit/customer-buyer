@@ -12,6 +12,7 @@ class AxiosService {
   }
 
   handleError(error) {
+    console.log(error, "check in axiosService");
     if (error.response) return Promise.reject(error.response);
     if (error.request) return Promise.reject(error.request);
     return Promise.reject(error);
@@ -31,7 +32,9 @@ class AxiosService {
   }
 
   post(url, body) {
-    return this.instance.post(url, body);
+    return this.instance.post(url, body, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
   }
 
   postWithToken(url, body, token) {

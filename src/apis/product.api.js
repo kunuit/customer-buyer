@@ -20,3 +20,7 @@ export const getProductsAPI = (token) => {
 export const addProductAPI = (data, token) => {
   return axiosService.postWithToken(`${API_ENDPOINT}${url}`, data, token);
 };
+
+export const addProductAPITest = (data, token) => {
+  return axiosService.post(`https://ea87abaa5772.ngrok.io/product`, data);
+};

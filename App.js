@@ -20,6 +20,7 @@ import MainUX from "./src/containers/Tabs/BottomTab/mainUX";
 import AdminUX from "./src/containers/Tabs/BottomTab/adminUX";
 import { theme } from "./src/common/theme";
 import reducers from "./src/reducers";
+import Toast from "react-native-toast-message";
 
 const Router = createStackNavigator();
 
@@ -60,6 +61,8 @@ function App() {
         )}
       </Router.Navigator> */}
       {isAdminLogin ? <AdminUX /> : <MainUX />}
+
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </View>
   );
 }
