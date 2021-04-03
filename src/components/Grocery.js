@@ -10,7 +10,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import CardItem from "./CardItem";
-const ProductList = ({ title, ...props }) => {
+import GroceriesList from "./GroceriesList";
+const Grocery = ({ title, ...props }) => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   return (
     <View style={styles.container}>
@@ -20,9 +21,11 @@ const ProductList = ({ title, ...props }) => {
           <Text style={styles.seeAllText}>See all</Text>
         </TouchableOpacity>
       </View>
+      <GroceriesList />
       <FlatList
         showsHorizontalScrollIndicator={false}
         horizontal={true}
+        showsVerticalScrollIndicator={false}
         data={fakeData}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
@@ -69,4 +72,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductList;
+export default Grocery;
