@@ -3,7 +3,7 @@ import Colors from "../constants/colors";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import RoundedButton from "../components/RoundedButton";
-const CategoryItem = ({ item }) => {
+const GroceryItem = ({ item }) => {
   return (
     <TouchableOpacity
       style={[
@@ -31,33 +31,33 @@ const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
     padding: 10,
-    height: 230,
-    borderColor: "#53B174",
-    backgroundColor: "white",
+    height: 100,
+    width: 200,
     borderRadius: 20,
     borderWidth: 1,
-    // flexDirection: "row",
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
   cardImageContainer: {
-    marginBottom: 20,
-    height: "45%",
+    height: "100%",
+    width: "50%",
   },
   cardImage: {
     height: "100%",
+    width: "100%",
     resizeMode: "contain",
   },
   cardDetailContainer: {
-    flexDirection: "column",
+    width: "50%",
     alignItems: "center",
-    flexGrow: 1,
     justifyContent: "center",
   },
   titleText: {
     textAlign: "center",
     fontFamily: "gilroy-bold",
-    fontSize: 18,
+    fontSize: 14,
     color: "black",
   },
 });
 
-export default CategoryItem;
+export default GroceryItem;
