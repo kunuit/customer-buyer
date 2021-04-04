@@ -14,6 +14,7 @@ import { addProductAPITest } from "../../../../apis/product.api";
 import AddImageComponent from "../../../../components/AddImageComponent";
 import { Dimensions } from "react-native";
 import { Provider, Portal, Modal } from "react-native-paper";
+import { Animated } from "react-native";
 
 const CreateProduct = ({ navigation }) => {
   const [name, setName] = useState({ value: "", error: "" });
@@ -26,10 +27,43 @@ const CreateProduct = ({ navigation }) => {
   const [supplier, setSupplier] = useState({ value: "", error: "" });
   const [images, setImages] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [visibleModal, setVisibleModal] = useState(false);
+  const [modalY, setModalY] = useState(
+    new Animated.Value(Dimensions.get("window").height * 0.1),
+  );
 
   const AddImage = (uri) => {
     setVisible(false);
     setImages([...images, uri]);
+  };
+
+  useEffect(() => {
+    if (visible == true) {
+      setVisibleModal(true);
+      openModal();
+    }
+    if (visible == false) {
+      setTimeout(() => {
+        setVisibleModal(false);
+      }, 500);
+      closeModal();
+    }
+  }, [visible]);
+
+  const openModal = () => {
+    Animated.timing(modalY, {
+      duration: 1000,
+      toValue: 0,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const closeModal = () => {
+    Animated.timing(modalY, {
+      duration: 1000,
+      toValue: Dimensions.get("window").height * 0.1,
+      useNativeDriver: true,
+    }).start();
   };
 
   const createNewProduct = async () => {
@@ -196,10 +230,13 @@ const CreateProduct = ({ navigation }) => {
 
         <Portal>
           <Modal
-            visible={visible}
+            visible={visibleModal}
             onDismiss={() => setVisible(false)}
             contentContainerStyle={styles.containerStyle}>
-            <ImagePickerComponent onImage={(e) => AddImage(e)} />
+            <Animated.View
+              style={[styles.modal, { transform: [{ translateY: modalY }] }]}>
+              <ImagePickerComponent onImage={(e) => AddImage(e)} />
+            </Animated.View>
           </Modal>
         </Portal>
       </View>
@@ -220,17 +257,14 @@ const styles = StyleSheet.create({
   modal: {
     height: Dimensions.get("window").height * 0.18,
     width: Dimensions.get("window").width,
-    position: "absolute",
-    bottom: 0,
-    backgroundColor: "#ededed",
+    justifyContent: "flex-start",
+    backgroundColor: theme.colors.notBlack,
+    borderRadius: 25,
     justifyContent: "flex-start",
   },
   containerStyle: {
-    backgroundColor: theme.colors.notBlack,
-    borderRadius: 25,
     marginBottom: -Dimensions.get("window").height * 0.78,
     height: Dimensions.get("window").height * 0.18,
-    justifyContent: "flex-start",
   },
 });
 

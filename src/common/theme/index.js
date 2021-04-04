@@ -18,6 +18,7 @@ export const theme = {
     lineBorder: "#E2E2E2",
   },
   backgrounds: {
+    statusBar: "#FFFFFF",
     paper: "#F2F3F2",
     white: "#FFFFFF",
   },
