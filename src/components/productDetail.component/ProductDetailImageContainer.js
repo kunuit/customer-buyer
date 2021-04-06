@@ -15,7 +15,8 @@ const ProductDetailImageContainer = () => {
         showsButtons={false}
         autoplay={true}
         autoplayTimeout={4}
-        activeDot={<View style={styles.activeDot} />}>
+        activeDot={<View style={styles.activeDot} />}
+      >
         {images.map((item, index) => (
           <Image
             key={index}
@@ -37,10 +38,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  // wrapper: {
-  //   width: Dimensions.get("screen").width,
-  //   height: Dimensions.get("screen").height * 0.4,
-  // },
   productDetailImage: {
     width: Dimensions.get("screen").width,
     height: Dimensions.get("screen").height * 0.3,
