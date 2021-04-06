@@ -17,6 +17,7 @@ import SearchView from "../../components/SearchView";
 import TitleScreen from "../../components/TitleScreen";
 import GroceriesList from "../../components/GroceriesList";
 import Grocery from "../../components/Grocery";
+import HomeBanner from "../../components/HomeBanner";
 
 const Home = () => {
   return (
@@ -25,6 +26,7 @@ const Home = () => {
       <SearchView />
       <ScrollView>
         <View style={styles.productListContainer}>
+          <HomeBanner />
           <ProductList title="Exclusive Offer" />
           <ProductList title="Best Selling" />
           <Grocery title="Groceries" />
@@ -40,6 +42,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   productListContainer: {
+    paddingTop: Dimensions.get("window").height * 0.03,
     paddingBottom: Dimensions.get("window").height * 0.09,
   },
 });
