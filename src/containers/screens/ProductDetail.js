@@ -23,7 +23,7 @@ const ProductDetail = ({ navigation }) => {
 
   return (
     <View style={styles.productDetailContainer}>
-      <ScrollView style={{ backgroundColor: "pink" }}>
+      <ScrollView>
         <ProductDetailImageContainer />
         <View style={styles.productDetailInfoContainer}>
           <ProductUnitContainer isEdit={isAdminLogin ? true : false} />
