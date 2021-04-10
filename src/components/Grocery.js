@@ -9,10 +9,13 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
+import { useSelector } from "react-redux";
 import CardItem from "./CardItem";
 import GroceriesList from "./GroceriesList";
 const Grocery = ({ title, ...props }) => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  const { data } = useSelector((state) => state.products);
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -21,20 +24,23 @@ const Grocery = ({ title, ...props }) => {
           <Text style={styles.seeAllText}>See all</Text>
         </TouchableOpacity>
       </View>
-      <GroceriesList />
+      <GroceriesList isHome={true} />
       <FlatList
-        showsHorizontalScrollIndicator={false}
-        horizontal={true}
+        columnWrapperStyle={{
+          flex: 1,
+        }}
         showsVerticalScrollIndicator={false}
-        data={fakeData}
+        numColumns={2}
+        data={data}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={styles.cardItemContainer}>
             <CardItem
-              item={item}
-              heightCard={200}
+              item={{ ...item }}
+              heightCard={210}
               fontSizeTitle={16}
               fontSizeDes={14}
+              numberOfLines={1}
             />
           </View>
         )}

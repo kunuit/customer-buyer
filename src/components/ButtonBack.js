@@ -1,12 +1,21 @@
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
+import React, { memo } from "react";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
+import { theme } from "../common/theme";
 import RoundedButton from "./RoundedButton";
 
-const ButtonBack = ({ navigation }) => {
+const ButtonBack = ({ navigation, isBackground = false }) => {
   return (
-    <View style={styles.root}>
+    <View
+      style={[
+        styles.root,
+        isBackground
+          ? {
+              backgroundColor: theme.backgrounds.buttonBack,
+            }
+          : {},
+      ]}>
       <RoundedButton
         mode='contained'
         onPress={() => navigation.goBack()}
@@ -22,10 +31,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 15,
     left: 18,
+    padding: 5,
+    borderRadius: 25,
   },
   buttonItem: {
     borderWidth: 0,
   },
 });
 
-export default ButtonBack;
+export default memo(ButtonBack);

@@ -11,45 +11,46 @@ import {
 } from "react-native";
 import CategoryItem from "../components/CategoryItem";
 import Colors from "../constants/colors";
-import { itemData } from "../components/data/data";
 import Button from "../components/Button";
-import ProductLoader from "./Loader/ProductLoader";
 import ProductItem from "./Loader/ProductItem";
 import { multipleRowsFlatListFormat } from "../common/format/FlatListDataFormat";
 import GroceryItem from "./GroceryItem";
-const GroceriesList = (props) => {
-  const { categories } = useSelector((state) => state);
-  const dispatch = useDispatch();
-  const dispatchGetAllCategories = () =>
-    dispatch({
-      type: "FETCH_CATEGORIES",
-    });
-  const [item, setItem] = useState(itemData);
-  const [isLoaded, setIsLoaded] = useState(false);
-  useEffect(() => {
-    const timing = setTimeout(() => setIsLoaded(true), 2000);
-    return () => clearTimeout(timing);
-  }, []);
+import CategoryHomeLoader from "./Loader/CategoryHomeLoader";
+import { itemData } from "./data/data";
+import { windowHeight } from "../common/Dimensions";
+const GroceriesList = ({ isHome = false }) => {
+  const { isLoading, data } = useSelector((state) => state.categories);
+
   return (
-    <View style={styles.container}>
-      {isLoaded ? (
+    <View
+      style={[
+        styles.container,
+        isHome ? {} : { paddingBottom: windowHeight * 0.09 },
+      ]}>
+      {!isLoading ? (
         <FlatList
-          horizontal
           showsHorizontalScrollIndicator={false}
-          data={multipleRowsFlatListFormat(item, 1)}
+          horizontal={isHome}
+          numColumns={isHome ? null : 2}
+          showsVerticalScrollIndicator={false}
+          data={multipleRowsFlatListFormat(data, 1)}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) =>
             item == "empty" ? (
               <View style={styles.cardItemContainer}></View>
             ) : (
               <View style={styles.cardItemContainer}>
-                <GroceryItem item={item} />
+                {isHome ? (
+                  <GroceryItem item={item} />
+                ) : (
+                  <CategoryItem item={item} />
+                )}
               </View>
             )
           }
         />
       ) : (
-        <ProductLoader />
+        <CategoryHomeLoader />
       )}
     </View>
   );

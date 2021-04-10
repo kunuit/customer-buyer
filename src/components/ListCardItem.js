@@ -8,9 +8,12 @@ import {
   FlatList,
   Dimensions,
 } from "react-native";
+import { useSelector } from "react-redux";
 import CardItem from "../components/CardItem";
 const ListCardItem = () => {
-  const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  // const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const { data } = useSelector((state) => state.products);
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -19,7 +22,7 @@ const ListCardItem = () => {
         }}
         showsVerticalScrollIndicator={false}
         numColumns={2}
-        data={fakeData}
+        data={data}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={styles.cardItemContainer}>

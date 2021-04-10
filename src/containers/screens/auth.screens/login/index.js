@@ -21,15 +21,22 @@ import {
 } from "../../../../common/validation";
 import * as authStyle from "../../../../constants/auth.constants";
 
-import { loginACT } from "../../../../actions/auth.action";
+import {
+  loginACT,
+  loginGoogleACT,
+  loginViaFirebaseACT,
+} from "../../../../actions/auth.action";
 import TextError from "../../../../components/TextError";
+import { showToast } from "../../../../common/Layout/toast.helper";
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
 
-  const { errorLogin, isAuthLoading } = useSelector((state) => state.auth);
+  const { errorLogin, isAuthLoading, isLogin } = useSelector(
+    (state) => state.auth,
+  );
 
   const _onLoginPressed = () => {
     const emailError = infoValidator(email.value);
@@ -42,11 +49,28 @@ const LoginScreen = ({ navigation }) => {
     }
 
     //! dispatch to check loginACT
-    dispatch(loginACT({ info: email.value, password: password.value }));
+    // dispatch(loginACT({ info: email.value, password: password.value }));
+
+    //! dispatch to login via Firebase
+    dispatch(
+      loginViaFirebaseACT({ email: email.value, password: password.value }),
+    );
   };
 
+  const _onGoogleLoginPressed = () => {
+    showToast({
+      title: "Sign in",
+      type: "info",
+      message: "Sorry can not do it",
+    });
+  };
+
+  if (isLogin) {
+    navigation.navigate("Bottom tab");
+  }
+
   return (
-    <Background>
+    <Background isButtonBack={true} navigation={navigation}>
       <Logo />
 
       <Header>Welcome back.</Header>
@@ -106,6 +130,13 @@ const LoginScreen = ({ navigation }) => {
           <Text style={styles.link}>Register</Text>
         </TouchableOpacity>
       </View>
+
+      <Button
+        mode='contained'
+        style={{ backgroundColor: theme.colors.placeholder }}
+        onPress={_onGoogleLoginPressed}>
+        <Text>Google Sign-In</Text>
+      </Button>
     </Background>
   );
 };

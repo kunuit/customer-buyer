@@ -12,6 +12,10 @@ import {
   REFRESH_TOKEN_SUCCESS,
   REFRESH_TOKEN_FAIL,
   SWITCH_IS_ADMIN,
+  GOOGLE_LOGIN,
+  LOGIN_FIREBASE,
+  LOGIN_FIREBASE_FAIL,
+  LOGIN_FIREBASE_SUCCESS,
 } from "../constants/auth.constants";
 
 // import { STATUSES } from "../constants";
@@ -21,6 +25,39 @@ export const loginACT = (data) => {
     type: LOGIN,
     payload: {
       data,
+    },
+  };
+};
+
+export const loginGoogleACT = () => {
+  return {
+    type: GOOGLE_LOGIN,
+  };
+};
+
+export const loginViaFirebaseACT = (data) => {
+  return {
+    type: LOGIN_FIREBASE,
+    payload: {
+      data,
+    },
+  };
+};
+
+export const loginViaFirebaseSuccessACT = (data) => {
+  return {
+    type: LOGIN_FIREBASE_SUCCESS,
+    payload: {
+      data,
+    },
+  };
+};
+
+export const loginViaFirebaseFailACT = (error) => {
+  return {
+    type: LOGIN_FIREBASE_FAIL,
+    payload: {
+      error,
     },
   };
 };

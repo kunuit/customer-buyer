@@ -2,19 +2,21 @@ const initState = {
   dataCustomer: null,
   token: null,
   refreshToken: null,
-  isLogin: false,
+  isLogin: true,
   isRegister: false,
   errorRefreshToken: null,
   errorLogin: null,
   errorRegister: null,
   isAuthLoading: false,
   isAdmin: false,
-  isAdminLogin: false,
+  isAdminLogin: true,
 };
 
 import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
+  LOGIN_FIREBASE_SUCCESS,
+  LOGIN_FIREBASE_FAIL,
   LOGOUT,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -88,12 +90,27 @@ const reducer = (state = initState, action) => {
     case REFRESH_TOKEN_FAIL:
       return {
         ...state,
-        errorRefreshToken: action.payload.error,
+        errorLogin: action.payload.error,
       };
     case SWITCH_IS_ADMIN:
       return {
         ...state,
         isAdmin: !state.isAdmin,
+      };
+    case LOGIN_FIREBASE_SUCCESS:
+      return {
+        ...state,
+        dataCustomer: state.isAdmin ? null : action.payload.data,
+        dataAdmin: state.isAdmin ? action.payload.data : null,
+        isAdminLogin: state.isAdmin ? true : false,
+        isLogin: true,
+        isAuthLoading: false,
+      };
+    case LOGIN_FIREBASE_FAIL:
+      return {
+        ...state,
+        errorLogin: action.payload.error,
+        isAuthLoading: false,
       };
     default:
       return state;

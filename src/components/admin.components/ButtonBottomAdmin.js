@@ -1,50 +1,47 @@
 import React from "react";
 import { View, StyleSheet, Text, Dimensions } from "react-native";
 import { theme } from "../../common/theme";
-import Button from "../Button";
+import RoundedButton from "../RoundedButton";
 import Colors from "../../constants/colors";
+import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 
 const ButtonBottomAdmin = () => {
   return (
     <View style={styles.root}>
-      <Button
+      {/* <Button
         mode='contained'
         onPress={() => console.log("Update Item")}
         style={styles.buttonUpdate}>
         <Text style={styles.buttonText}>Update</Text>
-      </Button>
+      </Button> */}
 
-      <Button
+      <RoundedButton
+        mode='contained'
+        onPress={() => console.log("Delete Item")}
+        style={styles.buttonItem}>
+        <FontAwesome5 name='trash' size={24} color={theme.colors.notpink} />
+      </RoundedButton>
+
+      {/* <Button
         mode='contained'
         onPress={() => console.log("Delete Item")}
         style={styles.buttonDelete}>
         <Text style={styles.buttonText}>Delete</Text>
-      </Button>
+      </Button> */}
     </View>
   );
 };
 const styles = StyleSheet.create({
   root: {
-    width: "90%",
     position: "absolute",
-    bottom: Dimensions.get("window").height * 0.08,
-    flexDirection: "row",
-    justifyContent: "center",
+    top: 15,
+    right: 18,
+    padding: 5,
+    borderRadius: 25,
+    backgroundColor: theme.backgrounds.buttonBack,
   },
-  buttonUpdate: {
-    width: "50%",
-    backgroundColor: theme.colors.primary,
-    marginRight: "2%",
-  },
-  buttonDelete: {
-    width: "50%",
-    backgroundColor: theme.colors.notpink,
-    marginLeft: "2%",
-  },
-  buttonText: {
-    fontFamily: "gilroy-bold",
-    fontSize: 15,
-    color: theme.backgrounds.white,
+  buttonItem: {
+    borderWidth: 0,
   },
 });
 

@@ -3,6 +3,7 @@ import { FlatList, SafeAreaView } from "react-native";
 import { Dimensions } from "react-native";
 import { StyleSheet } from "react-native";
 import { Text, View } from "react-native";
+import { windowHeight } from "../../../../common/Dimensions";
 import CardMyCart from "../../../../components/admin.components/CardMyCart.admin";
 import SearchView from "../../../../components/SearchView";
 import TitleScreen from "../../../../components/TitleScreen";
@@ -33,10 +34,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     backgroundColor: "white",
+    paddingBottom: windowHeight * 0.09,
   },
-  listCardItemContainer: {
-    marginBottom: Dimensions.get("window").height * 0.09,
-  },
+  listCardItemContainer: {},
 });
 
 export default CartAdmin;

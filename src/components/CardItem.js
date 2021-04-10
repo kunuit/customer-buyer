@@ -4,38 +4,44 @@ import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import RoundedButton from "../components/RoundedButton";
 import { useSelector } from "react-redux";
-const CardItem = (props) => {
-  const { fontSizeTitle, heightCard, fontSizeDes } = props;
+
+const CardItem = ({
+  fontSizeTitle,
+  heightCard,
+  fontSizeDes,
+  item,
+  numberOfLines = 2,
+}) => {
   const { isAdminLogin } = useSelector((state) => state.auth);
+
   return (
     <TouchableOpacity
-      style={[styles.cardContainer, { height: heightCard ? heightCard : 250 }]}
-    >
+      style={[styles.cardContainer, { height: heightCard ? heightCard : 250 }]}>
       <View style={styles.cardImageContainer}>
         <Image
           style={styles.cardImage}
           source={{
             uri:
-              "https://i.pinimg.com/originals/eb/d4/de/ebd4deb64c74e2f1246626d5a290274d.png",
+              item.images.length != 0
+                ? item.images[0]
+                : "https://i.pinimg.com/originals/eb/d4/de/ebd4deb64c74e2f1246626d5a290274d.png",
           }}
         />
       </View>
       <View style={styles.cardDetailContainer}>
         <Text
-          numberOfLines={2}
+          numberOfLines={numberOfLines}
           style={[
             styles.titleText,
             { fontSize: fontSizeTitle ? fontSizeTitle : 18 },
-          ]}
-        >
-          {`Straw berry ${props.item}`}
+          ]}>
+          {item.name}
         </Text>
         <Text
           style={[
             styles.descriptionText,
             { fontSize: fontSizeDes ? fontSizeDes : 16 },
-          ]}
-        >
+          ]}>
           7pcs, Price
         </Text>
       </View>
@@ -44,26 +50,25 @@ const CardItem = (props) => {
           style={[
             styles.titleText,
             { fontSize: fontSizeTitle ? fontSizeTitle : 18 },
-          ]}
-        >
-          $4.99
+          ]}>
+          {`$${item.price ? item.price : 0.0}`}
         </Text>
         <RoundedButton
           style={{
             backgroundColor: Colors.green,
             borderColor: Colors.grayWhite,
-          }}
-        >
+          }}>
           <Entypo
             name={isAdminLogin ? "pencil" : "plus"}
             size={17}
-            color="white"
+            color='white'
           />
         </RoundedButton>
       </View>
     </TouchableOpacity>
   );
 };
+
 const styles = StyleSheet.create({
   cardContainer: {
     padding: 10,

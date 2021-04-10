@@ -1,7 +1,8 @@
 import React from "react";
-import { Dimensions, ScrollView } from "react-native";
+import { Dimensions, ScrollView, StatusBar } from "react-native";
 import { StyleSheet } from "react-native";
 import { View } from "react-native";
+import { theme } from "../../../../common/theme";
 import ButtonBottomAdmin from "../../../../components/admin.components/ButtonBottomAdmin";
 import DetailContainer from "../../../../components/admin.components/DetailContainer";
 import ButtonBack from "../../../../components/ButtonBack";
@@ -11,6 +12,12 @@ import ProductUnitContainer from "../../../../components/productDetail.component
 const SupplierDetail = ({ navigation }) => {
   return (
     <View style={styles.root}>
+      <StatusBar
+        animated={true}
+        backgroundColor={theme.backgrounds.itemImageDetail}
+        barStyle='dark-content'
+        hidden={true}
+      />
       <ScrollView>
         <ProductDetailImageContainer />
         <ProductUnitContainer title='NCC 1' unitText='Kun pro' isEdit={true} />
@@ -24,7 +31,7 @@ const SupplierDetail = ({ navigation }) => {
           }}
         />
       </ScrollView>
-      <ButtonBack navigation={navigation} />
+      <ButtonBack navigation={navigation} isBackground={true} />
       <ButtonBottomAdmin />
     </View>
   );
@@ -36,7 +43,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     width: "100%",
     alignItems: "center",
-    paddingBottom: Dimensions.get("window").height * 0.09 + 37,
   },
 });
 

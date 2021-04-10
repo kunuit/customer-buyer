@@ -9,8 +9,7 @@ const CategoryItem = ({ item }) => {
       style={[
         styles.cardContainer,
         { backgroundColor: item.itemColor, borderColor: item.itemColor },
-      ]}
-    >
+      ]}>
       <View style={styles.cardImageContainer}>
         <Image
           style={styles.cardImage}
@@ -36,7 +35,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 20,
     borderWidth: 1,
-    // flexDirection: "row",
   },
   cardImageContainer: {
     marginBottom: 20,

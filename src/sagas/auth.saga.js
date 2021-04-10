@@ -1,15 +1,30 @@
 import { takeEvery, put, call, takeLatest, select } from "redux-saga/effects";
 import { loginAdminAPI, loginAPI, registerAPI } from "../apis/auth.api";
 
-import { LOGIN, REGISTER } from "../constants/auth.constants";
+import {
+  loginFirebaseAPI,
+  logoutFirebaseAPI,
+} from "../apis/firebase/auth.firebase";
+
+import {
+  GOOGLE_LOGIN,
+  LOGIN,
+  LOGIN_FIREBASE,
+  LOGOUT,
+  REGISTER,
+} from "../constants/auth.constants";
 import {
   hideAuthLoadingACT,
   loginFailACT,
   loginSuccessACT,
+  loginViaFirebaseACT,
+  loginViaFirebaseFailACT,
+  loginViaFirebaseSuccessACT,
   registerFailACT,
   registerSuccessACT,
   showAuthLoadingACT,
 } from "../actions/auth.action";
+import { onGoogleButtonPressAPI } from "../apis/firebase/auth.firebase";
 
 function* loginSaga({ payload }) {
   // get is customer or admin login
@@ -34,6 +49,27 @@ function* loginSaga({ payload }) {
   yield put(hideAuthLoadingACT());
 }
 
+function* loginFirebaseSaga({ payload }) {
+  yield put(showAuthLoadingACT());
+
+  const loginFirebaseRes = yield call(loginFirebaseAPI, payload.data);
+
+  console.log(loginFirebaseRes);
+
+  if (loginFirebaseRes.code && loginFirebaseRes.code == 400) {
+    yield put(loginViaFirebaseFailACT(loginFirebaseRes.message));
+  } else {
+    yield put(loginViaFirebaseSuccessACT(loginFirebaseRes));
+  }
+
+  // yield call(loginFirebaseAPI, payload.data);
+  // console.log(loginFirebaseRes);
+}
+
+function* logoutSaga() {
+  yield call(logoutFirebaseAPI);
+}
+
 function* registerSaga({ payload }) {
   // show loading and block button
   yield put(showAuthLoadingACT());
@@ -54,5 +90,7 @@ function* registerSaga({ payload }) {
 
 export const authSagas = [
   takeLatest(LOGIN, loginSaga),
+  takeLatest(LOGOUT, logoutSaga),
   takeLatest(REGISTER, registerSaga),
+  takeLatest(LOGIN_FIREBASE, loginFirebaseSaga),
 ];

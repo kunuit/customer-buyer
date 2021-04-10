@@ -1,19 +1,35 @@
-import { isLoaded } from "expo-font";
-import * as productTask from "../constants/product.constants";
-// import { toastError, toastSuccess } from '../helpers/toast.Helper';
+import { typeProducts } from "../sagas/product.saga";
 
 const initialState = {
   data: [],
-  isLoaded: false,
+  isLoading: false,
+  isCreatedProduct: false,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "GET_PRODUCTS":
+    case typeProducts.showLoadingProduct:
       return {
         ...state,
-        data: action.payload,
+        isLoading: true,
       };
+    case typeProducts.fetchProductFirebaseSuccess:
+      return {
+        ...state,
+        data: action.payload.data,
+        isLoading: false,
+      };
+    case typeProducts.createProductFirebaseSuccess:
+      return {
+        ...state,
+        isCreatedProduct: true,
+      };
+    case typeProducts.resetCreateProduct:
+      return {
+        ...state,
+        isCreatedProduct: false,
+      };
+
     default:
       return state;
   }

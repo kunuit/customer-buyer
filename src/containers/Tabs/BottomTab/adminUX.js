@@ -11,10 +11,17 @@ import TabProductAdmin from "../TopTab/TabProduct.admin";
 import TabSupplier from "../TopTab/TabSupplier";
 import TabStock from "../TopTab/TabStock";
 import TabCartAdmin from "../TopTab/TabCart.admin";
+import { HomeScreen } from "../../screens/auth.screens";
+import ProductAdmin from "../../screens/admin.screens/Product/Product.admin";
+import SupplierAdmin from "../../screens/admin.screens/Supplier/Supplier.admin";
+import CartAdmin from "../../screens/admin.screens/Cart/Cart.admin";
+import { useSelector } from "react-redux";
+import Profile from "../../screens/Profile";
 
 const Tab = createBottomTabNavigator();
 
 const AdminUX = () => {
+  const { isLogin } = useSelector((state) => state.auth);
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -36,7 +43,7 @@ const AdminUX = () => {
       }}>
       <Tab.Screen
         name='Product'
-        component={TabProductAdmin}
+        component={ProductAdmin}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
@@ -50,7 +57,7 @@ const AdminUX = () => {
       />
       <Tab.Screen
         name='Supplier'
-        component={TabSupplier}
+        component={SupplierAdmin}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <FontAwesome5
@@ -77,7 +84,7 @@ const AdminUX = () => {
       />
       <Tab.Screen
         name='Cart'
-        component={TabCartAdmin}
+        component={CartAdmin}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
@@ -91,7 +98,7 @@ const AdminUX = () => {
       />
       <Tab.Screen
         name='Profile'
-        component={TabProfile}
+        component={isLogin ? Profile : HomeScreen}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (

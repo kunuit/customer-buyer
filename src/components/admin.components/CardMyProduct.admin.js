@@ -8,29 +8,31 @@ const CardMyProduct = ({ item, navigation }) => {
   return (
     <TouchableOpacity
       style={{ elevation: 0 }}
-      onPress={() => navigation.navigate("Product Detail")}>
+      onPress={() => navigation.navigate("Product Detail", item)}>
       <View style={styles.root}>
         <Image
-          style={{ height: 60, width: 60, borderRadius: 30 }}
+          style={{ height: 60, width: 60 }}
           source={{
             uri:
-              "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg",
+              item.images.length != 0
+                ? item.images[1]
+                : "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg",
           }}
         />
         <View style={{ marginLeft: "5%", flex: 1 }}>
-          <Text style={[styles.text, styles.textFont]}>Cun rices</Text>
+          <Text style={[styles.text, styles.textFont]}>{item.name}</Text>
           <View style={styles.news}>
             <Text style={[styles.variant, styles.textFont]}>vision</Text>
             <Text style={[styles.variant, styles.selling, styles.textFont]}>
-              {/* {item.status == 2 ? "Đang bán" : "Chưa bán"} */}
-              Selling
+              {item.status == 0 ? "New" : "Selling"}
             </Text>
           </View>
           <NumberFormat
-            value={3000}
+            value={Math.round(item.price * 100) / 100}
             displayType={"text"}
             thousandSeparator={true}
-            suffix={" vnd"}
+            // suffix={" vnd"}
+            prefix={"$"}
             renderText={(formattedValue) => (
               <Text style={[{ fontSize: 13, color: "green" }]}>
                 {formattedValue}

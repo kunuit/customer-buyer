@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   ScrollView,
   Dimensions,
+  StatusBar,
 } from "react-native";
 
 import ProductDetailImageContainer from "../../components/productDetail.component/ProductDetailImageContainer";
@@ -17,24 +18,39 @@ import ButtonContainer from "../../components/productDetail.component/ButtonCont
 import ButtonBottomAdmin from "../../components/admin.components/ButtonBottomAdmin";
 import { useSelector } from "react-redux";
 import ButtonBack from "../../components/ButtonBack";
+import { theme } from "../../common/theme";
 
-const ProductDetail = ({ navigation }) => {
+const ProductDetail = ({ navigation, route }) => {
   const { isAdminLogin } = useSelector((state) => state.auth);
+
+  const item = route.params;
 
   return (
     <View style={styles.productDetailContainer}>
-      <ScrollView style={{ backgroundColor: "pink" }}>
-        <ProductDetailImageContainer />
+      <StatusBar
+        animated={true}
+        backgroundColor={theme.backgrounds.itemImageDetail}
+        barStyle='dark-content'
+        hidden={true}
+      />
+      <ScrollView>
+        <ProductDetailImageContainer images={item.images} />
         <View style={styles.productDetailInfoContainer}>
-          <ProductUnitContainer isEdit={isAdminLogin ? true : false} />
-          <QuantityAjustContainer />
+          <ProductUnitContainer
+            title={item.name}
+            isEdit={isAdminLogin ? true : false}
+          />
+          <QuantityAjustContainer
+            price={item.price}
+            isEdit={isAdminLogin ? true : false}
+          />
           <DescriptionContainer />
           <NutritionContainer />
           <ReviewContainer />
         </View>
       </ScrollView>
-      <ButtonBack navigation={navigation} />
       {isAdminLogin ? <ButtonBottomAdmin /> : <ButtonContainer />}
+      <ButtonBack navigation={navigation} isBackground={true} />
     </View>
   );
 };
@@ -45,7 +61,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     width: "100%",
     alignItems: "center",
-    paddingBottom: Dimensions.get("window").height * 0.09 + 37,
   },
 });
 

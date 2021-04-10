@@ -3,6 +3,7 @@ import { SafeAreaView, FlatList } from "react-native";
 import { StyleSheet } from "react-native";
 import { Dimensions } from "react-native";
 import { Text, View } from "react-native";
+import { windowHeight } from "../../../../common/Dimensions";
 import CardStockSlip from "../../../../components/admin.components/CardStockSlip";
 import SearchView from "../../../../components/SearchView";
 import TitleScreen from "../../../../components/TitleScreen";
@@ -32,10 +33,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     paddingTop: "1%",
+    paddingBottom: windowHeight * 0.09,
   },
-  listCardItemContainer: {
-    marginBottom: Dimensions.get("window").height * 0.09,
-  },
+  listCardItemContainer: {},
 });
 
 export default InStockSlip;

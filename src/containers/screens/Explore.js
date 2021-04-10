@@ -8,10 +8,10 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import CategoriesList from "../../components/CategoriesList";
 import { Searchbar } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
 import ListCardItem from "../../components/ListCardItem";
+import GroceriesList from "../../components/GroceriesList";
 import Colors from "../../constants/colors";
 const Explore = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -24,14 +24,14 @@ const Explore = () => {
       </View>
       <View style={styles.searchContainer}>
         <Searchbar
-          placeholder="Search Store"
+          placeholder='Search Store'
           onChangeText={onChangeSearch}
           value={searchQuery}
           style={styles.searchBar}
           clearIcon={() => (
-            <MaterialIcons name="clear" size={20} color="black" />
+            <MaterialIcons name='clear' size={20} color='black' />
           )}
-          icon={() => <MaterialIcons name="search" size={20} color="black" />}
+          icon={() => <MaterialIcons name='search' size={20} color='black' />}
           inputStyle={[
             { fontFamily: "gilroy-bold" },
             { fontSize: 13 },
@@ -40,7 +40,7 @@ const Explore = () => {
           on
         />
       </View>
-      {searchQuery == "" ? <CategoriesList /> : <ListCardItem />}
+      {searchQuery == "" ? <GroceriesList /> : <ListCardItem />}
     </SafeAreaView>
   );
 };

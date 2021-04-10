@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import { Dimensions } from "react-native";
 import { Text, View } from "react-native";
 import { FAB } from "react-native-paper";
+import { windowHeight } from "../../../../common/Dimensions";
 import { theme } from "../../../../common/theme";
 import CardMySupplier from "../../../../components/admin.components/CardMySupplier.admin";
 import SearchView from "../../../../components/SearchView";
@@ -43,16 +44,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     backgroundColor: "white",
+    paddingBottom: windowHeight * 0.09,
   },
   fab: {
     position: "absolute",
     margin: 16,
     right: 0,
-    bottom: Dimensions.get("window").height * 0.08,
+    bottom: windowHeight * 0.09,
   },
-  listCardItemContainer: {
-    marginBottom: Dimensions.get("window").height * 0.09,
-  },
+  listCardItemContainer: {},
 });
 
 export default SupplierAdmin;

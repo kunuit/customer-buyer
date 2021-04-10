@@ -9,9 +9,15 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
+import { useSelector } from "react-redux";
 import CardItem from "./CardItem";
+import CategoryHomeLoader from "./Loader/CategoryHomeLoader";
+
 const ProductList = ({ title, ...props }) => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const { data, isLoading } = useSelector((state) => state.products);
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -20,22 +26,34 @@ const ProductList = ({ title, ...props }) => {
           <Text style={styles.seeAllText}>See all</Text>
         </TouchableOpacity>
       </View>
-      <FlatList
-        showsHorizontalScrollIndicator={false}
-        horizontal={true}
-        data={fakeData}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.cardItemContainer}>
-            <CardItem
-              item={item}
-              heightCard={200}
-              fontSizeTitle={16}
-              fontSizeDes={14}
-            />
-          </View>
-        )}
-      />
+      {!isLoading ? (
+        <FlatList
+          showsHorizontalScrollIndicator={false}
+          horizontal={true}
+          data={data}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.cardItemContainer}>
+              <CardItem
+                item={{ ...item }}
+                heightCard={200}
+                fontSizeTitle={16}
+                fontSizeDes={14}
+                numberOfLines={1}
+              />
+            </View>
+          )}
+        />
+      ) : (
+        <View style={{ height: 200, flex: 1 }}>
+          <ActivityIndicator
+            style={{ opacity: 1 }}
+            animating={true}
+            size='small'
+            color='#fff'
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -66,6 +84,7 @@ const styles = StyleSheet.create({
   cardItemContainer: {
     margin: 10,
     flex: 1,
+    width: 135,
   },
 });
 

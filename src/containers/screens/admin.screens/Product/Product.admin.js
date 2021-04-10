@@ -5,6 +5,8 @@ import { StyleSheet } from "react-native";
 import { SafeAreaView, Text, View } from "react-native";
 import { FAB } from "react-native-paper";
 import Animated from "react-native-reanimated";
+import { useSelector } from "react-redux";
+import { windowHeight } from "../../../../common/Dimensions";
 import { theme } from "../../../../common/theme";
 import CardMyProduct from "../../../../components/admin.components/CardMyProduct.admin";
 import ListCardItem from "../../../../components/ListCardItem";
@@ -13,6 +15,7 @@ import TitleScreen from "../../../../components/TitleScreen";
 
 const ProductAdmin = ({ navigation }) => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const { data } = useSelector((state) => state.products);
 
   return (
     <SafeAreaView style={styles.exploreContainer}>
@@ -23,10 +26,10 @@ const ProductAdmin = ({ navigation }) => {
       <FlatList
         style={styles.listCardItemContainer}
         showsVerticalScrollIndicator={false}
-        data={fakeData}
+        data={data}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <CardMyProduct item={item} navigation={navigation} />
+          <CardMyProduct item={{ ...item }} navigation={navigation} />
         )}
       />
 
@@ -46,15 +49,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     backgroundColor: "white",
+    paddingBottom: windowHeight * 0.09,
   },
   fab: {
     position: "absolute",
     margin: 16,
     right: 0,
-    bottom: Dimensions.get("window").height * 0.08,
-  },
-  listCardItemContainer: {
-    marginBottom: Dimensions.get("window").height * 0.09,
+    bottom: windowHeight * 0.09,
   },
 });
 

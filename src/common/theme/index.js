@@ -21,5 +21,9 @@ export const theme = {
     statusBar: "#FFFFFF",
     paper: "#F2F3F2",
     white: "#FFFFFF",
+    itemImageDetail: "rgb(242, 243, 242)",
+    modal: "rgba(0, 0, 0, 0.5)",
+    buttonBack: "rgba(0,0,0,0.3)",
+    transparent: "rgba(0,0,0,0)",
   },
 };

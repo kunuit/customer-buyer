@@ -80,7 +80,7 @@ const RegisterScreen = ({ navigation }) => {
   }
 
   return (
-    <Background>
+    <Background isButtonBack={true} navigation={navigation}>
       <Logo />
 
       <Header>Create Account</Header>

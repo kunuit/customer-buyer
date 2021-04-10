@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text } from "react-native";
+import { StatusBar, Text } from "react-native";
 import { StyleSheet } from "react-native";
 import { View } from "react-native";
 import { theme } from "../../../../common/theme";
@@ -15,6 +15,8 @@ import AddImageComponent from "../../../../components/AddImageComponent";
 import { Dimensions } from "react-native";
 import { Provider, Portal, Modal } from "react-native-paper";
 import { Animated } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { typeProducts } from "../../../../sagas/product.saga";
 
 const CreateProduct = ({ navigation }) => {
   const [name, setName] = useState({ value: "", error: "" });
@@ -32,12 +34,21 @@ const CreateProduct = ({ navigation }) => {
     new Animated.Value(Dimensions.get("window").height * 0.1),
   );
 
+  const { isCreatedProduct } = useSelector((state) => state.products);
+
+  const dispatch = useDispatch();
+
   const AddImage = (uri) => {
     setVisible(false);
     setImages([...images, uri]);
   };
 
   useEffect(() => {
+    if (isCreatedProduct) {
+      navigation.goBack();
+      dispatch({ type: typeProducts.resetCreateProduct });
+    }
+
     if (visible == true) {
       setVisibleModal(true);
       openModal();
@@ -45,10 +56,13 @@ const CreateProduct = ({ navigation }) => {
     if (visible == false) {
       setTimeout(() => {
         setVisibleModal(false);
-      }, 500);
+      }, 300);
       closeModal();
     }
-  }, [visible]);
+    if (category.value == "") {
+      setParent({ value: "", error: "" });
+    }
+  }, [visible, category, isCreatedProduct]);
 
   const openModal = () => {
     Animated.timing(modalY, {
@@ -67,6 +81,27 @@ const CreateProduct = ({ navigation }) => {
   };
 
   const createNewProduct = async () => {
+    dispatch({
+      type: typeProducts.createProductFirebase,
+      payload: {
+        data: {
+          id: Math.floor(Math.random() * 100000 + 1),
+          name: name.value,
+          description: description.value,
+          price: price.value,
+          height: height.value,
+          weight: weight.value,
+          categoryId: category.value,
+          supplierId: supplier.value,
+          images: [
+            "https://i.pinimg.com/originals/eb/d4/de/ebd4deb64c74e2f1246626d5a290274d.png",
+            "https://i.pinimg.com/564x/d1/7a/77/d17a77389b34daabcfdd58d78fce5c5d.jpg",
+          ],
+          status: 0,
+          measureId: 0,
+        },
+      },
+    });
     // console.log(
     //   {
     //     name: name.value,
@@ -82,26 +117,26 @@ const CreateProduct = ({ navigation }) => {
     // );
 
     // Upload the image using the fetch and FormData APIs
-    let formData = new FormData();
+    // let formData = new FormData();
 
-    for (let uri of images) {
-      let filename = uri.split("/").pop();
+    // for (let uri of images) {
+    //   let filename = uri.split("/").pop();
 
-      // Infer the type of the image
-      let match = /\.(\w+)$/.exec(filename);
-      let type = match ? `image/${match[1]}` : `image`;
+    //   // Infer the type of the image
+    //   let match = /\.(\w+)$/.exec(filename);
+    //   let type = match ? `image/${match[1]}` : `image`;
 
-      // Assume "photo" is the name of the form field the server expects
-      formData.append("images", { uri: uri, name: filename, type });
-    }
+    //   // Assume "photo" is the name of the form field the server expects
+    //   formData.append("images", { uri: uri, name: filename, type });
+    // }
 
-    formData.append("name", name.value);
-    formData.append("price", price.value);
-    formData.append("description", description.value);
-    formData.append("categoryId", "605460a10626006fe5dcab41");
-    formData.append("measureId", "605460b10626006fe5dcab42");
+    // formData.append("name", name.value);
+    // formData.append("price", price.value);
+    // formData.append("description", description.value);
+    // formData.append("categoryId", "605460a10626006fe5dcab41");
+    // formData.append("measureId", "605460b10626006fe5dcab42");
 
-    console.log(formData);
+    // console.log(formData);
     // try {
     //   const data = await addProductAPITest(formData);
     //   console.log(data, "Check data res");
@@ -110,8 +145,8 @@ const CreateProduct = ({ navigation }) => {
     // }
   };
   return (
-    <Provider>
-      <View style={styles.root}>
+    <View style={styles.root}>
+      <Provider>
         <TitleScreen>Create Product</TitleScreen>
         <ButtonBack navigation={navigation} />
 
@@ -141,7 +176,7 @@ const CreateProduct = ({ navigation }) => {
 
           <TextInput
             label='Price'
-            returnKeyType='done'
+            returnKeyType='next'
             value={price.value}
             onChangeText={(text) => setPrice({ value: text, error: "" })}
             keyboardType='phone-pad'
@@ -152,7 +187,7 @@ const CreateProduct = ({ navigation }) => {
 
           <TextInput
             label='Height'
-            returnKeyType='done'
+            returnKeyType='next'
             value={height.value}
             onChangeText={(text) => {
               setHeight({ value: text, error: "" });
@@ -164,7 +199,7 @@ const CreateProduct = ({ navigation }) => {
 
           <TextInput
             label='Weight'
-            returnKeyType='done'
+            returnKeyType='next'
             value={weight.value}
             onChangeText={(text) => setWeight({ value: text, error: "" })}
             keyboardType='phone-pad'
@@ -233,14 +268,18 @@ const CreateProduct = ({ navigation }) => {
             visible={visibleModal}
             onDismiss={() => setVisible(false)}
             contentContainerStyle={styles.containerStyle}>
+            <StatusBar
+              backgroundColor={theme.backgrounds.modal}
+              barStyle='dark-content'
+            />
             <Animated.View
               style={[styles.modal, { transform: [{ translateY: modalY }] }]}>
               <ImagePickerComponent onImage={(e) => AddImage(e)} />
             </Animated.View>
           </Modal>
         </Portal>
-      </View>
-    </Provider>
+      </Provider>
+    </View>
   );
 };
 
@@ -255,15 +294,16 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   modal: {
-    height: Dimensions.get("window").height * 0.18,
-    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height * 0.1,
+    // width: Dimensions.get("window").width,
     justifyContent: "flex-start",
     backgroundColor: theme.colors.notBlack,
-    borderRadius: 25,
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
     justifyContent: "flex-start",
   },
   containerStyle: {
-    marginBottom: -Dimensions.get("window").height * 0.78,
+    marginBottom: -Dimensions.get("window").height * 0.85,
     height: Dimensions.get("window").height * 0.18,
   },
 });
