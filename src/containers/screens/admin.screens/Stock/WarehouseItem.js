@@ -12,15 +12,15 @@ const WarehouseItem = ({ navigation }) => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   return (
     <SafeAreaView style={styles.exploreContainer}>
-      <SearchView holSearch='my warehouse items' />
+      <SearchView holSearch="my warehouse items" />
 
       <FlatList
         style={styles.listCardItemContainer}
         showsVerticalScrollIndicator={false}
         data={fakeData}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <CardWarehouseItem item={item} navigation={navigation} />
+        renderItem={({ item, index }) => (
+          <CardWarehouseItem key={index} item={item} navigation={navigation} />
         )}
       />
     </SafeAreaView>

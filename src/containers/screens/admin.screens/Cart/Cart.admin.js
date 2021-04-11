@@ -14,15 +14,15 @@ const CartAdmin = ({ navigation }) => {
     <SafeAreaView style={styles.exploreContainer}>
       <TitleScreen isBorder={false}>My Cart</TitleScreen>
 
-      <SearchView holSearch='my cart' />
+      <SearchView holSearch="my cart" />
 
       <FlatList
         style={styles.listCardItemContainer}
         showsVerticalScrollIndicator={false}
         data={fakeData}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <CardMyCart item={item} navigation={navigation} />
+        renderItem={({ item, index }) => (
+          <CardMyCart key={index} item={item} navigation={navigation} />
         )}
       />
     </SafeAreaView>

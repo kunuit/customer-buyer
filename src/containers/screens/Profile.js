@@ -25,8 +25,10 @@ const Profile = () => {
         {/* <InfoProfile/> */}
         <FlatList
           data={arrInfoCard}
-          renderItem={({ item }) => {
-            return <InfoCard nameIcon={item.nameIcon} name={item.name} />;
+          renderItem={({ item, index }) => {
+            return (
+              <InfoCard key={index} nameIcon={item.nameIcon} name={item.name} />
+            );
           }}
           keyExtractor={(item) => item.name}
           ListHeaderComponent={InfoProfile}

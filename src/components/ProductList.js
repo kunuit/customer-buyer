@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   View,
   StyleSheet,
   Text,
-  Image,
-  TouchableWithoutFeedback,
   FlatList,
-  Dimensions,
   TouchableOpacity,
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { useSelector } from "react-redux";
 import CardItem from "./CardItem";
-import CategoryHomeLoader from "./Loader/CategoryHomeLoader";
+import MainLoading from "../components/Loader/MainLoading";
 
 const ProductList = ({ title, ...props }) => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -31,8 +28,7 @@ const ProductList = ({ title, ...props }) => {
           showsHorizontalScrollIndicator={false}
           horizontal={true}
           data={data}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <View style={styles.cardItemContainer}>
               <CardItem
                 item={{ ...item }}
@@ -43,16 +39,10 @@ const ProductList = ({ title, ...props }) => {
               />
             </View>
           )}
+          keyExtractor={(item, index) => index.toString()}
         />
       ) : (
-        <View style={{ height: 200, flex: 1 }}>
-          <ActivityIndicator
-            style={{ opacity: 1 }}
-            animating={true}
-            size='small'
-            color='#fff'
-          />
-        </View>
+        <MainLoading height={190} padding={30} />
       )}
     </View>
   );

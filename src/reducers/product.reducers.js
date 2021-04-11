@@ -3,7 +3,7 @@ import { typeProducts } from "../sagas/product.saga";
 const initialState = {
   data: [],
   isLoading: false,
-  isCreatedProduct: false,
+  isCreatedOrUpdatedOrDeletedProduct: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -22,12 +22,13 @@ const reducer = (state = initialState, action) => {
     case typeProducts.createProductFirebaseSuccess:
       return {
         ...state,
-        isCreatedProduct: true,
+        isCreatedOrUpdatedOrDeletedProduct: true,
+        isLoading: false,
       };
     case typeProducts.resetCreateProduct:
       return {
         ...state,
-        isCreatedProduct: false,
+        isCreatedOrUpdatedOrDeletedProduct: false,
       };
 
     default:

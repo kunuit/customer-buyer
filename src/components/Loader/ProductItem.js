@@ -1,8 +1,9 @@
 import React from "react";
 import ContentLoader, { Rect, Circle, Path } from "react-content-loader/native";
 
-const MyLoader = (props) => (
+const MyLoader = ({ key, ...props }) => (
   <ContentLoader
+    key={key}
     style={{ flex: 1 }}
     speed={1}
     width={150}

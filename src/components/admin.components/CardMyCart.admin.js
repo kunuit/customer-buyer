@@ -4,11 +4,13 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import NumberFormat from "react-number-format";
 import { theme } from "../../common/theme";
 
-const CardMyCart = ({ item, navigation }) => {
+const CardMyCart = ({ item, navigation, key }) => {
   return (
     <TouchableOpacity
+      key={key}
       style={{ elevation: 0 }}
-      onPress={() => navigation.navigate("Cart Detail")}>
+      onPress={() => navigation.navigate("Cart Detail")}
+    >
       <View style={styles.root}>
         <Image
           style={{ height: 60, width: 60, borderRadius: 30 }}

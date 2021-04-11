@@ -2,14 +2,14 @@ const initState = {
   dataCustomer: null,
   token: null,
   refreshToken: null,
-  isLogin: true,
+  isLogin: false,
   isRegister: false,
   errorRefreshToken: null,
   errorLogin: null,
   errorRegister: null,
   isAuthLoading: false,
   isAdmin: false,
-  isAdminLogin: true,
+  isAdminLogin: false,
 };
 
 import {

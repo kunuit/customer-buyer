@@ -16,15 +16,15 @@ const SupplierAdmin = ({ navigation }) => {
     <SafeAreaView style={styles.exploreContainer}>
       <TitleScreen isBorder={false}>My Suppliers</TitleScreen>
 
-      <SearchView holSearch='my supplier' />
+      <SearchView holSearch="my supplier" />
 
       <FlatList
         style={styles.listCardItemContainer}
         showsVerticalScrollIndicator={false}
         data={fakeData}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <CardMySupplier item={item} navigation={navigation} />
+        renderItem={({ item, index }) => (
+          <CardMySupplier key={index} item={item} navigation={navigation} />
         )}
       />
 
@@ -33,7 +33,7 @@ const SupplierAdmin = ({ navigation }) => {
         style={styles.fab}
         small={false}
         theme={{ colors: { accent: theme.colors.primary } }}
-        icon='plus'
+        icon="plus"
       />
     </SafeAreaView>
   );

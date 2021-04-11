@@ -1,23 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  TouchableWithoutFeedback,
-  FlatList,
-  Dimensions,
-} from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import CategoryItem from "../components/CategoryItem";
-import Colors from "../constants/colors";
-import Button from "../components/Button";
-import ProductItem from "./Loader/ProductItem";
 import { multipleRowsFlatListFormat } from "../common/format/FlatListDataFormat";
 import GroceryItem from "./GroceryItem";
 import CategoryHomeLoader from "./Loader/CategoryHomeLoader";
-import { itemData } from "./data/data";
 import { windowHeight } from "../common/Dimensions";
+
 const GroceriesList = ({ isHome = false }) => {
   const { isLoading, data } = useSelector((state) => state.categories);
 
@@ -26,20 +15,21 @@ const GroceriesList = ({ isHome = false }) => {
       style={[
         styles.container,
         isHome ? {} : { paddingBottom: windowHeight * 0.09 },
-      ]}>
+      ]}
+    >
       {!isLoading ? (
         <FlatList
           showsHorizontalScrollIndicator={false}
           horizontal={isHome}
           numColumns={isHome ? null : 2}
           showsVerticalScrollIndicator={false}
-          data={multipleRowsFlatListFormat(data, 1)}
+          data={multipleRowsFlatListFormat(data, 2)}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) =>
+          renderItem={({ item, index }) =>
             item == "empty" ? (
-              <View style={styles.cardItemContainer}></View>
+              <View key={index} style={styles.cardItemContainer}></View>
             ) : (
-              <View style={styles.cardItemContainer}>
+              <View key={index} style={styles.cardItemContainer}>
                 {isHome ? (
                   <GroceryItem item={item} />
                 ) : (

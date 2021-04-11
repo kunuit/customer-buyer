@@ -14,41 +14,58 @@ export const getAllProduct_FiB_API = async () => {
   }
 };
 
-export const createProduct_FiB_API = async (data = []) => {
+export const createProduct_FiB_API = async (data) => {
   try {
-    const newProduct = await productRef.set([...data]);
-    console.log(newProduct, "test");
+    const newProduct = await firebase
+      .database()
+      .ref(`/products/${data.id}`)
+      .set({ ...data });
+    console.log(newProduct, "test create at Saga");
     return { code: 200, data: "res" };
-    // productRef
-    //   .set([
-    //     {
-    //       id: 0,
-    //       name: "mushroom",
-    //       price: 9.99,
-    //       description: "quality from home",
-    //       categoryId: 0,
-    //       measureId: 0,
-    //       status: 0,
-    //       images: [
-    //         "https://i.pinimg.com/originals/eb/d4/de/ebd4deb64c74e2f1246626d5a290274d.png",
-    //         "https://i.pinimg.com/564x/d1/7a/77/d17a77389b34daabcfdd58d78fce5c5d.jpg",
-    //       ],
-    //     },
-    //     {
-    //       id: 1,
-    //       name: "mushroom 1",
-    //       price: 9.98,
-    //       description: "quality from home 1",
-    //       categoryId: 0,
-    //       measureId: 0,
-    //       status: 0,
-    //       images: [
-    //         "https://i.pinimg.com/236x/1c/55/f6/1c55f6d8ef3148b44ba54f1252bb6905.jpg",
-    //         "https://i.pinimg.com/236x/e6/86/4f/e6864fe2903cc1b34978caefb4617a5b.jpg",
-    //       ],
-    //     },
-    //   ])
-    //   .then(() => console.log("Data set."));
+  } catch (error) {
+    return { code: 400, message: error + "" };
+  }
+};
+
+export const updateProduct_FiB_API = async (data) => {
+  try {
+    const updatedProduct = await firebase
+      .database()
+      .ref(`/products/${data.id}`)
+      .update({
+        ...data,
+      });
+
+    console.log(updatedProduct, "test update at Saga");
+    return { code: 200, data: "res" };
+  } catch (error) {
+    return { code: 400, message: error + "" };
+  }
+};
+
+export const removeProduct_FiB_API = async (index) => {
+  try {
+    const removeProduct = await firebase
+      .database()
+      .ref(`/products/${index}`)
+      .remove();
+
+    return { code: 200, data: "res" };
+  } catch (error) {
+    return { code: 400, message: error + "" };
+  }
+};
+
+export const queryProduct_FiB_API = async (data) => {
+  try {
+    const query = await firebase
+      .database()
+      .ref("/products")
+      .equalTo(data)
+      .once("value");
+    console.log(query);
+
+    return { code: 200, data: "res" };
   } catch (error) {
     return { code: 400, message: error + "" };
   }

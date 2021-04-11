@@ -15,7 +15,7 @@ const MyLoader = (props) => {
         showsVerticalScrollIndicator={false}
         data={items}
         renderItem={(item, index) => (
-          <ProductItem style={{ margin: 5, flex: 1 }} />
+          <ProductItem key={index} style={{ margin: 5, flex: 1 }} />
         )}
       />
     </View>

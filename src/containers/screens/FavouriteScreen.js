@@ -32,8 +32,8 @@ const CartScreen = () => {
         showsVerticalScrollIndicator={false}
         data={fakeData}
         keyExtractor={(item, index) => item.toString()}
-        renderItem={({ item }) => (
-          <View>
+        renderItem={({ item, index }) => (
+          <View key={index}>
             <FavouriteItem />
             <Line />
           </View>

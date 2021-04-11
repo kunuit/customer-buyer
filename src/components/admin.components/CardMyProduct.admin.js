@@ -4,19 +4,20 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import NumberFormat from "react-number-format";
 import { theme } from "../../common/theme";
 
-const CardMyProduct = ({ item, navigation }) => {
+const CardMyProduct = ({ item, navigation, key }) => {
   return (
     <TouchableOpacity
+      key={key}
       style={{ elevation: 0 }}
-      onPress={() => navigation.navigate("Product Detail", item)}>
+      onPress={() => navigation.navigate("Product Detail", item)}
+    >
       <View style={styles.root}>
         <Image
           style={{ height: 60, width: 60 }}
           source={{
-            uri:
-              item.images.length != 0
-                ? item.images[1]
-                : "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg",
+            uri: item.images
+              ? item.images[1]
+              : "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg",
           }}
         />
         <View style={{ marginLeft: "5%", flex: 1 }}>

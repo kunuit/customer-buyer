@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   View,
   StyleSheet,
   Text,
-  Image,
-  TouchableWithoutFeedback,
   FlatList,
-  Dimensions,
   TouchableOpacity,
 } from "react-native";
 import { useSelector } from "react-redux";
 import CardItem from "./CardItem";
 import GroceriesList from "./GroceriesList";
+
 const Grocery = ({ title, ...props }) => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -32,8 +30,7 @@ const Grocery = ({ title, ...props }) => {
         showsVerticalScrollIndicator={false}
         numColumns={2}
         data={data}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <View style={styles.cardItemContainer}>
             <CardItem
               item={{ ...item }}
@@ -44,6 +41,7 @@ const Grocery = ({ title, ...props }) => {
             />
           </View>
         )}
+        keyExtractor={(item, index) => index.toString()}
       />
     </View>
   );

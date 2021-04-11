@@ -1,16 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  Dimensions,
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  SafeAreaView,
-} from "react-native";
+import React from "react";
+import { useSelector } from "react-redux";
+import { Dimensions, View, Text, StyleSheet, FlatList } from "react-native";
 import Button from "../../components/Button";
 import CartItem from "../../components/CartItem";
 import Colors from "../../constants/colors";
+
 const Line = () => {
   return (
     <View
@@ -23,14 +17,7 @@ const Line = () => {
 };
 const CartScreen = () => {
   const { products } = useSelector((state) => state);
-  const dispatch = useDispatch();
-  const dispatchGetAllProducts = () =>
-    dispatch({
-      type: "FETCH_PRODUCTS",
-    });
-  useEffect(() => {
-    // dispatchGetAllProducts();
-  }, []);
+
   const fakeData = [1, 2, 3, 4, 5, 6, 7];
   return (
     <View style={styles.container}>
@@ -42,8 +29,8 @@ const CartScreen = () => {
         showsVerticalScrollIndicator={false}
         data={fakeData}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <View>
+        renderItem={({ item, index }) => (
+          <View key={index}>
             <CartItem product={item} />
             <Line />
           </View>
@@ -55,7 +42,8 @@ const CartScreen = () => {
           width: "90%",
           position: "absolute",
           bottom: Dimensions.get("window").height * 0.08,
-        }}>
+        }}
+      >
         <Text style={{ color: "white", fontFamily: "gilroy-bold" }}>
           Go to Checkout
         </Text>

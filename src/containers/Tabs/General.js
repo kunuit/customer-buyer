@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import {
   ForgotPasswordScreen,
-  HomeScreen,
   LoginScreen,
   RegisterScreen,
 } from "../screens/auth.screens";
@@ -30,25 +29,25 @@ const General = () => {
   }, []);
 
   return (
-    <Stack.Navigator headerMode='none' initialRouteName='Bottom tab'>
+    <Stack.Navigator headerMode="none">
       <Stack.Screen
-        name='Bottom tab'
+        name="Bottom tab"
         component={isAdminLogin ? AdminUX : MainUX}
       />
-      <Stack.Screen name='LoginScreen' component={LoginScreen} />
-      <Stack.Screen name='RegisterScreen' component={RegisterScreen} />
+      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
       <Stack.Screen
-        name='ForgotPasswordScreen'
+        name="ForgotPasswordScreen"
         component={ForgotPasswordScreen}
       />
 
-      <Stack.Screen name='Cart admin Detail' component={CartAdminDetail} />
+      <Stack.Screen name="Cart admin Detail" component={CartAdminDetail} />
 
-      <Stack.Screen name='Product Detail' component={ProductDetail} />
-      <Stack.Screen name='Create Product' component={CreateProduct} />
+      <Stack.Screen name="Product Detail" component={ProductDetail} />
+      <Stack.Screen name="Create Product" component={CreateProduct} />
 
-      <Stack.Screen name='Supplier Detail' component={SupplierDetail} />
-      <Stack.Screen name='Create Supplier' component={CreateSupplier} />
+      <Stack.Screen name="Supplier Detail" component={SupplierDetail} />
+      <Stack.Screen name="Create Supplier" component={CreateSupplier} />
     </Stack.Navigator>
   );
 };

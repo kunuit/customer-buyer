@@ -5,7 +5,7 @@ import RoundedButton from "../RoundedButton";
 import Colors from "../../constants/colors";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 
-const ButtonBottomAdmin = () => {
+const ButtonBottomAdmin = ({ onDeletedProduct }) => {
   return (
     <View style={styles.root}>
       {/* <Button
@@ -16,10 +16,11 @@ const ButtonBottomAdmin = () => {
       </Button> */}
 
       <RoundedButton
-        mode='contained'
-        onPress={() => console.log("Delete Item")}
-        style={styles.buttonItem}>
-        <FontAwesome5 name='trash' size={24} color={theme.colors.notpink} />
+        mode="contained"
+        onPress={() => onDeletedProduct()}
+        style={styles.buttonItem}
+      >
+        <FontAwesome5 name="trash" size={24} color={theme.colors.notpink} />
       </RoundedButton>
 
       {/* <Button

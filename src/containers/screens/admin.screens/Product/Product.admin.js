@@ -9,36 +9,49 @@ import { useSelector } from "react-redux";
 import { windowHeight } from "../../../../common/Dimensions";
 import { theme } from "../../../../common/theme";
 import CardMyProduct from "../../../../components/admin.components/CardMyProduct.admin";
+import MainLoading from "../../../../components/Loader/MainLoading";
 import ListCardItem from "../../../../components/ListCardItem";
 import SearchView from "../../../../components/SearchView";
 import TitleScreen from "../../../../components/TitleScreen";
+import { typeProducts } from "../../../../sagas/product.saga";
 
 const ProductAdmin = ({ navigation }) => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const { data } = useSelector((state) => state.products);
+  const { data, isLoading } = useSelector((state) => state.products);
 
   return (
     <SafeAreaView style={styles.exploreContainer}>
       <TitleScreen isBorder={false}>My Products</TitleScreen>
 
-      <SearchView holSearch='my product' />
-
-      <FlatList
-        style={styles.listCardItemContainer}
-        showsVerticalScrollIndicator={false}
-        data={data}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <CardMyProduct item={{ ...item }} navigation={navigation} />
-        )}
+      <SearchView
+        typeAction={typeProducts.queryProductFirebase}
+        holSearch="my product"
       />
+
+      {!isLoading ? (
+        <FlatList
+          style={styles.listCardItemContainer}
+          showsVerticalScrollIndicator={false}
+          data={data}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item, index }) => (
+            <CardMyProduct
+              key={index}
+              item={{ ...item }}
+              navigation={navigation}
+            />
+          )}
+        />
+      ) : (
+        <MainLoading padding={30} />
+      )}
 
       <FAB
         onPress={() => navigation.navigate("Create Product")}
         style={styles.fab}
         small={false}
         theme={{ colors: { accent: theme.colors.primary } }}
-        icon='plus'
+        icon="plus"
       />
     </SafeAreaView>
   );

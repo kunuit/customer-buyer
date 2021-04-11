@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-import Colors from "../constants/colors";
+import React from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
-import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
-import RoundedButton from "../components/RoundedButton";
+
 const GroceryItem = ({ item }) => {
   return (
     <TouchableOpacity

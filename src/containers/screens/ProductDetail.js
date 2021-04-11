@@ -1,12 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  ScrollView,
-  Dimensions,
-  StatusBar,
-} from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, View, ScrollView, StatusBar } from "react-native";
 
 import ProductDetailImageContainer from "../../components/productDetail.component/ProductDetailImageContainer";
 import ProductUnitContainer from "../../components/productDetail.component/ProductUnitContainer";
@@ -16,21 +9,47 @@ import NutritionContainer from "../../components/productDetail.component/Nutriti
 import ReviewContainer from "../../components/productDetail.component/ReviewContainer";
 import ButtonContainer from "../../components/productDetail.component/ButtonContainer";
 import ButtonBottomAdmin from "../../components/admin.components/ButtonBottomAdmin";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ButtonBack from "../../components/ButtonBack";
 import { theme } from "../../common/theme";
+import { typeProducts } from "../../sagas/product.saga";
 
 const ProductDetail = ({ navigation, route }) => {
+  const dispatch = useDispatch();
+
   const { isAdminLogin } = useSelector((state) => state.auth);
+  const { isCreatedOrUpdatedOrDeletedProduct } = useSelector(
+    (state) => state.products
+  );
 
   const item = route.params;
+
+  useEffect(() => {
+    if (isCreatedOrUpdatedOrDeletedProduct) {
+      dispatch({ type: typeProducts.resetCreateProduct });
+      navigation.navigate("Bottom tab");
+    }
+  }, [isCreatedOrUpdatedOrDeletedProduct]);
+
+  const redirect = () => {
+    navigation.navigate("Create Product", item);
+  };
+
+  const handleDeletedProduct = () => {
+    dispatch({
+      type: typeProducts.removeProductFirebase,
+      payload: {
+        index: item.id,
+      },
+    });
+  };
 
   return (
     <View style={styles.productDetailContainer}>
       <StatusBar
         animated={true}
         backgroundColor={theme.backgrounds.itemImageDetail}
-        barStyle='dark-content'
+        barStyle="dark-content"
         hidden={true}
       />
       <ScrollView>
@@ -39,17 +58,22 @@ const ProductDetail = ({ navigation, route }) => {
           <ProductUnitContainer
             title={item.name}
             isEdit={isAdminLogin ? true : false}
+            upDateProduct={redirect}
           />
           <QuantityAjustContainer
             price={item.price}
             isEdit={isAdminLogin ? true : false}
           />
-          <DescriptionContainer />
+          <DescriptionContainer description={item.description} />
           <NutritionContainer />
           <ReviewContainer />
         </View>
       </ScrollView>
-      {isAdminLogin ? <ButtonBottomAdmin /> : <ButtonContainer />}
+      {isAdminLogin ? (
+        <ButtonBottomAdmin onDeletedProduct={handleDeletedProduct} />
+      ) : (
+        <ButtonContainer />
+      )}
       <ButtonBack navigation={navigation} isBackground={true} />
     </View>
   );

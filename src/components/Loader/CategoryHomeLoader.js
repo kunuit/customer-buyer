@@ -8,15 +8,17 @@ const MyLoader = (props) => {
       style={{
         flex: 1,
         // paddingBottom: Dimensions.get("window").height * 0.09,
-      }}>
+      }}
+    >
       <FlatList
         showsHorizontalScrollIndicator={false}
         horizontal={true}
         showsVerticalScrollIndicator={false}
         data={items}
         renderItem={(item, index) => (
-          <CategoryHomeItem style={{ margin: 5, flex: 1 }} />
+          <CategoryHomeItem key={index} style={{ margin: 5, flex: 1 }} />
         )}
+        keyExtractor={(item, index) => index.toString()}
       />
     </View>
   );

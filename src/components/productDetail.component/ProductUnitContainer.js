@@ -5,7 +5,7 @@ import { View, StyleSheet, Text } from "react-native";
 import { theme } from "../../common/theme";
 import { useState } from "react";
 
-const ProductUnitContainer = ({ title, unitText, isEdit }) => {
+const ProductUnitContainer = ({ title, unitText, isEdit, upDateProduct }) => {
   const [heart, setHeart] = useState(false);
   return (
     <View style={styles.productUnitContainer}>
@@ -20,20 +20,22 @@ const ProductUnitContainer = ({ title, unitText, isEdit }) => {
       <View>
         {isEdit ? (
           <RoundedButton
-            mode='contained'
-            onPress={() => console.log("edit product unit Containter")}
-            style={styles.buttonItem}>
-            <FontAwesome name='edit' size={24} color='black' />
+            mode="contained"
+            onPress={() => upDateProduct()}
+            style={styles.buttonItem}
+          >
+            <FontAwesome name="edit" size={24} color="black" />
           </RoundedButton>
         ) : (
           <RoundedButton
-            mode='contained'
+            mode="contained"
             onPress={() => setHeart(!heart)}
-            style={styles.buttonItem}>
+            style={styles.buttonItem}
+          >
             {heart ? (
-              <AntDesign name='heart' size={24} color='pink' />
+              <AntDesign name="heart" size={24} color="pink" />
             ) : (
-              <AntDesign name='hearto' size={24} color='black' />
+              <AntDesign name="hearto" size={24} color="black" />
             )}
           </RoundedButton>
         )}

@@ -1,14 +1,28 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import React from "react";
+import React, { useEffect } from "react";
 import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import { Searchbar } from "react-native-paper";
+import { useDispatch } from "react-redux";
 import { theme } from "../common/theme";
 
-const SearchView = ({ holSearch }) => {
+const SearchView = ({ holSearch, typeAction }) => {
+  const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const onChangeSearch = (query) => setSearchQuery(query);
+
+  useEffect(() => {
+    if (typeAction && searchQuery) {
+      dispatch({
+        type: typeAction,
+        payload: {
+          data: searchQuery,
+        },
+      });
+    }
+  }, [searchQuery]);
+
   return (
     <View style={styles.searchContainer}>
       <Searchbar

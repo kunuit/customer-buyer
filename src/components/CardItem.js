@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Colors from "../constants/colors";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
@@ -16,15 +16,15 @@ const CardItem = ({
 
   return (
     <TouchableOpacity
-      style={[styles.cardContainer, { height: heightCard ? heightCard : 250 }]}>
+      style={[styles.cardContainer, { height: heightCard ? heightCard : 250 }]}
+    >
       <View style={styles.cardImageContainer}>
         <Image
           style={styles.cardImage}
           source={{
-            uri:
-              item.images.length != 0
-                ? item.images[0]
-                : "https://i.pinimg.com/originals/eb/d4/de/ebd4deb64c74e2f1246626d5a290274d.png",
+            uri: item.images
+              ? item.images[0]
+              : "https://i.pinimg.com/originals/eb/d4/de/ebd4deb64c74e2f1246626d5a290274d.png",
           }}
         />
       </View>
@@ -34,14 +34,16 @@ const CardItem = ({
           style={[
             styles.titleText,
             { fontSize: fontSizeTitle ? fontSizeTitle : 18 },
-          ]}>
+          ]}
+        >
           {item.name}
         </Text>
         <Text
           style={[
             styles.descriptionText,
             { fontSize: fontSizeDes ? fontSizeDes : 16 },
-          ]}>
+          ]}
+        >
           7pcs, Price
         </Text>
       </View>
@@ -50,18 +52,20 @@ const CardItem = ({
           style={[
             styles.titleText,
             { fontSize: fontSizeTitle ? fontSizeTitle : 18 },
-          ]}>
+          ]}
+        >
           {`$${item.price ? item.price : 0.0}`}
         </Text>
         <RoundedButton
           style={{
             backgroundColor: Colors.green,
             borderColor: Colors.grayWhite,
-          }}>
+          }}
+        >
           <Entypo
             name={isAdminLogin ? "pencil" : "plus"}
             size={17}
-            color='white'
+            color="white"
           />
         </RoundedButton>
       </View>

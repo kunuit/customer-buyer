@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Colors from "../constants/colors";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
@@ -9,7 +9,8 @@ const CategoryItem = ({ item }) => {
       style={[
         styles.cardContainer,
         { backgroundColor: item.itemColor, borderColor: item.itemColor },
-      ]}>
+      ]}
+    >
       <View style={styles.cardImageContainer}>
         <Image
           style={styles.cardImage}
