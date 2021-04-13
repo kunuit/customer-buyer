@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Entypo, FontAwesome5, Fontisto, Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Zocial } from "@expo/vector-icons";
@@ -15,13 +15,20 @@ import { HomeScreen } from "../../screens/auth.screens";
 import ProductAdmin from "../../screens/admin.screens/Product/Product.admin";
 import SupplierAdmin from "../../screens/admin.screens/Supplier/Supplier.admin";
 import CartAdmin from "../../screens/admin.screens/Cart/Cart.admin";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Profile from "../../screens/Profile";
+import { typeSuppliers } from "../../../sagas/supplier.saga";
 
 const Tab = createBottomTabNavigator();
 
 const AdminUX = () => {
   const { isLogin } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // createCategory_FiB_API();
+    dispatch({ type: typeSuppliers.fetchSupplierFirebase });
+  }, []);
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -40,15 +47,16 @@ const AdminUX = () => {
         },
         showIcon: true,
         showLabel: true,
-      }}>
+      }}
+    >
       <Tab.Screen
-        name='Product'
+        name="Product"
         component={ProductAdmin}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <Entypo
-              name='layers'
+              name="layers"
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -56,12 +64,12 @@ const AdminUX = () => {
         }}
       />
       <Tab.Screen
-        name='Supplier'
+        name="Supplier"
         component={SupplierAdmin}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <FontAwesome5
-              name='building'
+              name="building"
               size={24}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -69,13 +77,13 @@ const AdminUX = () => {
         }}
       />
       <Tab.Screen
-        name='Stock'
+        name="Stock"
         component={TabStock}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <Ionicons
-              name='md-library-outline'
+              name="md-library-outline"
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -83,13 +91,13 @@ const AdminUX = () => {
         }}
       />
       <Tab.Screen
-        name='Cart'
+        name="Cart"
         component={CartAdmin}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <Zocial
-              name='cart'
+              name="cart"
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -97,13 +105,13 @@ const AdminUX = () => {
         }}
       />
       <Tab.Screen
-        name='Profile'
+        name="Profile"
         component={isLogin ? Profile : HomeScreen}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <MaterialCommunityIcons
-              name='face-profile'
+              name="face-profile"
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />

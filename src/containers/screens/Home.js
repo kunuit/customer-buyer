@@ -12,7 +12,7 @@ import SearchView from "../../components/SearchView";
 import TitleScreen from "../../components/TitleScreen";
 import Grocery from "../../components/Grocery";
 
-const Home = () => {
+const Home = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.homeScreenContainer}>
       <TitleScreen isBorder={false}>Home</TitleScreen>
@@ -22,9 +22,9 @@ const Home = () => {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.productListContainer}>
-          <ProductList title="Exclusive Offer" />
-          <ProductList title="Best Selling" />
-          <Grocery title="Groceries" />
+          <ProductList title="Exclusive Offer" navigation={navigation} />
+          <Grocery title="Groceries" navigation={navigation} />
+          <ProductList title="Best Selling" navigation={navigation} />
         </View>
       </ScrollView>
     </SafeAreaView>

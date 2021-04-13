@@ -16,6 +16,7 @@ import { Modal } from "react-native-paper";
 import { Animated } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { typeProducts } from "../../../../sagas/product.saga";
+import PopUp from "../../../../components/Modal/PopUp";
 
 const CreateProduct = ({ navigation, route }) => {
   const [name, setName] = useState({ value: "", error: "" });
@@ -28,10 +29,6 @@ const CreateProduct = ({ navigation, route }) => {
   const [supplier, setSupplier] = useState({ value: "", error: "" });
   const [images, setImages] = useState([]);
   const [visible, setVisible] = useState(false);
-  const [visibleModal, setVisibleModal] = useState(false);
-  const [modalY, setModalY] = useState(
-    new Animated.Value(Dimensions.get("window").height * 0.1)
-  );
 
   const item = route.params;
 
@@ -53,19 +50,6 @@ const CreateProduct = ({ navigation, route }) => {
     setImages([...images, uri]);
   };
 
-  const checkVisble = () => {
-    if (visible == true) {
-      setVisibleModal(true);
-      openModal();
-    }
-    if (visible == false) {
-      setTimeout(() => {
-        setVisibleModal(false);
-      }, 300);
-      closeModal();
-    }
-  };
-
   const addItem = () => {
     if (item) {
       setName({ value: item.name, error: "" });
@@ -79,28 +63,8 @@ const CreateProduct = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    checkVisble();
-  }, [visible]);
-
-  useEffect(() => {
     addItem();
   }, [item]);
-
-  const openModal = () => {
-    Animated.timing(modalY, {
-      duration: 1000,
-      toValue: 0,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const closeModal = () => {
-    Animated.timing(modalY, {
-      duration: 1000,
-      toValue: Dimensions.get("window").height * 0.1,
-      useNativeDriver: true,
-    }).start();
-  };
 
   const createNewProduct = async () => {
     dispatch({
@@ -272,21 +236,9 @@ const CreateProduct = ({ navigation, route }) => {
         </Button>
       </Background>
 
-      <Modal
-        visible={visibleModal}
-        onDismiss={() => setVisible(false)}
-        contentContainerStyle={styles.containerStyle}
-      >
-        <StatusBar
-          backgroundColor={theme.backgrounds.modal}
-          barStyle="dark-content"
-        />
-        <Animated.View
-          style={[styles.modal, { transform: [{ translateY: modalY }] }]}
-        >
-          <ImagePickerComponent onImage={(e) => AddImage(e)} />
-        </Animated.View>
-      </Modal>
+      <PopUp visible={visible} closedVisible={() => setVisible(false)}>
+        <ImagePickerComponent onImage={(e) => AddImage(e)} />
+      </PopUp>
     </View>
   );
 };
@@ -300,19 +252,6 @@ const styles = StyleSheet.create({
   root: {
     backgroundColor: theme.backgrounds.white,
     height: "100%",
-  },
-  modal: {
-    height: Dimensions.get("window").height * 0.12,
-    // width: Dimensions.get("window").width,
-    justifyContent: "flex-start",
-    backgroundColor: theme.colors.notBlack,
-    borderTopRightRadius: 25,
-    borderTopLeftRadius: 25,
-    justifyContent: "flex-start",
-  },
-  containerStyle: {
-    marginBottom: -Dimensions.get("window").height * 0.85,
-    height: Dimensions.get("window").height * 0.18,
   },
 });
 

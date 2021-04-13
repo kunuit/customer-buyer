@@ -13,12 +13,6 @@ const DetailContainer = ({ title, info }) => {
         <Text style={styles.descriptionTittle}>
           {title ? title : "Product Detail"}
         </Text>
-        <RoundedButton
-          mode='contained'
-          onPress={() => console.log("edit description supplier")}
-          style={styles.buttonItem}>
-          <FontAwesome name='edit' size={24} color='black' />
-        </RoundedButton>
       </View>
       <Text style={styles.descriptionText}>
         {`Address: ${info.address ? info.address : ""}

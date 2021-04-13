@@ -15,6 +15,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { useDispatch, useSelector } from "react-redux";
 import { typeProducts } from "../../sagas/product.saga";
 import { typeCategories } from "../../sagas/category.saga";
+import { typeAuths } from "../../sagas/auth.saga";
+import { getLocal } from "../../common/storeLocal/Auth.local";
 
 const Stack = createStackNavigator();
 
@@ -26,6 +28,7 @@ const General = () => {
     // createCategory_FiB_API();
     dispatch({ type: typeCategories.fetchCategoryFirebase });
     dispatch({ type: typeProducts.fetchProductFirebase });
+    dispatch({ type: typeAuths.authLocal });
   }, []);
 
   return (

@@ -5,11 +5,9 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { showToast } from "../../common/Layout/toast.helper";
 import { theme } from "../../common/theme";
 
-const InfoCard = (props) => {
-  const { nameIcon, name, key } = props;
+const InfoCard = ({ nameIcon, name }) => {
   return (
     <TouchableOpacity
-      key={key}
       style={{ elevation: 0 }}
       onPress={() => showToast({ title: name, type: "info", message: name })}
     >

@@ -1,17 +1,3 @@
-const initState = {
-  dataCustomer: null,
-  token: null,
-  refreshToken: null,
-  isLogin: false,
-  isRegister: false,
-  errorRefreshToken: null,
-  errorLogin: null,
-  errorRegister: null,
-  isAuthLoading: false,
-  isAdmin: false,
-  isAdminLogin: false,
-};
-
 import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
@@ -27,6 +13,21 @@ import {
   REFRESH_TOKEN_FAIL,
   SWITCH_IS_ADMIN,
 } from "../constants/auth.constants";
+import { typeAuths } from "../sagas/auth.saga";
+
+const initState = {
+  dataCustomer: null,
+  token: null,
+  refreshToken: null,
+  isLogin: false,
+  isRegister: false,
+  errorRefreshToken: null,
+  errorLogin: null,
+  errorRegister: null,
+  isAuthLoading: false,
+  isAdmin: false,
+  isAdminLogin: false,
+};
 
 const reducer = (state = initState, action) => {
   switch (action.type) {
@@ -111,6 +112,12 @@ const reducer = (state = initState, action) => {
         ...state,
         errorLogin: action.payload.error,
         isAuthLoading: false,
+      };
+    case typeAuths.isAuthLocal:
+      return {
+        ...state,
+        dataCustomer: action.payload.data,
+        isLogin: true,
       };
     default:
       return state;

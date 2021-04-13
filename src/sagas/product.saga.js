@@ -82,63 +82,57 @@ function* fetchProductSaga() {
   }
 }
 
-function* createProductSaga(action) {
-  const createProductRes = yield call(
-    createProduct_FiB_API,
-    action.payload.data
-  );
+function* createProductSaga({ type, payload }) {
+  const createProductRes = yield call(createProduct_FiB_API, payload.data);
   const { code, data } = createProductRes;
   if (code == 200) {
     yield put({
       type: typeProducts.createProductFirebaseSuccess,
+      payload: {
+        data: payload.data,
+      },
     });
-
-    yield put({ type: typeProducts.fetchProductFirebase });
   } else {
     showToast({ title: Product, type: "error", message: data });
   }
 }
 
-function* updateProructSaga(action) {
-  console.log(action.payload, "check update");
-  const updateProductRes = yield call(
-    updateProduct_FiB_API,
-    action.payload.data
-  );
+function* updateProructSaga({ type, payload }) {
+  console.log(payload, "check update");
+  const updateProductRes = yield call(updateProduct_FiB_API, payload.data);
   const { code, data } = updateProductRes;
   if (code == 200) {
     yield put({
-      type: typeProducts.createProductFirebaseSuccess,
+      type: typeProducts.updateProductFirebaseSuccess,
+      payload: {
+        data: payload.data,
+      },
     });
-
-    yield put({ type: typeProducts.fetchProductFirebase });
   } else {
     showToast({ title: Product, type: "error", message: data });
   }
 }
 
-function* removeProductSaga(action) {
-  const removeProductRes = yield call(
-    removeProduct_FiB_API,
-    action.payload.index
-  );
+function* removeProductSaga({ type, payload }) {
+  const removeProductRes = yield call(removeProduct_FiB_API, payload.index);
   const { code, data } = removeProductRes;
   if (code == 200) {
     yield put({
-      type: typeProducts.createProductFirebaseSuccess,
+      type: typeProducts.removeProductFirebaseSuccess,
+      payload: {
+        data: payload.index,
+      },
     });
-
-    yield put({ type: typeProducts.fetchProductFirebase });
   } else {
     showToast({ title: Product, type: "error", message: data });
   }
 }
 
-function* queryProductSaga(action) {
+function* queryProductSaga({ type, payload }) {
   yield put({ type: typeProducts.showLoadingProduct });
   yield delay(300);
 
-  const queryRes = yield call(queryProduct_FiB_API, action.payload.data);
+  const queryRes = yield call(queryProduct_FiB_API, payload.data);
 }
 
 export const productSagas = [

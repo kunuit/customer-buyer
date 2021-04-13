@@ -6,8 +6,8 @@ const initialState = {
   isCreatedOrUpdatedOrDeletedProduct: false,
 };
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
+const reducer = (state = initialState, { type, payload }) => {
+  switch (type) {
     case typeProducts.showLoadingProduct:
       return {
         ...state,
@@ -16,7 +16,7 @@ const reducer = (state = initialState, action) => {
     case typeProducts.fetchProductFirebaseSuccess:
       return {
         ...state,
-        data: action.payload.data,
+        data: payload.data,
         isLoading: false,
       };
     case typeProducts.createProductFirebaseSuccess:
@@ -24,6 +24,28 @@ const reducer = (state = initialState, action) => {
         ...state,
         isCreatedOrUpdatedOrDeletedProduct: true,
         isLoading: false,
+        data: [...state.data, payload.data],
+      };
+    case typeProducts.removeProductFirebaseSuccess:
+      return {
+        ...state,
+        isCreatedOrUpdatedOrDeletedProduct: true,
+        isLoading: false,
+        data: state.data.filter((product) => {
+          return product.id != payload.data;
+        }),
+      };
+    case typeProducts.updateProductFirebaseSuccess:
+      return {
+        ...state,
+        isCreatedOrUpdatedOrDeletedProduct: true,
+        isLoading: false,
+        data: state.data.map((product) => {
+          if (product.id == payload.data.id) {
+            return payload.data;
+          }
+          return product;
+        }),
       };
     case typeProducts.resetCreateProduct:
       return {

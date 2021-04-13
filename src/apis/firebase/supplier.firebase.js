@@ -1,12 +1,12 @@
 import { firebase } from "../../common/config/firebase";
 
 const rootRef = firebase.database().ref();
-const productRef = rootRef.child("products");
-const newProductRef = firebase.database().ref("/products").push();
+const supplier = rootRef.child("suppliers");
+const newsupplier = firebase.database().ref("/suppliers").push();
 
-export const getAllProduct_FiB_API = async () => {
+export const getAllSupplier_FiB_API = async () => {
   try {
-    const data = await productRef.once("value");
+    const data = await supplier.once("value");
     const snapshot = data.val();
     return { code: 200, data: snapshot };
   } catch (error) {
@@ -14,40 +14,41 @@ export const getAllProduct_FiB_API = async () => {
   }
 };
 
-export const createProduct_FiB_API = async (data) => {
+export const createSupplier_FiB_API = async (data) => {
   try {
-    const newProduct = await firebase
+    console.log(data, "check data in API");
+    const newSupplier = await firebase
       .database()
-      .ref(`/products/${data.id}`)
+      .ref(`/suppliers/${data.id}`)
       .set({ ...data });
-    console.log(newProduct, "test create at Saga");
+    console.log(newSupplier, "test create at Saga");
     return { code: 200, data: "res" };
   } catch (error) {
     return { code: 400, data: error + "" };
   }
 };
 
-export const updateProduct_FiB_API = async (data) => {
+export const updateSupplier_FiB_API = async (data) => {
   try {
-    const updatedProduct = await firebase
+    const updatedSupplier = await firebase
       .database()
-      .ref(`/products/${data.id}`)
+      .ref(`/suppliers/${data.id}`)
       .update({
         ...data,
       });
 
-    console.log(updatedProduct, "test update at Saga");
+    console.log(updatedSupplier, "test update at Saga");
     return { code: 200, data: "res" };
   } catch (error) {
     return { code: 400, data: error + "" };
   }
 };
 
-export const removeProduct_FiB_API = async (index) => {
+export const removeSupplier_FiB_API = async (index) => {
   try {
-    const removeProduct = await firebase
+    const removeSupplier = await firebase
       .database()
-      .ref(`/products/${index}`)
+      .ref(`/suppliers/${index}`)
       .remove();
 
     return { code: 200, data: "res" };
@@ -56,11 +57,11 @@ export const removeProduct_FiB_API = async (index) => {
   }
 };
 
-export const queryProduct_FiB_API = async (data) => {
+export const querySupplier_FiB_API = async (data) => {
   try {
     const query = await firebase
       .database()
-      .ref("/products")
+      .ref("/suppliers")
       .equalTo(data)
       .once("value");
     console.log(query);

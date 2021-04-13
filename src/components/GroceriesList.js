@@ -1,13 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { View, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList, Text } from "react-native";
 import CategoryItem from "../components/CategoryItem";
 import { multipleRowsFlatListFormat } from "../common/format/FlatListDataFormat";
 import GroceryItem from "./GroceryItem";
 import CategoryHomeLoader from "./Loader/CategoryHomeLoader";
 import { windowHeight } from "../common/Dimensions";
 
-const GroceriesList = ({ isHome = false }) => {
+const GroceriesList = ({ navigation, isHome = false }) => {
   const { isLoading, data } = useSelector((state) => state.categories);
 
   return (
@@ -27,9 +27,9 @@ const GroceriesList = ({ isHome = false }) => {
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) =>
             item == "empty" ? (
-              <View key={index} style={styles.cardItemContainer}></View>
+              <View style={styles.cardItemContainer}></View>
             ) : (
-              <View key={index} style={styles.cardItemContainer}>
+              <View style={styles.cardItemContainer}>
                 {isHome ? (
                   <GroceryItem item={item} />
                 ) : (

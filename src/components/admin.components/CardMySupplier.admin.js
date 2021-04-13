@@ -8,32 +8,32 @@ const CardMySupplier = ({ item, navigation }) => {
   return (
     <TouchableOpacity
       style={{ elevation: 0 }}
-      onPress={() => navigation.navigate("Supplier Detail")}>
+      onPress={() => navigation.navigate("Supplier Detail", item)}
+    >
       <View style={styles.root}>
         <Image
           style={{ height: 60, width: 60, borderRadius: 30 }}
           source={{
-            uri:
-              "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg",
+            uri: item.images[1],
           }}
         />
         <View style={{ marginLeft: "5%", flex: 1 }}>
-          <Text style={[styles.text, styles.textFont]}>NCC 01</Text>
+          <Text style={[styles.text, styles.textFont]}>{item.name}</Text>
           <View style={styles.news}>
             <Text style={[styles.variant, styles.textFont]}>
               <NumberFormat
-                value={"0961010875"}
+                value={item.phone}
                 displayType={"text"}
-                format='### ### ## ##'
+                format="### ### ## ##"
                 renderText={(formattedValue) => <Text>{formattedValue}</Text>}
               />
             </Text>
             <Text style={[styles.variant, styles.selling, styles.textFont]}>
-              Active
+              {item.status == 0 ? "Active" : "Pending"}
             </Text>
           </View>
           <Text style={[{ fontSize: 13, color: "green" }, styles.textFont]}>
-            Kun pro
+            {item.representative}
           </Text>
         </View>
       </View>

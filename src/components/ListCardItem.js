@@ -1,9 +1,10 @@
 import React from "react";
 import { View, StyleSheet, FlatList, Dimensions } from "react-native";
 import { useSelector } from "react-redux";
+import { multipleRowsFlatListFormat } from "../common/format/FlatListDataFormat";
 import CardItem from "../components/CardItem";
 
-const ListCardItem = () => {
+const ListCardItem = ({ navigation }) => {
   // const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const { data } = useSelector((state) => state.products);
 
@@ -15,13 +16,17 @@ const ListCardItem = () => {
         }}
         showsVerticalScrollIndicator={false}
         numColumns={2}
-        data={data}
+        data={multipleRowsFlatListFormat(data, 2)}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <View key={index} style={styles.cardItemContainer}>
-            <CardItem item={item} />
-          </View>
-        )}
+        renderItem={({ item, index }) =>
+          item == "empty" ? (
+            <View style={styles.cardItemContainer}></View>
+          ) : (
+            <View style={styles.cardItemContainer}>
+              <CardItem item={item} navigation={navigation} />
+            </View>
+          )
+        }
       />
     </View>
   );

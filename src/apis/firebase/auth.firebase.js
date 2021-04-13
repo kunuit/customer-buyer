@@ -1,4 +1,5 @@
 import auth from "@react-native-firebase/auth";
+import { removeLocal, setLocal } from "../../common/storeLocal/Auth.local";
 
 // export const onGoogleButtonPressAPI = async () => {
 //   // Get the users ID token
@@ -11,11 +12,11 @@ import auth from "@react-native-firebase/auth";
 //   return auth().signInWithCredential(googleCredential);
 // };
 
-export const loginFirebaseAPI = async ({ email, password }) => {
+export const loginFirebaseAPI = async ({ email, password, authLocal }) => {
   try {
     const loginFirebaseRes = await auth().createUserWithEmailAndPassword(
       email,
-      password,
+      password
     );
 
     // Handle user state changes
@@ -23,19 +24,25 @@ export const loginFirebaseAPI = async ({ email, password }) => {
     //   console.log(user, "user firebase");
     // }
     // auth().onAuthStateChanged(onAuthStateChanged);
+
+    await setLocal(authLocal, loginFirebaseRes);
+
     return loginFirebaseRes;
   } catch (error) {
-    return { code: 400, message: error + "" };
+    return { code: 400, data: error + "" };
   }
 };
 
-export const logoutFirebaseAPI = async () => {
+export const logoutFirebaseAPI = async (authLocal) => {
   try {
     auth()
       .signOut()
       .then(() => console.log("logouted"));
+
+    await removeLocal(authLocal);
+    return "success";
   } catch (error) {
-    return { code: 400, message: error + "" };
+    return { code: 400, data: error + "" };
   }
 };
 // export const logoutAPI = () => {

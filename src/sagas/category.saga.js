@@ -15,8 +15,7 @@ export const typeCategories = {
 function* fetchCategorySaga() {
   yield put({ type: typeCategories.showLoadingCategory });
 
-  const categoryRes = yield call(getAllCategory_FiB_API);
-  const { code, data } = categoryRes;
+  const { code, data } = yield call(getAllCategory_FiB_API);
   if (code == 200) {
     yield put({
       type: typeCategories.fetchCategoryFirebaseSuccess,
@@ -25,7 +24,7 @@ function* fetchCategorySaga() {
       },
     });
   } else {
-    showToast({ title: Product, type: "error", message: data });
+    showToast({ title: "Product", type: "error", message: data });
   }
 }
 

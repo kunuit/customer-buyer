@@ -25,6 +25,12 @@ import {
   showAuthLoadingACT,
 } from "../actions/auth.action";
 import { onGoogleButtonPressAPI } from "../apis/firebase/auth.firebase";
+import { getLocal } from "../common/storeLocal/Auth.local";
+
+export const typeAuths = {
+  authLocal: "AUTH_LOCAL",
+  isAuthLocal: "IS_AUTH_LOCAL",
+};
 
 function* loginSaga({ payload }) {
   // get is customer or admin login
@@ -52,7 +58,10 @@ function* loginSaga({ payload }) {
 function* loginFirebaseSaga({ payload }) {
   yield put(showAuthLoadingACT());
 
-  const loginFirebaseRes = yield call(loginFirebaseAPI, payload.data);
+  const loginFirebaseRes = yield call(loginFirebaseAPI, {
+    ...payload.data,
+    authLocal: typeAuths.authLocal,
+  });
 
   console.log(loginFirebaseRes);
 
@@ -67,7 +76,7 @@ function* loginFirebaseSaga({ payload }) {
 }
 
 function* logoutSaga() {
-  yield call(logoutFirebaseAPI);
+  yield call(logoutFirebaseAPI, typeAuths.authLocal);
 }
 
 function* registerSaga({ payload }) {
@@ -88,9 +97,22 @@ function* registerSaga({ payload }) {
   yield put(hideAuthLoadingACT());
 }
 
+function* checkAuthLocal() {
+  const authLocalRes = yield call(getLocal, typeAuths.authLocal);
+  if (authLocalRes) {
+    yield put({
+      type: typeAuths.isAuthLocal,
+      payload: {
+        data: authLocalRes,
+      },
+    });
+  }
+}
+
 export const authSagas = [
   takeLatest(LOGIN, loginSaga),
   takeLatest(LOGOUT, logoutSaga),
   takeLatest(REGISTER, registerSaga),
   takeLatest(LOGIN_FIREBASE, loginFirebaseSaga),
+  takeLatest(typeAuths.authLocal, checkAuthLocal),
 ];

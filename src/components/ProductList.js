@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import CardItem from "./CardItem";
 import MainLoading from "../components/Loader/MainLoading";
 
-const ProductList = ({ title, ...props }) => {
+const ProductList = ({ title, navigation, ...props }) => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const { data, isLoading } = useSelector((state) => state.products);
 
@@ -31,11 +31,12 @@ const ProductList = ({ title, ...props }) => {
           renderItem={({ item, index }) => (
             <View style={styles.cardItemContainer}>
               <CardItem
-                item={{ ...item }}
+                item={item}
                 heightCard={200}
                 fontSizeTitle={16}
                 fontSizeDes={14}
                 numberOfLines={1}
+                navigation={navigation}
               />
             </View>
           )}

@@ -33,14 +33,10 @@ const ProductAdmin = ({ navigation }) => {
           style={styles.listCardItemContainer}
           showsVerticalScrollIndicator={false}
           data={data}
-          keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
-            <CardMyProduct
-              key={index}
-              item={{ ...item }}
-              navigation={navigation}
-            />
+            <CardMyProduct item={item} navigation={navigation} />
           )}
+          keyExtractor={(item, index) => index.toString()}
         />
       ) : (
         <MainLoading padding={30} />

@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   productDetailContainer: {
     flex: 1,
     backgroundColor: "#fff",
-    width: "100%",
+    // width: "100%",
     alignItems: "center",
   },
 });

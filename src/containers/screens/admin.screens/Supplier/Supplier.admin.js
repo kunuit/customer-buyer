@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import { Dimensions } from "react-native";
 import { Text, View } from "react-native";
 import { FAB } from "react-native-paper";
+import { useSelector } from "react-redux";
 import { windowHeight } from "../../../../common/Dimensions";
 import { theme } from "../../../../common/theme";
 import CardMySupplier from "../../../../components/admin.components/CardMySupplier.admin";
@@ -12,6 +13,7 @@ import TitleScreen from "../../../../components/TitleScreen";
 
 const SupplierAdmin = ({ navigation }) => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const { data, isLoading } = useSelector((state) => state.suppliers);
   return (
     <SafeAreaView style={styles.exploreContainer}>
       <TitleScreen isBorder={false}>My Suppliers</TitleScreen>
@@ -21,10 +23,10 @@ const SupplierAdmin = ({ navigation }) => {
       <FlatList
         style={styles.listCardItemContainer}
         showsVerticalScrollIndicator={false}
-        data={fakeData}
+        data={data}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <CardMySupplier key={index} item={item} navigation={navigation} />
+        renderItem={({ item }) => (
+          <CardMySupplier item={item} navigation={navigation} />
         )}
       />
 

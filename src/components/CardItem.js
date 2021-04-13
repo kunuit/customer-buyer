@@ -3,7 +3,8 @@ import Colors from "../constants/colors";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import RoundedButton from "../components/RoundedButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { typeCarts } from "../sagas/cart.saga";
 
 const CardItem = ({
   fontSizeTitle,
@@ -11,12 +12,15 @@ const CardItem = ({
   fontSizeDes,
   item,
   numberOfLines = 2,
+  navigation,
 }) => {
   const { isAdminLogin } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   return (
     <TouchableOpacity
       style={[styles.cardContainer, { height: heightCard ? heightCard : 250 }]}
+      onPress={() => navigation.navigate("Product Detail", item)}
     >
       <View style={styles.cardImageContainer}>
         <Image
@@ -61,6 +65,14 @@ const CardItem = ({
             backgroundColor: Colors.green,
             borderColor: Colors.grayWhite,
           }}
+          onPress={() =>
+            dispatch({
+              type: typeCarts.addtoCart,
+              payload: {
+                data: item.id,
+              },
+            })
+          }
         >
           <Entypo
             name={isAdminLogin ? "pencil" : "plus"}
