@@ -25,7 +25,7 @@ const ButtonBack = ({ navigation, isBackground = false, stylesButtonBack }) => {
       >
         <Ionicons
           name="ios-return-up-back"
-          size={30}
+          size={25}
           color={theme.colors.notBlack}
         />
       </RoundedButton>
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 15,
     left: 18,
-    padding: 5,
+    padding: 3,
     borderRadius: 25,
   },
   buttonItem: {

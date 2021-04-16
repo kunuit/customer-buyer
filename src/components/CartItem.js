@@ -11,6 +11,7 @@ import RoundedButton from "./RoundedButton";
 import { Dimensions } from "react-native";
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import Colors from "../constants/colors";
+import NumberFormat from "react-number-format";
 
 const CartItem = ({ item, onProductCount, onDeleteProduct, navigation }) => {
   return (
@@ -80,7 +81,20 @@ const CartItem = ({ item, onProductCount, onDeleteProduct, navigation }) => {
             />
           </View>
         </TouchableOpacity>
-        <Text style={styles.titleText}>${item.price * item.quantity}</Text>
+        <NumberFormat
+          value={
+            item.price
+              ? Math.round(item.price * item.quantity * 100) / 100
+              : 0.0
+          }
+          displayType={"text"}
+          thousandSeparator={true}
+          // suffix={" vnd"}
+          prefix={"$"}
+          renderText={(formattedValue) => (
+            <Text style={styles.titleText}>{formattedValue}</Text>
+          )}
+        />
       </View>
     </TouchableOpacity>
   );

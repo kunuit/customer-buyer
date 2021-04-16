@@ -12,8 +12,8 @@ const TextInput = ({ errorText, ...props }) => (
       style={styles.input}
       selectionColor={theme.colors.primary}
       theme={{ colors: { primary: theme.colors.primary } }}
-      // underlineColor='transparent'
-      mode='flat'
+      // underlineColor="transparent"
+      mode="flat"
       {...props}
     />
 

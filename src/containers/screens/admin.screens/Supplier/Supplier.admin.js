@@ -1,34 +1,53 @@
 import React from "react";
-import { FlatList, SafeAreaView } from "react-native";
+import { useState } from "react";
+import { FlatList, RefreshControl, SafeAreaView } from "react-native";
 import { StyleSheet } from "react-native";
 import { Dimensions } from "react-native";
 import { Text, View } from "react-native";
 import { FAB } from "react-native-paper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { windowHeight } from "../../../../common/Dimensions";
 import { theme } from "../../../../common/theme";
 import CardMySupplier from "../../../../components/admin.components/CardMySupplier.admin";
+import MainLoading from "../../../../components/Loader/MainLoading";
 import SearchView from "../../../../components/SearchView";
 import TitleScreen from "../../../../components/TitleScreen";
+import { typeSuppliers } from "../../../../sagas/supplier.saga";
 
 const SupplierAdmin = ({ navigation }) => {
-  const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const dispatch = useDispatch();
+  const [refreshing, setRefreshing] = useState(false);
   const { data, isLoading } = useSelector((state) => state.suppliers);
+
+  const onRefresh = () => {
+    dispatch({ type: typeSuppliers.fetchSupplierFirebase });
+    // if (isLoading) {
+    //   setRefreshing(false);
+    // }
+  };
+
   return (
     <SafeAreaView style={styles.exploreContainer}>
       <TitleScreen isBorder={false} title="My Suppliers" />
 
       <SearchView holSearch="my supplier" />
 
-      <FlatList
-        style={styles.listCardItemContainer}
-        showsVerticalScrollIndicator={false}
-        data={data}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <CardMySupplier item={item} navigation={navigation} />
-        )}
-      />
+      {!isLoading ? (
+        <FlatList
+          style={styles.listCardItemContainer}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          data={data}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <CardMySupplier item={item} navigation={navigation} />
+          )}
+        />
+      ) : (
+        <MainLoading padding={30} />
+      )}
 
       <FAB
         onPress={() => navigation.navigate("Create Supplier")}

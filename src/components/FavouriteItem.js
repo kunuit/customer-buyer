@@ -2,6 +2,7 @@ import React from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import Colors from "../constants/colors";
+import NumberFormat from "react-number-format";
 const FavouriteItem = ({ item, navigation }) => {
   return (
     <TouchableOpacity
@@ -24,7 +25,16 @@ const FavouriteItem = ({ item, navigation }) => {
         </View>
       </View>
       <View style={styles.cartAmount}>
-        <Text style={styles.titleText}>${item.price}</Text>
+        <NumberFormat
+          value={item.price ? Math.round(item.price * 100) / 100 : 0.0}
+          displayType={"text"}
+          thousandSeparator={true}
+          // suffix={" vnd"}
+          prefix={"$"}
+          renderText={(formattedValue) => (
+            <Text style={styles.titleText}>{formattedValue}</Text>
+          )}
+        />
         <TouchableOpacity>
           <View>
             <AntDesign name="right" size={20} color="black" />

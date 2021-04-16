@@ -84,19 +84,31 @@ function* addToCartSaga({ type, payload }) {
   const transitDataCart = Object.values(dataCart.data);
 
   console.log(transitDataCart, "check data cart get");
-  const filteredCart = transitDataCart.filter((cart) => {
-    if (cart.id == payload.data.id) return cart;
-  });
+  // const filteredCart = transitDataCart.filter((cart) => {
+  //   if (cart.id == payload.data.id) return cart;
+  // });
 
-  console.log(filteredCart, "check data filter");
+  //* check new product is included in cart
+  const filteredCart = transitDataCart.find(
+    (item) => item.id == payload.data.id
+  );
 
-  if (filteredCart.length != 0) {
-    console.log("run isfilteredCart");
+  console.log(
+    transitDataCart.find((item) => item.id == payload.data.id),
+    "check data filter"
+  );
+
+  if (filteredCart) {
+    showToast({
+      title: "Cart",
+      type: "success",
+      message: `${payload.data.name} is added to your cart`,
+    });
     yield put({
       type: typeCarts.updateCart,
       payload: {
         data: payload.data.id,
-        quantity: filteredCart[0].quantity + payload.quantity,
+        quantity: filteredCart.quantity + payload.quantity,
       },
     });
   } else {
@@ -133,11 +145,6 @@ function* updateCartSaga({ type, payload }) {
   });
 
   if (code == 200) {
-    showToast({
-      title: "Cart",
-      type: "success",
-      message: `The product is updated in your cart`,
-    });
     yield put({
       type: typeCarts.updateCartSuccess,
       payload: {
@@ -159,12 +166,11 @@ function* removeOutCartSaga({ type, payload }) {
   const { code, data } = yield call(removeOutCart_Fib_API, payload.data);
 
   if (code == 200) {
-    showToast({
-      title: "Cart",
-      type: "success",
-      message: `The product is deleted in your cart`,
-    });
-
+    // showToast({
+    //   title: "Cart",
+    //   type: "success",
+    //   message: `The product is deleted in your cart`,
+    // });
     // yield put({
     //   type: typeCarts.removeOutCartSuccess,
     //   payload: {

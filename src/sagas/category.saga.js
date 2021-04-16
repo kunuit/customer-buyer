@@ -16,11 +16,12 @@ function* fetchCategorySaga() {
   yield put({ type: typeCategories.showLoadingCategory });
 
   const { code, data } = yield call(getAllCategory_FiB_API);
+  const transitData = Object.values(data);
   if (code == 200) {
     yield put({
       type: typeCategories.fetchCategoryFirebaseSuccess,
       payload: {
-        data,
+        data: transitData,
       },
     });
   } else {

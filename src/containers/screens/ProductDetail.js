@@ -15,6 +15,7 @@ import { theme } from "../../common/theme";
 import { typeProducts } from "../../sagas/product.saga";
 import { typeCarts } from "../../sagas/cart.saga";
 import { typeFavorites } from "../../sagas/favorite.saga";
+import ButtonMessenger from "../../components/ButtonMessenger";
 
 const ProductDetail = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -109,6 +110,7 @@ const ProductDetail = ({ navigation, route }) => {
         onDeletedProduct={handleDeletedProduct}
         isAdmin={isAdminLogin}
       />
+      {/* {isAdminLogin ? <></> : <ButtonMessenger navigation={navigation} />} */}
       {isAdminLogin ? <></> : <ButtonContainer onAddToCart={handleAddToCart} />}
       <ButtonBack navigation={navigation} isBackground={true} />
     </View>

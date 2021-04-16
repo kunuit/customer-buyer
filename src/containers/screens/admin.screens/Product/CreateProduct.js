@@ -32,6 +32,8 @@ const CreateProduct = ({ navigation, route }) => {
 
   const item = route.params;
 
+  const categoryState = useSelector((state) => state.categories);
+  const supplierState = useSelector((state) => state.suppliers);
   const { isCreatedOrUpdatedOrDeletedProduct } = useSelector(
     (state) => state.products
   );
@@ -194,10 +196,12 @@ const CreateProduct = ({ navigation, route }) => {
           errorText={weight.error}
         />
         <SelectItem
-          data={[
-            { name: "book", value: "1" },
-            { name: "food", value: "2" },
-          ]}
+          data={categoryState.data.map((e) => {
+            return {
+              name: e.nameItem,
+              value: e.id,
+            };
+          })}
           title="Category"
           value={category.value}
           onChangeValue={(e) => setCategory({ value: e, error: "" })}
@@ -206,10 +210,12 @@ const CreateProduct = ({ navigation, route }) => {
         />
 
         <SelectItem
-          data={[
-            { name: "kong", value: "1" },
-            { name: "kun", value: "2" },
-          ]}
+          data={supplierState.data.map((e) => {
+            return {
+              name: e.name,
+              value: e.id,
+            };
+          })}
           title="Supplier"
           value={supplier.value}
           onChangeValue={(e) => setSupplier({ value: e, error: "" })}

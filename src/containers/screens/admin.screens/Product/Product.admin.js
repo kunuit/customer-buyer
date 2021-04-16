@@ -1,11 +1,11 @@
 import React from "react";
-import { Dimensions } from "react-native";
+import { Dimensions, RefreshControl } from "react-native";
 import { FlatList } from "react-native";
 import { StyleSheet } from "react-native";
 import { SafeAreaView, Text, View } from "react-native";
 import { FAB } from "react-native-paper";
 import Animated from "react-native-reanimated";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { windowHeight } from "../../../../common/Dimensions";
 import { theme } from "../../../../common/theme";
 import CardMyProduct from "../../../../components/admin.components/CardMyProduct.admin";
@@ -14,10 +14,19 @@ import ListCardItem from "../../../../components/ListCardItem";
 import SearchView from "../../../../components/SearchView";
 import TitleScreen from "../../../../components/TitleScreen";
 import { typeProducts } from "../../../../sagas/product.saga";
+import { useState } from "react";
 
 const ProductAdmin = ({ navigation }) => {
-  const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const dispatch = useDispatch();
+  const [refreshing, setRefreshing] = useState(false);
   const { data, isLoading } = useSelector((state) => state.products);
+
+  const onRefresh = () => {
+    dispatch({ type: typeProducts.fetchProductFirebase });
+    // if (isLoading) {
+    //   setRefreshing(false);
+    // }
+  };
 
   return (
     <SafeAreaView style={styles.exploreContainer}>
@@ -32,6 +41,9 @@ const ProductAdmin = ({ navigation }) => {
         <FlatList
           style={styles.listCardItemContainer}
           showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           data={data}
           renderItem={({ item, index }) => (
             <CardMyProduct item={item} navigation={navigation} />

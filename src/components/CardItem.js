@@ -5,6 +5,7 @@ import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import RoundedButton from "../components/RoundedButton";
 import { useDispatch, useSelector } from "react-redux";
 import { typeCarts } from "../sagas/cart.saga";
+import NumberFormat from "react-number-format";
 
 const CardItem = ({
   fontSizeTitle,
@@ -52,14 +53,23 @@ const CardItem = ({
         </Text>
       </View>
       <View style={styles.addToCartContainer}>
-        <Text
-          style={[
-            styles.titleText,
-            { fontSize: fontSizeTitle ? fontSizeTitle : 18 },
-          ]}
-        >
-          {`$${item.price ? item.price : 0.0}`}
-        </Text>
+        <NumberFormat
+          value={item.price ? Math.round(item.price * 100) / 100 : 0.0}
+          displayType={"text"}
+          thousandSeparator={true}
+          // suffix={" vnd"}
+          prefix={"$"}
+          renderText={(formattedValue) => (
+            <Text
+              style={[
+                styles.titleText,
+                { fontSize: fontSizeTitle ? fontSizeTitle : 18 },
+              ]}
+            >
+              {formattedValue}
+            </Text>
+          )}
+        />
         <RoundedButton
           style={{
             backgroundColor: Colors.green,

@@ -20,6 +20,7 @@ import { getLocal } from "../../common/storeLocal/Auth.local";
 import CartScreen from "../screens/CartScreen";
 import { typeFavorites } from "../../sagas/favorite.saga";
 import CategoryDetail from "../screens/CategoryDetail";
+import MessengerDetail from "../screens/MessengerDetail";
 
 const Stack = createStackNavigator();
 
@@ -58,6 +59,7 @@ const General = () => {
       <Stack.Screen name="Create Supplier" component={CreateSupplier} />
 
       <Stack.Screen name="Category Detail" component={CategoryDetail} />
+      <Stack.Screen name="Messenger Detail" component={MessengerDetail} />
     </Stack.Navigator>
   );
 };
