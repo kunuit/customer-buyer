@@ -17,6 +17,9 @@ import { typeProducts } from "../../sagas/product.saga";
 import { typeCategories } from "../../sagas/category.saga";
 import { typeAuths } from "../../sagas/auth.saga";
 import { getLocal } from "../../common/storeLocal/Auth.local";
+import CartScreen from "../screens/CartScreen";
+import { typeFavorites } from "../../sagas/favorite.saga";
+import CategoryDetail from "../screens/CategoryDetail";
 
 const Stack = createStackNavigator();
 
@@ -29,6 +32,7 @@ const General = () => {
     dispatch({ type: typeCategories.fetchCategoryFirebase });
     dispatch({ type: typeProducts.fetchProductFirebase });
     dispatch({ type: typeAuths.authLocal });
+    dispatch({ type: typeFavorites.fetchFavoriteFirebase });
   }, []);
 
   return (
@@ -37,6 +41,7 @@ const General = () => {
         name="Bottom tab"
         component={isAdminLogin ? AdminUX : MainUX}
       />
+
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
       <Stack.Screen
@@ -51,6 +56,8 @@ const General = () => {
 
       <Stack.Screen name="Supplier Detail" component={SupplierDetail} />
       <Stack.Screen name="Create Supplier" component={CreateSupplier} />
+
+      <Stack.Screen name="Category Detail" component={CategoryDetail} />
     </Stack.Navigator>
   );
 };

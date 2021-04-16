@@ -2,25 +2,29 @@ import React from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import Colors from "../constants/colors";
-const FavouriteItem = () => {
+const FavouriteItem = ({ item, navigation }) => {
   return (
-    <TouchableOpacity style={styles.cartItemContainer}>
+    <TouchableOpacity
+      style={styles.cartItemContainer}
+      onPress={() => navigation.navigate("Product Detail", item)}
+    >
       <View style={styles.cartImageContainer}>
         <Image
           style={styles.cartImage}
           source={{
-            uri: "https://pngimg.com/uploads/pepsi/pepsi_PNG8956.png",
+            uri: item.images[0],
+            // uri: "https://pngimg.com/uploads/pepsi/pepsi_PNG8956.png",
           }}
         />
       </View>
       <View style={styles.cartDetailContainer}>
         <View style={{ marginBottom: 5 }}>
-          <Text style={styles.titleText}>Bell Pepper Red</Text>
+          <Text style={styles.titleText}>{item.name}</Text>
           <Text style={{ color: Colors.gray }}>1kg, prices</Text>
         </View>
       </View>
       <View style={styles.cartAmount}>
-        <Text style={styles.titleText}>$1.50</Text>
+        <Text style={styles.titleText}>${item.price}</Text>
         <TouchableOpacity>
           <View>
             <AntDesign name="right" size={20} color="black" />
@@ -64,6 +68,7 @@ const styles = StyleSheet.create({
     fontFamily: "gilroy-bold",
     fontSize: 16,
     color: Colors.black,
+    paddingRight: 5,
   },
   quantityAjustContainer: {
     justifyContent: "flex-start",

@@ -23,7 +23,7 @@ const Grocery = ({ title, navigation, ...props }) => {
           <Text style={styles.seeAllText}>See all</Text>
         </TouchableOpacity>
       </View>
-      <GroceriesList isHome={true} />
+      <GroceriesList navigation={navigation} isHome={true} />
       {/* <FlatList
         columnWrapperStyle={{
           flex: 1,

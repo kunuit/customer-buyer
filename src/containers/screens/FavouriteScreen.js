@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dimensions,
   View,
@@ -6,10 +6,15 @@ import {
   StyleSheet,
   FlatList,
   SafeAreaView,
+  RefreshControl,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../../components/Button";
 import FavouriteItem from "../../components/FavouriteItem";
+import MainLoading from "../../components/Loader/MainLoading";
 import Colors from "../../constants/colors";
+import { typeFavorites } from "../../sagas/favorite.saga";
+
 const Line = () => {
   return (
     <View
@@ -20,25 +25,43 @@ const Line = () => {
     />
   );
 };
-const CartScreen = () => {
-  const fakeData = [1, 2, 3, 4, 5, 6, 7];
+
+const CartScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const { isLoading, data } = useSelector((state) => state.favorites);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    dispatch({ type: typeFavorites.fetchFavoriteFirebase });
+    // if (isLoading) {
+    //   setRefreshing(false);
+    // }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.titleTextContainer}>
         <Text style={styles.titleText}>Favourite</Text>
       </View>
-      <FlatList
-        style={styles.listCartItemContainer}
-        showsVerticalScrollIndicator={false}
-        data={fakeData}
-        keyExtractor={(item, index) => item.toString()}
-        renderItem={({ item, index }) => (
-          <View key={index}>
-            <FavouriteItem />
-            <Line />
-          </View>
-        )}
-      />
+      {isLoading ? (
+        <MainLoading padding={30} />
+      ) : (
+        <FlatList
+          style={styles.listCartItemContainer}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          data={data}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <View>
+              <FavouriteItem item={item} navigation={navigation} />
+              <Line />
+            </View>
+          )}
+        />
+      )}
       <Button
         style={{
           backgroundColor: Colors.green,

@@ -6,9 +6,12 @@ import Colors from "../../constants/colors";
 import NumberFormat from "react-number-format";
 
 // class QuantityAjustContainer extends React.Component {
-const QuantityAjustContainer = ({ price, isEdit }) => {
-  const [productCount, setProductCount] = useState(1);
-
+const QuantityAjustContainer = ({
+  price,
+  isEdit,
+  productCount,
+  onSetProductCount,
+}) => {
   return (
     <View style={styles.quantityAjustContainer}>
       {isEdit ? (
@@ -18,11 +21,12 @@ const QuantityAjustContainer = ({ price, isEdit }) => {
           <RoundedButton
             onPress={() => {
               if (productCount > 1) {
-                setProductCount(productCount - 1);
+                onSetProductCount(productCount - 1);
               }
             }}
-            style={[styles.buttonItem, styles.buttonClickable]}>
-            <Entypo name='minus' size={25} color={Colors.gray} />
+            style={[styles.buttonItem, styles.buttonClickable]}
+          >
+            <Entypo name="minus" size={25} color={Colors.gray} />
           </RoundedButton>
           <View style={{ marginLeft: 12, marginRight: 12 }}>
             <RoundedButton>
@@ -30,9 +34,10 @@ const QuantityAjustContainer = ({ price, isEdit }) => {
             </RoundedButton>
           </View>
           <RoundedButton
-            onPress={() => setProductCount(productCount + 1)}
-            style={[styles.buttonItem, styles.buttonClickable]}>
-            <Entypo name='plus' size={25} color={Colors.gray} />
+            onPress={() => onSetProductCount(productCount + 1)}
+            style={[styles.buttonItem, styles.buttonClickable]}
+          >
+            <Entypo name="plus" size={25} color={Colors.gray} />
           </RoundedButton>
         </View>
       )}

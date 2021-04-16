@@ -45,7 +45,7 @@ const SupplierDetail = ({ navigation, route }) => {
         animated={true}
         backgroundColor={theme.backgrounds.itemImageDetail}
         barStyle="dark-content"
-        hidden={true}
+        // hidden={true}
       />
       <ScrollView>
         <ProductDetailImageContainer images={item.images} />

@@ -3,13 +3,16 @@ import Colors from "../constants/colors";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import RoundedButton from "../components/RoundedButton";
-const CategoryItem = ({ item }) => {
+const CategoryItem = ({ item, navigation }) => {
   return (
     <TouchableOpacity
       style={[
         styles.cardContainer,
         { backgroundColor: item.itemColor, borderColor: item.itemColor },
       ]}
+      onPress={() => {
+        navigation.navigate("Category Detail", item);
+      }}
     >
       <View style={styles.cardImageContainer}>
         <Image

@@ -3,15 +3,22 @@ import { Text } from "react-native";
 import { StyleSheet } from "react-native";
 import { View } from "react-native";
 import { theme } from "../common/theme";
+import ButtonBack from "./ButtonBack";
 
-const TitleScreen = ({ children, isBorder = true }) => {
+const TitleScreen = ({ title, isBorder = true, navigation }) => {
   return (
     <View
       style={[
         styles.titleTextContainer,
         { borderBottomWidth: isBorder ? 1 : 0 },
-      ]}>
-      <Text style={styles.titleText}>{children}</Text>
+      ]}
+    >
+      <Text style={styles.titleText}>{title}</Text>
+      {navigation ? (
+        <ButtonBack stylesButtonBack={{ top: 10 }} navigation={navigation} />
+      ) : (
+        <></>
+      )}
     </View>
   );
 };

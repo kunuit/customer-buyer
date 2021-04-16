@@ -1,13 +1,16 @@
 import React from "react";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 
-const GroceryItem = ({ item }) => {
+const GroceryItem = ({ item, navigation }) => {
   return (
     <TouchableOpacity
       style={[
         styles.cardContainer,
         { backgroundColor: item.itemColor, borderColor: item.itemColor },
       ]}
+      onPress={() => {
+        navigation.navigate("Category Detail", item);
+      }}
     >
       <View style={styles.cardImageContainer}>
         <Image

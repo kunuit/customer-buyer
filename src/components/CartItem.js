@@ -11,35 +11,51 @@ import RoundedButton from "./RoundedButton";
 import { Dimensions } from "react-native";
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import Colors from "../constants/colors";
-const CartItem = (props) => {
-  const { urlImages } = props.product;
+
+const CartItem = ({ item, onProductCount, onDeleteProduct, navigation }) => {
   return (
-    <TouchableOpacity style={styles.cartItemContainer}>
+    <TouchableOpacity
+      style={styles.cartItemContainer}
+      onPress={() => {
+        item.status == 5
+          ? console.log("product not exits")
+          : navigation.navigate("Product Detail", item);
+      }}
+    >
       <View style={styles.cartImageContainer}>
         <Image
           style={styles.cartImage}
           source={{
-            uri:
-              //  urlImages.length
-              //   ? urlImages[0].url
-              //   :
-              "https://theme.hstatic.net/1000273444/1000452469/14/no-img.png?v=1804",
+            uri: item.images[0],
+            // "https://theme.hstatic.net/1000273444/1000452469/14/no-img.png?v=1804",
           }}
         />
       </View>
       <View style={styles.cartDetailContainer}>
         <View style={{ marginBottom: 5 }}>
-          <Text style={styles.titleText}>Bell Pepper Red</Text>
+          <Text style={styles.titleText}>{item.name}</Text>
           <Text style={{ color: Colors.gray }}>1kg, prices</Text>
         </View>
         <View style={styles.quantityAjustContainer}>
-          <RoundedButton>
+          <RoundedButton
+            disabled={item.status == 5 ? true : false}
+            onPress={() => {
+              if (item.quantity > 1) onProductCount(item.id, item.quantity - 1);
+            }}
+          >
             <Entypo name="minus" size={17} color={Colors.gray} />
           </RoundedButton>
           <View style={{ marginLeft: 12, marginRight: 12 }}>
-            <Text style={(styles.titleText, { fontSize: 16 })}>1</Text>
+            <Text style={(styles.titleText, { fontSize: 16 })}>
+              {item.quantity}
+            </Text>
           </View>
-          <RoundedButton>
+          <RoundedButton
+            disabled={item.status == 5 ? true : false}
+            onPress={() => {
+              onProductCount(item.id, item.quantity + 1);
+            }}
+          >
             <Entypo
               name="plus"
               size={17}
@@ -50,7 +66,11 @@ const CartItem = (props) => {
         </View>
       </View>
       <View style={styles.cartAmount}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            onDeleteProduct(item.id);
+          }}
+        >
           <View>
             <AntDesign
               name="close"
@@ -60,7 +80,7 @@ const CartItem = (props) => {
             />
           </View>
         </TouchableOpacity>
-        <Text style={styles.titleText}>$4.99</Text>
+        <Text style={styles.titleText}>${item.price * item.quantity}</Text>
       </View>
     </TouchableOpacity>
   );

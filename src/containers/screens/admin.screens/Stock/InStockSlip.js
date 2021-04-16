@@ -1,12 +1,9 @@
 import React from "react";
 import { SafeAreaView, FlatList } from "react-native";
 import { StyleSheet } from "react-native";
-import { Dimensions } from "react-native";
-import { Text, View } from "react-native";
 import { windowHeight } from "../../../../common/Dimensions";
 import CardStockSlip from "../../../../components/admin.components/CardStockSlip";
 import SearchView from "../../../../components/SearchView";
-import TitleScreen from "../../../../components/TitleScreen";
 
 const InStockSlip = ({ navigation }) => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];

@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native";
 import { theme } from "../common/theme";
 import RoundedButton from "./RoundedButton";
 
-const ButtonBack = ({ navigation, isBackground = false }) => {
+const ButtonBack = ({ navigation, isBackground = false, stylesButtonBack }) => {
   return (
     <View
       style={[
@@ -15,12 +15,19 @@ const ButtonBack = ({ navigation, isBackground = false }) => {
               backgroundColor: theme.backgrounds.buttonBack,
             }
           : {},
-      ]}>
+        stylesButtonBack,
+      ]}
+    >
       <RoundedButton
-        mode='contained'
+        mode="contained"
         onPress={() => navigation.goBack()}
-        style={styles.buttonItem}>
-        <Ionicons name='ios-return-up-back' size={35} color='black' />
+        style={styles.buttonItem}
+      >
+        <Ionicons
+          name="ios-return-up-back"
+          size={30}
+          color={theme.colors.notBlack}
+        />
       </RoundedButton>
     </View>
   );

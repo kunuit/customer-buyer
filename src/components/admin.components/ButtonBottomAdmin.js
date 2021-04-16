@@ -1,34 +1,29 @@
 import React from "react";
-import { View, StyleSheet, Text, Dimensions } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { theme } from "../../common/theme";
 import RoundedButton from "../RoundedButton";
-import Colors from "../../constants/colors";
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5, Zocial } from "@expo/vector-icons";
 
-const ButtonBottomAdmin = ({ onDeletedProduct }) => {
+const ButtonBottomAdmin = ({ onDeletedProduct, isAdmin, navigation }) => {
   return (
     <View style={styles.root}>
-      {/* <Button
-        mode='contained'
-        onPress={() => console.log("Update Item")}
-        style={styles.buttonUpdate}>
-        <Text style={styles.buttonText}>Update</Text>
-      </Button> */}
-
-      <RoundedButton
-        mode="contained"
-        onPress={() => onDeletedProduct()}
-        style={styles.buttonItem}
-      >
-        <FontAwesome5 name="trash" size={24} color={theme.colors.notpink} />
-      </RoundedButton>
-
-      {/* <Button
-        mode='contained'
-        onPress={() => console.log("Delete Item")}
-        style={styles.buttonDelete}>
-        <Text style={styles.buttonText}>Delete</Text>
-      </Button> */}
+      {isAdmin ? (
+        <RoundedButton
+          mode="contained"
+          onPress={() => onDeletedProduct()}
+          style={styles.buttonItem}
+        >
+          <FontAwesome5 name="trash" size={24} color={theme.colors.notpink} />
+        </RoundedButton>
+      ) : (
+        <RoundedButton
+          mode="contained"
+          onPress={() => navigation.navigate("Cart")}
+          style={styles.buttonItem}
+        >
+          <Zocial name="cart" size={25} color={theme.colors.notBlack} />
+        </RoundedButton>
+      )}
     </View>
   );
 };

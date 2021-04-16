@@ -12,7 +12,7 @@ const CartAdmin = ({ navigation }) => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   return (
     <SafeAreaView style={styles.exploreContainer}>
-      <TitleScreen isBorder={false}>My Cart</TitleScreen>
+      <TitleScreen isBorder={false} title="My Cart" />
 
       <SearchView holSearch="my cart" />
 

@@ -88,7 +88,7 @@ const CreateSupplier = ({ navigation, route }) => {
 
   return (
     <View style={styles.root}>
-      <TitleScreen>Create Supplier</TitleScreen>
+      <TitleScreen title="Create Supplier" />
       <ButtonBack navigation={navigation} />
 
       <Background>

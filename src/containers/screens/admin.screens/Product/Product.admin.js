@@ -21,7 +21,7 @@ const ProductAdmin = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.exploreContainer}>
-      <TitleScreen isBorder={false}>My Products</TitleScreen>
+      <TitleScreen isBorder={false} title="My Products" />
 
       <SearchView
         typeAction={typeProducts.queryProductFirebase}

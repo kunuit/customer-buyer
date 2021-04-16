@@ -14,7 +14,7 @@ export const theme = {
     error: "#f13a59",
     notBlack: "#181725",
     notGray: "#7C7C7C",
-    notpink: "#F21B3B",
+    notpink: "#FA8072",
     lineBorder: "#E2E2E2",
   },
   backgrounds: {

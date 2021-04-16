@@ -134,7 +134,7 @@ const CreateProduct = ({ navigation, route }) => {
   };
   return (
     <View style={styles.root}>
-      <TitleScreen>Create Product</TitleScreen>
+      <TitleScreen title="Create Product" />
       <ButtonBack navigation={navigation} />
 
       <Background>

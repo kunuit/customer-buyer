@@ -69,7 +69,8 @@ const CardItem = ({
             dispatch({
               type: typeCarts.addtoCart,
               payload: {
-                data: item.id,
+                data: item,
+                quantity: 1,
               },
             })
           }

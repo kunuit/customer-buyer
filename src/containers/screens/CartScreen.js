@@ -1,9 +1,18 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Dimensions, View, Text, StyleSheet, FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  Dimensions,
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  RefreshControl,
+} from "react-native";
 import Button from "../../components/Button";
 import CartItem from "../../components/CartItem";
 import Colors from "../../constants/colors";
+import { typeCarts } from "../../sagas/cart.saga";
+import MainLoading from "../../components/Loader/MainLoading";
 
 const Line = () => {
   return (
@@ -15,27 +24,76 @@ const Line = () => {
     />
   );
 };
-const CartScreen = () => {
-  const { products } = useSelector((state) => state);
 
-  const fakeData = [1, 2, 3, 4, 5, 6, 7];
+const CartScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const { isLoading, data } = useSelector((state) => state.carts);
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    console.log("run effect in cart screen");
+    dispatch({ type: typeCarts.fetchCartFirebase });
+  }, []);
+
+  const handleProductCount = (itemId, quantity) => {
+    console.log(itemId, "check handle product count");
+    dispatch({
+      type: typeCarts.updateCart,
+      payload: {
+        data: itemId,
+        quantity,
+      },
+    });
+  };
+
+  const handleDeleteProduct = (itemId) => {
+    console.log(itemId, "check delete product count");
+    dispatch({
+      type: typeCarts.removeOutCart,
+      payload: {
+        data: itemId,
+      },
+    });
+  };
+
+  const onRefresh = () => {
+    dispatch({ type: typeCarts.fetchCartFirebase });
+    // if (isLoading) {
+    //   setRefreshing(false);
+    // }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.titleTextContainer}>
         <Text style={styles.titleText}>My Cart</Text>
       </View>
-      <FlatList
-        style={styles.listCartItemContainer}
-        showsVerticalScrollIndicator={false}
-        data={fakeData}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <View key={index}>
-            <CartItem product={item} />
-            <Line />
-          </View>
-        )}
-      />
+      {!isLoading ? (
+        <FlatList
+          style={styles.listCartItemContainer}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          data={data}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <View>
+              <CartItem
+                item={item}
+                onProductCount={(itemId, quantity) =>
+                  handleProductCount(itemId, quantity)
+                }
+                onDeleteProduct={(itemId) => handleDeleteProduct(itemId)}
+                navigation={navigation}
+              />
+              <Line />
+            </View>
+          )}
+        />
+      ) : (
+        <MainLoading padding={30} />
+      )}
       <Button
         style={{
           backgroundColor: Colors.green,

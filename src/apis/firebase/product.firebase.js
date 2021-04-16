@@ -14,6 +14,17 @@ export const getAllProduct_FiB_API = async () => {
   }
 };
 
+export const getProductById_Fib_API = async ({ id }) => {
+  try {
+    const data = await firebase.database().ref(`/products/${id}`).once("value");
+    const snapshot = data.val();
+    console.log(snapshot, "check get product by id in API");
+    return snapshot;
+  } catch (error) {
+    return { code: 400, data: error + "" };
+  }
+};
+
 export const createProduct_FiB_API = async (data) => {
   try {
     const newProduct = await firebase

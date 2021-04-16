@@ -3,10 +3,15 @@ import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import RoundedButton from "../RoundedButton";
 import { View, StyleSheet, Text } from "react-native";
 import { theme } from "../../common/theme";
-import { useState } from "react";
 
-const ProductUnitContainer = ({ title, unitText, isEdit, upDateProduct }) => {
-  const [heart, setHeart] = useState(false);
+const ProductUnitContainer = ({
+  title,
+  unitText,
+  isEdit,
+  upDateProduct,
+  heart,
+  onSetFavorite,
+}) => {
   return (
     <View style={styles.productUnitContainer}>
       <View>
@@ -29,7 +34,9 @@ const ProductUnitContainer = ({ title, unitText, isEdit, upDateProduct }) => {
         ) : (
           <RoundedButton
             mode="contained"
-            onPress={() => setHeart(!heart)}
+            onPress={() => {
+              onSetFavorite();
+            }}
             style={styles.buttonItem}
           >
             {heart ? (

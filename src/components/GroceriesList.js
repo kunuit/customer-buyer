@@ -6,6 +6,7 @@ import { multipleRowsFlatListFormat } from "../common/format/FlatListDataFormat"
 import GroceryItem from "./GroceryItem";
 import CategoryHomeLoader from "./Loader/CategoryHomeLoader";
 import { windowHeight } from "../common/Dimensions";
+import MainLoading from "./Loader/MainLoading";
 
 const GroceriesList = ({ navigation, isHome = false }) => {
   const { isLoading, data } = useSelector((state) => state.categories);
@@ -31,16 +32,18 @@ const GroceriesList = ({ navigation, isHome = false }) => {
             ) : (
               <View style={styles.cardItemContainer}>
                 {isHome ? (
-                  <GroceryItem item={item} />
+                  <GroceryItem item={item} navigation={navigation} />
                 ) : (
-                  <CategoryItem item={item} />
+                  <CategoryItem item={item} navigation={navigation} />
                 )}
               </View>
             )
           }
         />
       ) : (
-        <CategoryHomeLoader />
+        <View>
+          {isHome ? <CategoryHomeLoader /> : <MainLoading padding={30} />}
+        </View>
       )}
     </View>
   );

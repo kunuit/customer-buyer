@@ -16,7 +16,7 @@ const SupplierAdmin = ({ navigation }) => {
   const { data, isLoading } = useSelector((state) => state.suppliers);
   return (
     <SafeAreaView style={styles.exploreContainer}>
-      <TitleScreen isBorder={false}>My Suppliers</TitleScreen>
+      <TitleScreen isBorder={false} title="My Suppliers" />
 
       <SearchView holSearch="my supplier" />
 

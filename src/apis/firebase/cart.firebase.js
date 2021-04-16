@@ -3,15 +3,15 @@ import { firebase } from "../../common/config/firebase";
 const rootRef = firebase.database().ref();
 const cartRef = rootRef.child("carts");
 
-// export const getAllProduct_FiB_API = async () => {
-//   try {
-//     const data = await productRef.once("value");
-//     const snapshot = data.val();
-//     return { code: 200, data: snapshot };
-//   } catch (error) {
-//     return { code: 400, data: error + "" };
-//   }
-// };
+export const getCart_FiB_API = async () => {
+  try {
+    const data = await cartRef.once("value");
+    const snapshot = data.val();
+    return { code: 200, data: snapshot };
+  } catch (error) {
+    return { code: 400, data: error + "" };
+  }
+};
 
 export const addToCart_FiB_API = async ({ id, quantity }) => {
   try {
@@ -27,34 +27,33 @@ export const addToCart_FiB_API = async ({ id, quantity }) => {
   }
 };
 
-// export const updateProduct_FiB_API = async (data) => {
-//   try {
-//     const updatedProduct = await firebase
-//       .database()
-//       .ref(`/products/${data.id}`)
-//       .update({
-//         ...data,
-//       });
+export const updateCart_Fib_API = async ({ id, quantity }) => {
+  try {
+    const updatedCart = await firebase.database().ref(`/carts/${id}`).update({
+      id,
+      quantity,
+    });
 
-//     console.log(updatedProduct, "test update at Saga");
-//     return { code: 200, data: "res" };
-//   } catch (error) {
-//     return { code: 400, data: error + "" };
-//   }
-// };
+    console.log(updatedCart, "test update at Saga");
+    return { code: 200, data: "res" };
+  } catch (error) {
+    return { code: 400, data: error + "" };
+  }
+};
 
-// export const removeProduct_FiB_API = async (index) => {
-//   try {
-//     const removeProduct = await firebase
-//       .database()
-//       .ref(`/products/${index}`)
-//       .remove();
+export const removeOutCart_Fib_API = async (id) => {
+  try {
+    const removeProductOutCart = await firebase
+      .database()
+      .ref(`/carts/${id}`)
+      .remove();
 
-//     return { code: 200, data: "res" };
-//   } catch (error) {
-//     return { code: 400, data: error + "" };
-//   }
-// };
+    console.log(removeProductOutCart, "test remove at Saga");
+    return { code: 200, data: "res" };
+  } catch (error) {
+    return { code: 400, data: error + "" };
+  }
+};
 
 // export const queryProduct_FiB_API = async (data) => {
 //   try {
