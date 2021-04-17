@@ -7,6 +7,7 @@ const initialState = {
 };
 
 const reducer = (state = initialState, { type, payload }) => {
+  console.log(`action`, { type });
   switch (type) {
     case typeProducts.showLoadingProduct:
       return {
@@ -14,6 +15,12 @@ const reducer = (state = initialState, { type, payload }) => {
         isLoading: true,
       };
     case typeProducts.fetchProductFirebaseSuccess:
+      return {
+        ...state,
+        data: payload.data,
+        isLoading: false,
+      };
+    case typeProducts.fetchProductSuccess:
       return {
         ...state,
         data: payload.data,

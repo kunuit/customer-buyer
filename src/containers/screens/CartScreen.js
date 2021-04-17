@@ -29,6 +29,7 @@ const CartScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { isLoading, data } = useSelector((state) => state.carts);
   const [refreshing, setRefreshing] = useState(false);
+  const [listCheckOut, setListCheckOut] = useState(null);
 
   useEffect(() => {
     console.log("run effect in cart screen");
@@ -75,6 +76,7 @@ const CartScreen = ({ navigation }) => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
+          ItemSeparatorComponent={Line}
           data={data}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
@@ -85,9 +87,11 @@ const CartScreen = ({ navigation }) => {
                   handleProductCount(itemId, quantity)
                 }
                 onDeleteProduct={(itemId) => handleDeleteProduct(itemId)}
+                onAddToCheckout={(itemCheckout) => {
+                  console.log(itemCheckout, "check total price");
+                }}
                 navigation={navigation}
               />
-              <Line />
             </View>
           )}
         />

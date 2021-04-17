@@ -18,12 +18,12 @@ const Background = ({
   relative = false,
 }) => (
   <View style={styles.background}>
-    {isButtonBack ? <ButtonBack navigation={navigation} /> : <></>}
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ alignItems: "center" }}>{children}</View>
       </ScrollView>
     </SafeAreaView>
+    {isButtonBack ? <ButtonBack navigation={navigation} /> : <></>}
   </View>
 );
 

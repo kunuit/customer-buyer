@@ -18,39 +18,65 @@ class AxiosService {
     return Promise.reject(error);
   }
 
-  get(url) {
-    return this.instance.get(url);
+  get(url, token) {
+    if (token) {
+      return this.instance.get(url, {
+        headers: {
+          authorization: "Bearer " + token,
+        },
+      });
+    } else return this.instance.get(url);
   }
 
-  getWithToken(url, token) {
-    console.log(url, token, "check api");
-    return this.instance.get(url, {
-      headers: {
-        authorization: "Bearer " + token,
-      },
-    });
+  postFormData(url, body, token) {
+    if (token) {
+      return this.instance.post(url, body, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authorization: "Bearer " + token, //the token is a variable which holds the token
+        },
+      });
+    } else {
+      return this.instance.post(url, body, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    }
   }
 
-  post(url, body) {
-    return this.instance.post(url, body, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+  post(url, body, token) {
+    if (token) {
+      return this.instance.post(url, body, {
+        headers: {
+          authorization: "Bearer " + token, //the token is a variable which holds the token
+        },
+      });
+    } else {
+      return this.instance.post(url, body);
+    }
   }
 
-  postWithToken(url, body, token) {
-    return this.instance.post(url, body, {
-      headers: {
-        authorization: "Bearer " + token, //the token is a variable which holds the token
-      },
-    });
+  put(url, body, token) {
+    if (token) {
+      return this.instance.put(url, body, {
+        headers: {
+          authorization: "Bearer " + token, //the token is a variable which holds the token
+        },
+      });
+    } else {
+      return this.instance.put(url, body);
+    }
   }
 
-  put(url, body) {
-    return this.instance.put(url, body);
-  }
-
-  delete(url) {
-    return this.instance.delete(url);
+  delete(url, token) {
+    if (token) {
+      return this.instance.delete(url, {
+        headers: {
+          authorization: "Bearer " + token, //the token is a variable which holds the token
+        },
+      });
+    } else {
+      return this.instance.delete(url);
+    }
   }
 }
 

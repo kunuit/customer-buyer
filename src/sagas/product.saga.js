@@ -13,7 +13,9 @@ import {
   removeProduct_FiB_API,
   queryProduct_FiB_API,
 } from "../apis/firebase/product.firebase";
+import { getProductsAPI } from "../apis/product.api";
 import { showToast } from "../common/Layout/toast.helper";
+import { statusCode } from "../constants/API.constants";
 import Product from "../containers/screens/Product";
 
 // import { getProductsAPI } from "../apis/product.api";
@@ -62,9 +64,19 @@ export const typeProducts = {
   // query product
   queryProductFirebase: "QUERY_PRODUCT_FIREBASE",
   queryProductFirebaseSuccess: "QUERY_PRODUCT_FIREBASE_SUCCESS",
+  // fetchProduct
+  fetchProduct: "FETCH_PRODUCT",
+  fetchProductSuccess: "FETCH_PRODUCT_SUCCESS",
+  fetchProductFail: "FETCH_PRODUCT_FAIL",
 };
 
-function* fetchProductSaga() {
+export const statusProduct = Object.freeze({
+  notExit: 5,
+  outOfStock: 2,
+  available: 1,
+});
+
+function* fetchProductFirebaseSaga() {
   yield put({ type: typeProducts.showLoadingProduct });
 
   const productRes = yield call(getAllProduct_FiB_API);
@@ -82,7 +94,7 @@ function* fetchProductSaga() {
   }
 }
 
-function* createProductSaga({ type, payload }) {
+function* createProductFirebaseSaga({ type, payload }) {
   const createProductRes = yield call(createProduct_FiB_API, payload.data);
   const { code, data } = createProductRes;
   if (code == 200) {
@@ -97,7 +109,7 @@ function* createProductSaga({ type, payload }) {
   }
 }
 
-function* updateProructSaga({ type, payload }) {
+function* updateProructFirebaseSaga({ type, payload }) {
   console.log(payload, "check update");
   const updateProductRes = yield call(updateProduct_FiB_API, payload.data);
   const { code, data } = updateProductRes;
@@ -113,7 +125,7 @@ function* updateProructSaga({ type, payload }) {
   }
 }
 
-function* removeProductSaga({ type, payload }) {
+function* removeProductFirebaseSaga({ type, payload }) {
   const removeProductRes = yield call(removeProduct_FiB_API, payload.index);
   const { code, data } = removeProductRes;
   if (code == 200) {
@@ -124,22 +136,43 @@ function* removeProductSaga({ type, payload }) {
       },
     });
   } else {
-    showToast({ title: Product, type: "error", message: data });
+    showToast({ title: "Product", type: "error", message: data });
   }
 }
 
-function* queryProductSaga({ type, payload }) {
+function* queryProductFirebaseSaga({ type, payload }) {
   yield put({ type: typeProducts.showLoadingProduct });
   yield delay(300);
 
   const queryRes = yield call(queryProduct_FiB_API, payload.data);
 }
 
+function* fetchProductSaga(action) {
+  // loading
+  yield put({ type: typeProducts.showLoadingProduct });
+  // call API product
+  const productRes = yield call(getProductsAPI);
+  const { payload, code, error, message } = productRes.data;
+  // nếu đúng thì gọi action success sai thì show Toast
+  if (code == statusCode.success) {
+    console.log(payload, "check payload data");
+    yield put({
+      type: typeProducts.fetchProductSuccess,
+      payload: {
+        data: payload,
+      },
+    });
+  } else {
+    showToast({ title: "Product", type: "error", message: message });
+  }
+}
+
 export const productSagas = [
   // takeEvery("FETCH_PRODUCTS", fetchAllProducts),
-  takeLatest(typeProducts.fetchProductFirebase, fetchProductSaga),
-  takeLatest(typeProducts.createProductFirebase, createProductSaga),
-  takeLatest(typeProducts.updateProductFirebase, updateProructSaga),
-  takeLatest(typeProducts.removeProductFirebase, removeProductSaga),
-  takeLatest(typeProducts.queryProductFirebase, queryProductSaga),
+  takeLatest(typeProducts.fetchProductFirebase, fetchProductFirebaseSaga),
+  takeLatest(typeProducts.createProductFirebase, createProductFirebaseSaga),
+  takeLatest(typeProducts.updateProductFirebase, updateProructFirebaseSaga),
+  takeLatest(typeProducts.removeProductFirebase, removeProductFirebaseSaga),
+  takeLatest(typeProducts.queryProductFirebase, queryProductFirebaseSaga),
+  takeLatest(typeProducts.fetchProduct, fetchProductSaga),
 ];

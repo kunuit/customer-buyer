@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import {
   TouchableOpacity,
   StyleSheet,
@@ -26,6 +26,7 @@ import {
 } from "../../../../actions/auth.action";
 import TextError from "../../../../components/TextError";
 import { showToast } from "../../../../common/Layout/toast.helper";
+import { typeAuths } from "../../../../sagas/auth.saga";
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -47,12 +48,15 @@ const LoginScreen = ({ navigation }) => {
     }
 
     //! dispatch to check loginACT
-    // dispatch(loginACT({ info: email.value, password: password.value }));
+    dispatch({
+      type: typeAuths.login,
+      payload: { username: email.value, password: password.value },
+    });
 
     //! dispatch to login via Firebase
-    dispatch(
-      loginViaFirebaseACT({ email: email.value, password: password.value })
-    );
+    // dispatch(
+    //   loginViaFirebaseACT({ email: email.value, password: password.value })
+    // );
   };
 
   const _onGoogleLoginPressed = () => {
@@ -63,9 +67,11 @@ const LoginScreen = ({ navigation }) => {
     });
   };
 
-  if (isLogin) {
-    navigation.navigate("Bottom tab");
-  }
+  useEffect(() => {
+    if (isLogin) {
+      navigation.navigate("Bottom tab");
+    }
+  }, [isLogin]);
 
   return (
     <Background isButtonBack={true} navigation={navigation}>

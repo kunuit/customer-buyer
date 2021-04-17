@@ -24,6 +24,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { registerACT, resetRegisterACT } from "../../../../actions/auth.action";
 import TextError from "../../../../components/TextError";
+import { typeAuths } from "../../../../sagas/auth.saga";
 
 // type Props = {
 //   navigation: Navigation,
@@ -32,17 +33,19 @@ import TextError from "../../../../components/TextError";
 const RegisterScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [name, setName] = useState({ value: "", error: "" });
+  const [fullName, setFullName] = useState({ value: "", error: "" });
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
   const [phone, setPhone] = useState({ value: "", error: "" });
   const [address, setAddress] = useState({ value: "", error: "" });
 
-  const { errorRegister, isRegister, isAuthLoading } = useSelector(
-    (state) => state.auth,
+  const { errorRegister, isRegister, isRegisterLoading } = useSelector(
+    (state) => state.auth
   );
 
   const _onSignUpPressed = () => {
     const nameError = nameValidator(name.value);
+    const fullNameError = nameValidator(fullName.value);
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
     const phoneError = phoneValidator(phone.value);
@@ -51,11 +54,13 @@ const RegisterScreen = ({ navigation }) => {
     if (
       emailError ||
       passwordError ||
+      fullNameError ||
       nameError ||
       phoneError ||
       addressError
     ) {
       setName({ ...name, error: nameError });
+      setFullName({ ...fullName, error: fullNameError });
       setEmail({ ...email, error: emailError });
       setPassword({ ...password, error: passwordError });
       setPhone({ ...phone, error: phoneError });
@@ -63,15 +68,17 @@ const RegisterScreen = ({ navigation }) => {
       return;
     }
 
-    dispatch(
-      registerACT({
+    dispatch({
+      type: typeAuths.register,
+      payload: {
         username: name.value,
-        email: email.value,
+        fullName: fullName.value,
+        // email: email.value,
         password: password.value,
-        phone: phone.value,
-        addressDetail: address.value,
-      }),
-    );
+        // phone: phone.value,
+        // addressDetail: address.value,
+      },
+    });
   };
 
   if (isRegister) {
@@ -88,8 +95,8 @@ const RegisterScreen = ({ navigation }) => {
       {errorRegister != null ? <TextError error={errorRegister} /> : <></>}
 
       <TextInput
-        label='Username'
-        returnKeyType='next'
+        label="Username"
+        returnKeyType="next"
         value={name.value}
         onChangeText={(text) => setName({ value: text, error: "" })}
         error={!!name.error}
@@ -97,21 +104,30 @@ const RegisterScreen = ({ navigation }) => {
       />
 
       <TextInput
-        label='Email'
-        returnKeyType='next'
+        label="Full name"
+        returnKeyType="next"
+        value={fullName.value}
+        onChangeText={(text) => setFullName({ value: text, error: "" })}
+        error={!!fullName.error}
+        errorText={fullName.error}
+      />
+
+      <TextInput
+        label="Email"
+        returnKeyType="next"
         value={email.value}
         onChangeText={(text) => setEmail({ value: text, error: "" })}
         error={!!email.error}
         errorText={email.error}
-        autoCapitalize='none'
-        autoCompleteType='email'
-        textContentType='emailAddress'
-        keyboardType='email-address'
+        autoCapitalize="none"
+        autoCompleteType="email"
+        textContentType="emailAddress"
+        keyboardType="email-address"
       />
 
       <TextInput
-        label='Password'
-        returnKeyType='done'
+        label="Password"
+        returnKeyType="done"
         value={password.value}
         onChangeText={(text) => setPassword({ value: text, error: "" })}
         error={!!password.error}
@@ -120,20 +136,20 @@ const RegisterScreen = ({ navigation }) => {
       />
 
       <TextInput
-        label='Phone'
-        returnKeyType='done'
+        label="Phone"
+        returnKeyType="done"
         value={phone.value}
         onChangeText={(text) => {
           setPhone({ value: text, error: "" });
         }}
-        keyboardType='phone-pad'
+        keyboardType="phone-pad"
         error={!!phone.error}
         errorText={phone.error}
       />
 
       <TextInput
-        label='Address'
-        returnKeyType='done'
+        label="Address"
+        returnKeyType="done"
         value={address.value}
         onChangeText={(text) => setAddress({ value: text, error: "" })}
         error={!!address.error}
@@ -141,16 +157,17 @@ const RegisterScreen = ({ navigation }) => {
       />
 
       <Button
-        mode='contained'
+        mode="contained"
         style={{ backgroundColor: theme.colors.primary }}
         onPress={_onSignUpPressed}
-        disabled={isAuthLoading}>
-        {isAuthLoading ? (
+        disabled={isRegisterLoading}
+      >
+        {isRegisterLoading ? (
           <ActivityIndicator
             style={{ opacity: 1 }}
             animating={true}
-            size='small'
-            color='#fff'
+            size="small"
+            color="#fff"
           />
         ) : (
           <Text style={styles.text}>Register</Text>

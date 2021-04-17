@@ -1,19 +1,4 @@
-import {
-  LOGIN_FAIL,
-  LOGIN_SUCCESS,
-  LOGIN_FIREBASE_SUCCESS,
-  LOGIN_FIREBASE_FAIL,
-  LOGOUT,
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
-  RESET_REGISTER,
-  SHOW_AUTH_LOADING,
-  HIDE_AUTH_LOADING,
-  REFRESH_TOKEN_SUCCESS,
-  REFRESH_TOKEN_FAIL,
-  SWITCH_IS_ADMIN,
-} from "../constants/auth.constants";
-import { typeAuths } from "../sagas/auth.saga";
+import { role, typeAuths } from "../sagas/auth.saga";
 
 const initState = {
   dataCustomer: null,
@@ -25,47 +10,60 @@ const initState = {
   errorLogin: null,
   errorRegister: null,
   isAuthLoading: false,
+  isRegisterLoading: false,
   isAdmin: false,
   isAdminLogin: false,
 };
 
 const reducer = (state = initState, action) => {
+  console.log(`action`, action);
   switch (action.type) {
-    case REGISTER_SUCCESS:
+    case typeAuths.registerSuccess:
       return {
         ...state,
         isRegister: true,
+        isRegisterLoading: false,
       };
-    case REGISTER_FAIL:
+    case typeAuths.registerFail:
       return {
         ...state,
-        errorRegister: action.payload.error.message,
+        errorRegister: action.payload.error,
+        isRegisterLoading: false,
       };
-    case RESET_REGISTER:
+    case typeAuths.resetRegister:
       return {
         ...state,
         isRegister: false,
         errorRegister: null,
       };
-    case LOGIN_SUCCESS:
+    case typeAuths.loginSuccess:
       return {
         ...state,
         token: action.payload.data.token,
         refreshToken: action.payload.data.refreshToken,
-        dataCustomer: state.isAdmin ? null : action.payload.data,
-        dataAdmin: state.isAdmin ? action.payload.data : null,
-        isAdminLogin: state.isAdmin ? true : false,
+        dataCustomer:
+          action.payload.data.userInfo == role.user
+            ? null
+            : action.payload.data.userInfo,
+        dataAdmin:
+          action.payload.data.userInfo == role.staff
+            ? action.payload.data.userInfo
+            : null,
+        isAdminLogin: action.payload.data.userInfo == role.staff ? true : false,
         isLogin: true,
+        isAuthLoading: false,
       };
-    case LOGIN_FAIL:
+    case typeAuths.loginFail:
       return {
         ...state,
-        errorLogin: action.payload.error.message,
+        errorLogin: action.payload.error,
+        isAuthLoading: false,
       };
-    case LOGOUT:
+    case typeAuths.logout:
       return {
         ...state,
         token: null,
+        refreshToken: null,
         isLogin: false,
         isAdminLogin: false,
         errorLogin: null,
@@ -73,50 +71,61 @@ const reducer = (state = initState, action) => {
         dataAdmin: null,
         isAdmin: false,
       };
-    case SHOW_AUTH_LOADING:
+    case typeAuths.showAuthLoading:
       return {
         ...state,
         isAuthLoading: true,
       };
-    case HIDE_AUTH_LOADING:
+    case typeAuths.showRegisterLoading:
       return {
         ...state,
-        isAuthLoading: false,
+        isRegisterLoading: true,
       };
-    case REFRESH_TOKEN_SUCCESS:
+    case typeAuths.refreshTokenSuccess:
       return {
         ...state,
         token: action.payload.data.accessToken,
       };
-    case REFRESH_TOKEN_FAIL:
+    case typeAuths.refreshTokenFail:
       return {
         ...state,
         errorLogin: action.payload.error,
       };
-    case SWITCH_IS_ADMIN:
+    case typeAuths.switchIsAdmin:
       return {
         ...state,
         isAdmin: !state.isAdmin,
       };
-    case LOGIN_FIREBASE_SUCCESS:
-      return {
-        ...state,
-        dataCustomer: state.isAdmin ? null : action.payload.data,
-        dataAdmin: state.isAdmin ? action.payload.data : null,
-        isAdminLogin: state.isAdmin ? true : false,
-        isLogin: true,
-        isAuthLoading: false,
-      };
-    case LOGIN_FIREBASE_FAIL:
-      return {
-        ...state,
-        errorLogin: action.payload.error,
-        isAuthLoading: false,
-      };
+    // case LOGIN_FIREBASE_SUCCESS:
+    //   return {
+    //     ...state,
+    //     dataCustomer: state.isAdmin ? null : action.payload.data,
+    //     dataAdmin: state.isAdmin ? action.payload.data : null,
+    //     isAdminLogin: state.isAdmin ? true : false,
+    //     isLogin: true,
+    //     isAuthLoading: false,
+    //   };
+    // case LOGIN_FIREBASE_FAIL:
+    //   return {
+    //     ...state,
+    //     errorLogin: action.payload.error,
+    //     isAuthLoading: false,
+    //   };
     case typeAuths.isAuthLocal:
       return {
         ...state,
+        token: action.payload.data.token,
+        refreshToken: action.payload.data.refreshToken,
         dataCustomer: action.payload.data,
+        dataCustomer:
+          action.payload.data.userInfo == role.user
+            ? null
+            : action.payload.data.userInfo,
+        dataAdmin:
+          action.payload.data.userInfo == role.staff
+            ? action.payload.data.userInfo
+            : null,
+        isAdminLogin: action.payload.data.userInfo == role.staff ? true : false,
         isLogin: true,
       };
     default:

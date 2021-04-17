@@ -38,7 +38,6 @@ function* fetchFavoriteSaga({ type, payload }) {
   // handle
   if (code == 200) {
     const transitData = Object.values(data);
-
     // công việc này của back end
     const realFavorite = yield all(
       transitData.map((item) => {

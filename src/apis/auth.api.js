@@ -1,21 +1,12 @@
 // import qs from 'query-string';
 import axiosService from "../common/axiosService";
-import { API_ENDPOINT } from "../constants/product.constants";
+import { API_ENDPOINT } from "../constants/API.constants";
 
-const routeCustomer = "customer";
+const routeCustomer = "auth";
 const routeAdmin = "admin";
 
 export const loginAPI = (data) => {
-  return {
-    data: {
-      data: {
-        token: "customer token",
-        refreshToken: "customer refreshToken",
-      },
-      statusCode: 200,
-    },
-  };
-  // return axiosService.post(`${API_ENDPOINT}/${routeCustomer}/login`, data);
+  return axiosService.post(`${API_ENDPOINT}/${routeCustomer}/login`, data);
 };
 
 export const registerAPI = (data) => {

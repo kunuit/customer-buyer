@@ -13,6 +13,7 @@ import {
 } from "../apis/firebase/cart.firebase";
 import { getAllProduct_FiB_API } from "../apis/firebase/product.firebase";
 import { showToast } from "../common/Layout/toast.helper";
+import { statusProduct } from "./product.saga";
 
 export const typeCarts = {
   // fetch cart
@@ -59,7 +60,7 @@ function* fetchCartSaga({ type, payload }) {
           images: [
             "https://theme.hstatic.net/1000273444/1000452469/14/no-img.png?v=1804",
           ],
-          status: 5,
+          status: statusProduct.notExit,
           id: item.id,
         };
       return {
@@ -125,7 +126,7 @@ function* addToCartSaga({ type, payload }) {
       yield put({
         type: typeCarts.addtoCartSuccess,
         payload: {
-          data: { ...payload.data, quantity: 1 },
+          data: { ...payload.data, quantity: payload.quantity },
         },
       });
     } else {

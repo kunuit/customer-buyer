@@ -7,6 +7,7 @@ const initialState = {
 };
 
 const reducer = (state = initialState, { type, payload }) => {
+  console.log(`action`, { type });
   switch (type) {
     case typeSuppliers.showLoadingSupplier:
       return {

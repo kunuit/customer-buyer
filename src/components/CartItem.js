@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -6,97 +6,131 @@ import {
   Image,
   TouchableWithoutFeedback,
   TouchableOpacity,
+  TouchableHighlight,
+  CheckBox,
 } from "react-native";
 import RoundedButton from "./RoundedButton";
 import { Dimensions } from "react-native";
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import Colors from "../constants/colors";
 import NumberFormat from "react-number-format";
+import { statusProduct } from "../sagas/product.saga";
+import { theme } from "../common/theme";
 
-const CartItem = ({ item, onProductCount, onDeleteProduct, navigation }) => {
+const CartItem = ({
+  item,
+  onProductCount,
+  onDeleteProduct,
+  onAddToCheckout,
+  navigation,
+}) => {
+  const [isSelected, setIsSelected] = useState(false);
+
+  const onAddProductCheckOut = () => {
+    onAddToCheckout({
+      item,
+    });
+    setIsSelected(!isSelected);
+  };
+
   return (
-    <TouchableOpacity
-      style={styles.cartItemContainer}
+    <TouchableHighlight
+      underlayColor={theme.backgrounds.white}
       onPress={() => {
-        item.status == 5
+        item.status == statusProduct.notExit
           ? console.log("product not exits")
           : navigation.navigate("Product Detail", item);
       }}
     >
-      <View style={styles.cartImageContainer}>
-        <Image
-          style={styles.cartImage}
-          source={{
-            uri: item.images[0],
-            // "https://theme.hstatic.net/1000273444/1000452469/14/no-img.png?v=1804",
-          }}
-        />
-      </View>
-      <View style={styles.cartDetailContainer}>
-        <View style={{ marginBottom: 5 }}>
-          <Text style={styles.titleText}>{item.name}</Text>
-          <Text style={{ color: Colors.gray }}>1kg, prices</Text>
+      <View style={styles.cartItemContainer}>
+        <View style={styles.cartImageContainer}>
+          <Image
+            style={styles.cartImage}
+            source={{
+              uri: item.images[0],
+              // "https://theme.hstatic.net/1000273444/1000452469/14/no-img.png?v=1804",
+            }}
+          />
         </View>
-        <View style={styles.quantityAjustContainer}>
-          <RoundedButton
-            disabled={item.status == 5 ? true : false}
+        <View style={styles.cartDetailContainer}>
+          <View style={{ marginBottom: 5 }}>
+            <Text style={styles.titleText}>{item.name}</Text>
+            <Text style={{ color: Colors.gray }}>1kg, prices</Text>
+          </View>
+          <View style={styles.quantityAjustContainer}>
+            <RoundedButton
+              disabled={item.status == 5 ? true : false}
+              onPress={() => {
+                if (item.quantity > 1)
+                  onProductCount(item.id, item.quantity - 1);
+              }}
+            >
+              <Entypo name="minus" size={17} color={Colors.gray} />
+            </RoundedButton>
+            <View style={{ marginLeft: 12, marginRight: 12 }}>
+              <Text style={(styles.titleText, { fontSize: 16 })}>
+                {item.quantity}
+              </Text>
+            </View>
+            <RoundedButton
+              disabled={item.status == 5 ? true : false}
+              onPress={() => {
+                onProductCount(item.id, item.quantity + 1);
+              }}
+            >
+              <Entypo
+                name="plus"
+                size={17}
+                color="white"
+                style={styles.buttonClickable}
+              />
+            </RoundedButton>
+          </View>
+        </View>
+        <View style={styles.cartAmount}>
+          <TouchableOpacity
             onPress={() => {
-              if (item.quantity > 1) onProductCount(item.id, item.quantity - 1);
+              onDeleteProduct(item.id);
             }}
           >
-            <Entypo name="minus" size={17} color={Colors.gray} />
-          </RoundedButton>
-          <View style={{ marginLeft: 12, marginRight: 12 }}>
-            <Text style={(styles.titleText, { fontSize: 16 })}>
-              {item.quantity}
-            </Text>
-          </View>
-          <RoundedButton
-            disabled={item.status == 5 ? true : false}
-            onPress={() => {
-              onProductCount(item.id, item.quantity + 1);
+            <View>
+              <AntDesign
+                name="close"
+                style={{ paddingVertical: 5, paddingHorizontal: 5 }}
+                size={20}
+                color="black"
+              />
+            </View>
+          </TouchableOpacity>
+          <CheckBox
+            value={isSelected}
+            disabled={item.status == statusProduct.notExit ? true : false}
+            onValueChange={() => {
+              onAddProductCheckOut();
             }}
-          >
-            <Entypo
-              name="plus"
-              size={17}
-              color="white"
-              style={styles.buttonClickable}
-            />
-          </RoundedButton>
+            tintColors={{
+              true: theme.colors.primary,
+              false: theme.colors.notBlack,
+            }}
+            style={styles.checkbox}
+          />
+          <NumberFormat
+            value={
+              item.price
+                ? Math.round(item.price * item.quantity * 100) / 100
+                : 0.0
+            }
+            displayType={"text"}
+            thousandSeparator={true}
+            // suffix={" vnd"}
+            prefix={"$"}
+            renderText={(formattedValue) => (
+              <Text style={styles.titleText}>{formattedValue}</Text>
+            )}
+          />
         </View>
       </View>
-      <View style={styles.cartAmount}>
-        <TouchableOpacity
-          onPress={() => {
-            onDeleteProduct(item.id);
-          }}
-        >
-          <View>
-            <AntDesign
-              name="close"
-              style={{ paddingVertical: 5, paddingHorizontal: 5 }}
-              size={20}
-              color="black"
-            />
-          </View>
-        </TouchableOpacity>
-        <NumberFormat
-          value={
-            item.price
-              ? Math.round(item.price * item.quantity * 100) / 100
-              : 0.0
-          }
-          displayType={"text"}
-          thousandSeparator={true}
-          // suffix={" vnd"}
-          prefix={"$"}
-          renderText={(formattedValue) => (
-            <Text style={styles.titleText}>{formattedValue}</Text>
-          )}
-        />
-      </View>
-    </TouchableOpacity>
+    </TouchableHighlight>
   );
 };
 const styles = StyleSheet.create({
@@ -139,5 +173,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   buttonClickable: { color: Colors.green },
+  checkbox: {
+    // alignSelf: "center",
+  },
 });
 export default CartItem;

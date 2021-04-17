@@ -1,6 +1,6 @@
 // import qs from 'query-string';
 import axiosService from "../common/axiosService";
-import { API_ENDPOINT } from "../constants/product.constants";
+import { API_ENDPOINT } from "../constants/API.constants";
 
 const url = "/product";
 
@@ -14,7 +14,7 @@ const url = "/product";
 
 export const getProductsAPI = (token) => {
   console.log(token, "check token");
-  return axiosService.getWithToken(`http://localhost:3000/product`, token);
+  return axiosService.get(`${API_ENDPOINT}${url}`);
 };
 
 export const addProductAPI = (data, token) => {

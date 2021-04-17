@@ -1,5 +1,4 @@
 import { isLoaded } from "expo-font";
-import * as productTask from "../constants/product.constants";
 import { typeCategories } from "../sagas/category.saga";
 // import { toastError, toastSuccess } from '../helpers/toast.Helper';
 
@@ -9,6 +8,7 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
+  console.log(`action`, action);
   switch (action.type) {
     case typeCategories.showLoadingCategory:
       return {

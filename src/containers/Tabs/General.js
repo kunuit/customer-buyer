@@ -32,6 +32,7 @@ const General = () => {
     // createCategory_FiB_API();
     dispatch({ type: typeCategories.fetchCategoryFirebase });
     dispatch({ type: typeProducts.fetchProductFirebase });
+    dispatch({ type: typeProducts.fetchProduct });
     dispatch({ type: typeAuths.authLocal });
     dispatch({ type: typeFavorites.fetchFavoriteFirebase });
   }, []);
