@@ -14,6 +14,7 @@ import TitleScreen from "../../components/TitleScreen";
 import Grocery from "../../components/Grocery";
 import { useDispatch, useSelector } from "react-redux";
 import { typeProducts } from "../../sagas/product.saga";
+import { ProductListViaCategory } from "../../components/ProductListViaCategory";
 
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -41,6 +42,10 @@ const Home = ({ navigation }) => {
           <ProductList title="Exclusive Offer" navigation={navigation} />
           <Grocery title="Categories" navigation={navigation} />
           <ProductList title="Best Selling" navigation={navigation} />
+          <ProductListViaCategory
+            title="Product with category"
+            navigation={navigation}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -1,35 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
   Text,
   Image,
-  TouchableWithoutFeedback,
   TouchableOpacity,
   TouchableHighlight,
   CheckBox,
 } from "react-native";
 import RoundedButton from "./RoundedButton";
-import { Dimensions } from "react-native";
-import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
+import { Entypo, AntDesign } from "@expo/vector-icons";
 import Colors from "../constants/colors";
 import NumberFormat from "react-number-format";
 import { statusProduct } from "../sagas/product.saga";
 import { theme } from "../common/theme";
+import { statusCart } from "../sagas/cart.saga";
 
 const CartItem = ({
   item,
+  listCheckOutId,
   onProductCount,
   onDeleteProduct,
-  onAddToCheckout,
+  onChangeCheckout,
   navigation,
 }) => {
-  const [isSelected, setIsSelected] = useState(false);
+  const [isSelected, setIsSelected] = useState(
+    listCheckOutId.some((e) => e == item.id)
+  );
+  const [quantityCart, setQuantityCart] = useState(item.quantity);
 
-  const onAddProductCheckOut = () => {
-    onAddToCheckout({
-      item,
-    });
+  useEffect(() => {
+    setQuantityCart(item.quantity);
+  }, [item.quantity]);
+
+  const onActiveProductCheckOut = () => {
+    onChangeCheckout(
+      item.id,
+      isSelected ? statusCart.inActiveToCheckout : statusCart.activeToCheckout
+    );
     setIsSelected(!isSelected);
   };
 
@@ -61,21 +69,24 @@ const CartItem = ({
             <RoundedButton
               disabled={item.status == 5 ? true : false}
               onPress={() => {
-                if (item.quantity > 1)
-                  onProductCount(item.id, item.quantity - 1);
+                if (quantityCart > 1) {
+                  onProductCount(item.id, quantityCart - 1);
+                  setQuantityCart(quantityCart - 1);
+                }
               }}
             >
               <Entypo name="minus" size={17} color={Colors.gray} />
             </RoundedButton>
             <View style={{ marginLeft: 12, marginRight: 12 }}>
               <Text style={(styles.titleText, { fontSize: 16 })}>
-                {item.quantity}
+                {quantityCart}
               </Text>
             </View>
             <RoundedButton
               disabled={item.status == 5 ? true : false}
               onPress={() => {
-                onProductCount(item.id, item.quantity + 1);
+                onProductCount(item.id, quantityCart + 1);
+                setQuantityCart(quantityCart + 1);
               }}
             >
               <Entypo
@@ -91,6 +102,7 @@ const CartItem = ({
           <TouchableOpacity
             onPress={() => {
               onDeleteProduct(item.id);
+              onChangeCheckout(item.id, false);
             }}
           >
             <View>
@@ -102,22 +114,11 @@ const CartItem = ({
               />
             </View>
           </TouchableOpacity>
-          <CheckBox
-            value={isSelected}
-            disabled={item.status == statusProduct.notExit ? true : false}
-            onValueChange={() => {
-              onAddProductCheckOut();
-            }}
-            tintColors={{
-              true: theme.colors.primary,
-              false: theme.colors.notBlack,
-            }}
-            style={styles.checkbox}
-          />
+
           <NumberFormat
             value={
               item.price
-                ? Math.round(item.price * item.quantity * 100) / 100
+                ? Math.round(item.price * quantityCart * 100) / 100
                 : 0.0
             }
             displayType={"text"}
@@ -127,6 +128,18 @@ const CartItem = ({
             renderText={(formattedValue) => (
               <Text style={styles.titleText}>{formattedValue}</Text>
             )}
+          />
+          <CheckBox
+            value={isSelected}
+            disabled={item.status == statusProduct.notExit ? true : false}
+            onValueChange={() => {
+              onActiveProductCheckOut();
+            }}
+            tintColors={{
+              true: theme.colors.primary,
+              false: theme.colors.notBlack,
+            }}
+            style={styles.checkbox}
           />
         </View>
       </View>

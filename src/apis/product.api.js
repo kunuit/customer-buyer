@@ -17,10 +17,11 @@ export const getProductsAPI = (token) => {
   return axiosService.get(`${API_ENDPOINT}${url}`);
 };
 
-export const addProductAPI = (data, token) => {
-  return axiosService.postWithToken(`${API_ENDPOINT}${url}`, data, token);
+export const createProductAPI = (data, token) => {
+  console.log(data, token, "check req send in axios");
+  return axiosService.post(`${API_ENDPOINT}${url}/staff`, data, token);
 };
 
-export const addProductAPITest = (data, token) => {
-  return axiosService.post(`https://ea87abaa5772.ngrok.io/product`, data);
-};
+// export const addProductAPITest = (data, token) => {
+//   return axiosService.post(`https://ea87abaa5772.ngrok.io/product`, data);
+// };

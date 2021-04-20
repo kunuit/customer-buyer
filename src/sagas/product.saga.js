@@ -6,6 +6,7 @@ import {
   takeEvery,
   takeLatest,
 } from "@redux-saga/core/effects";
+import { create } from "react-test-renderer";
 import {
   getAllProduct_FiB_API,
   createProduct_FiB_API,
@@ -13,7 +14,7 @@ import {
   removeProduct_FiB_API,
   queryProduct_FiB_API,
 } from "../apis/firebase/product.firebase";
-import { getProductsAPI } from "../apis/product.api";
+import { getProductsAPI, createProductAPI } from "../apis/product.api";
 import { showToast } from "../common/Layout/toast.helper";
 import { statusCode } from "../constants/API.constants";
 import Product from "../containers/screens/Product";
@@ -68,6 +69,10 @@ export const typeProducts = {
   fetchProduct: "FETCH_PRODUCT",
   fetchProductSuccess: "FETCH_PRODUCT_SUCCESS",
   fetchProductFail: "FETCH_PRODUCT_FAIL",
+  // create product
+  createProduct: "CREATE_PRODUCT",
+  createProductSuccess: "CREATE_PRODUCT_SUCCESS",
+  createProductFail: "CREATE_PRODUCT_FAIL",
 };
 
 export const statusProduct = Object.freeze({
@@ -167,6 +172,28 @@ function* fetchProductSaga(action) {
   }
 }
 
+function* createProductSaga(action) {
+  const { urlProducts } = yield select((state) => state.uploads);
+  const createRes = yield call(
+    createProductAPI,
+    { ...action.payload.data, imageUrls: urlProducts },
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikt1bmlvbiIsImZ1bGxOYW1lIjoiVsWpIFh1w6JuIEPGsOG7nW5nICIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjE4OTEyMDU3LCJleHAiOjE2MjA2NDAwNTd9.XcpK2OB8xRw-3897ZDO13-x6ca6sap5TRBZ4TsGYmM0"
+  );
+  const { payload, code, error, message } = createRes.data;
+  //! check here
+  if (code == statusCode.success) {
+    console.log(payload, "check payload create data");
+    yield put({
+      type: typeProducts.createProductSuccess,
+      payload: {
+        data: { ...action.payload.data, imageUrls: urlProducts },
+      },
+    });
+  } else {
+    showToast({ title: "Product", type: "error", message: message });
+  }
+}
+
 export const productSagas = [
   // takeEvery("FETCH_PRODUCTS", fetchAllProducts),
   takeLatest(typeProducts.fetchProductFirebase, fetchProductFirebaseSaga),
@@ -175,4 +202,5 @@ export const productSagas = [
   takeLatest(typeProducts.removeProductFirebase, removeProductFirebaseSaga),
   takeLatest(typeProducts.queryProductFirebase, queryProductFirebaseSaga),
   takeLatest(typeProducts.fetchProduct, fetchProductSaga),
+  takeLatest(typeProducts.createProduct, createProductSaga),
 ];

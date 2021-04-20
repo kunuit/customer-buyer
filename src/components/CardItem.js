@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     padding: 10,
     width: "100%",
     height: 250,
-    borderColor: Colors.gray,
+    borderColor: theme.colors.lineBorder,
     borderRadius: 20,
     borderWidth: 1,
   },

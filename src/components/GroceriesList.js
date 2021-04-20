@@ -24,7 +24,7 @@ const GroceriesList = ({ navigation, isHome = false }) => {
           horizontal={isHome}
           numColumns={isHome ? null : 2}
           showsVerticalScrollIndicator={false}
-          data={multipleRowsFlatListFormat(data, 2)}
+          data={data}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) =>
             item == "empty" ? (

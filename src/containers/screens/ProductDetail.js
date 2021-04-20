@@ -83,7 +83,7 @@ const ProductDetail = ({ navigation, route }) => {
         barStyle="dark-content"
       />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <ProductDetailImageContainer images={item.images} />
+        <ProductDetailImageContainer images={item.imageUrls} />
         <View style={styles.productDetailInfoContainer}>
           <ProductUnitContainer
             title={item.name}

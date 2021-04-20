@@ -17,6 +17,7 @@ import { Animated } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { typeProducts } from "../../../../sagas/product.saga";
 import PopUp from "../../../../components/Modal/PopUp";
+import { typeUpload } from "../../../../sagas/upload.saga";
 
 const CreateProduct = ({ navigation, route }) => {
   const [name, setName] = useState({ value: "", error: "" });
@@ -29,11 +30,13 @@ const CreateProduct = ({ navigation, route }) => {
   const [supplier, setSupplier] = useState({ value: "", error: "" });
   const [images, setImages] = useState([]);
   const [visible, setVisible] = useState(false);
+  const dispatch = useDispatch();
 
   const item = route.params;
 
   const categoryState = useSelector((state) => state.categories);
   const supplierState = useSelector((state) => state.suppliers);
+  const uploadState = useSelector((state) => state.uploads);
   const { isCreatedOrUpdatedOrDeletedProduct } = useSelector(
     (state) => state.products
   );
@@ -45,9 +48,23 @@ const CreateProduct = ({ navigation, route }) => {
     }
   }, [isCreatedOrUpdatedOrDeletedProduct]);
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log(uploadState.urlProducts, "check urlProducts");
+    if (images.length == 0) {
+      dispatch({
+        type: typeUpload.resetUrlProducts,
+      });
+    }
+  }, [images]);
 
   const AddImage = (uri) => {
+    console.log(uri, "check uri");
+    dispatch({
+      type: typeUpload.uploadImageProduct,
+      payload: {
+        data: uri,
+      },
+    });
     setVisible(false);
     setImages([...images, uri]);
   };
@@ -72,23 +89,20 @@ const CreateProduct = ({ navigation, route }) => {
     dispatch({
       type: item
         ? typeProducts.updateProductFirebase
-        : typeProducts.createProductFirebase,
+        : typeProducts.createProduct,
       payload: {
         data: {
-          id: item ? item.id : Math.floor(Math.random() * 100000 + 1),
+          // id: item ? item.id : Math.floor(Math.random() * 100000 + 1),
           name: name.value,
-          description: description.value,
+          // description: description.value,
           price: price.value,
           height: height.value,
           weight: weight.value,
-          categoryId: category.value,
-          supplierId: supplier.value,
-          images: [
-            "https://i.pinimg.com/originals/eb/d4/de/ebd4deb64c74e2f1246626d5a290274d.png",
-            "https://i.pinimg.com/564x/d1/7a/77/d17a77389b34daabcfdd58d78fce5c5d.jpg",
-          ],
-          status: 0,
-          measureId: 0,
+          // categoryId: category.value,
+          categoryId: "606fadfa83ca8724eca6775a",
+          // supplierId: supplier.value,
+          // status: 0,
+          measureId: "606fadfa83ca8724eca6775b",
         },
       },
     });

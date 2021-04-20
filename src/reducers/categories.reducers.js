@@ -16,7 +16,6 @@ const reducer = (state = initialState, action) => {
         isLoading: true,
       };
     case typeCategories.fetchCategoryFirebaseSuccess:
-      console.log(action.payload);
       return {
         ...state,
         isLoading: false,

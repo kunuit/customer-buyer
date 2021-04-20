@@ -14,8 +14,8 @@ const CardMyProduct = ({ item, navigation }) => {
         <Image
           style={{ height: 60, width: 60 }}
           source={{
-            uri: item.images
-              ? item.images[1]
+            uri: item.imageUrls
+              ? item.imageUrls[0]
               : "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg",
           }}
         />

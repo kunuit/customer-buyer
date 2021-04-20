@@ -33,6 +33,12 @@ const reducer = (state = initialState, { type, payload }) => {
         isLoading: false,
         data: [...state.data, payload.data],
       };
+    case typeProducts.createProductSuccess:
+      return {
+        ...state,
+        isCreatedOrUpdatedOrDeletedProduct: true,
+        data: [...state.data, payload.data],
+      };
     case typeProducts.removeProductFirebaseSuccess:
       return {
         ...state,

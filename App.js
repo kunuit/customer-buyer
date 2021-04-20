@@ -7,12 +7,25 @@ import { createStore, applyMiddleware, compose } from "redux";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./src/sagas";
 import { Provider, useDispatch } from "react-redux";
+import { persistStore, persistReducer } from "redux-persist";
+import AsyncStorage from "@react-native-community/async-storage";
 import { useFonts } from "expo-font";
+import { PersistGate } from "redux-persist/integration/react";
 
 import { theme } from "./src/common/theme";
 import reducers from "./src/reducers";
 import Toast from "react-native-toast-message";
 import General from "./src/containers/Tabs/General";
+
+const persistConfig = {
+  key: "root",
+  storage: AsyncStorage,
+  whitelist: [],
+  // Blacklist (Don't Save Specific Reducers)
+  blacklist: ["products", "auth", "carts"],
+};
+
+const persistedReducer = persistReducer(persistConfig, reducers);
 
 // create redux redux-saga redux-dev-tool for browser
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -27,7 +40,11 @@ const composeEnhancersRNDebugger =
 const sagaMiddleware = createSagaMiddleware();
 const middleware = [sagaMiddleware];
 const enhancers = [applyMiddleware(...middleware)];
-const store = createStore(reducers, composeEnhancersRNDebugger(...enhancers));
+const store = createStore(
+  persistedReducer,
+  composeEnhancersRNDebugger(...enhancers)
+);
+let persistor = persistStore(store);
 
 sagaMiddleware.run(rootSaga);
 
@@ -45,7 +62,7 @@ const App = () => {
       <StatusBar
         animated={true}
         backgroundColor={theme.backgrounds.white}
-        barStyle='dark-content'
+        barStyle="dark-content"
       />
       <General />
 
@@ -57,9 +74,11 @@ const App = () => {
 export default () => {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <App />
-      </NavigationContainer>
+      <PersistGate loading={null} persistor={persistor}>
+        <NavigationContainer>
+          <App />
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   );
 };

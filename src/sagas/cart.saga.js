@@ -2,6 +2,7 @@ import {
   call,
   put,
   select,
+  delay,
   takeEvery,
   takeLatest,
 } from "@redux-saga/core/effects";
@@ -21,6 +22,7 @@ export const typeCarts = {
   fetchCartFirebaseSuccess: "FETCH_CART_FIREBASE_SUCCESS",
   // loading
   showLoadingCart: "SHOW_LOADING_CART",
+  showLoadingUpdateCart: "SHOW_LOADING_UPDATE_CART",
   // add 1 product to cart
   addtoCart: "ADD_TO_CART",
   addtoCartSuccess: "ADD_TO_CART_SUCCESS",
@@ -33,6 +35,14 @@ export const typeCarts = {
   removeOutCartSuccess: "REMOVE_PRODUCT_OUT_CART",
   // reset
   resetCreateCart: "RESET_CREATE_CART",
+  // updateCheckoutList
+  inActiveToCheckout: "INACTIVE_TO_CHECKOUT",
+  activeToCheckout: "ACTIVE_TO_CHECKOUT",
+};
+
+export const statusCart = {
+  activeToCheckout: 1,
+  inActiveToCheckout: 0,
 };
 
 function* fetchCartSaga({ type, payload }) {
@@ -140,6 +150,11 @@ function* addToCartSaga({ type, payload }) {
 }
 
 function* updateCartSaga({ type, payload }) {
+  yield put({ type: typeCarts.showLoadingUpdateCart });
+  // delay to take latest value of cart
+  yield delay(500);
+
+  console.log(payload.quantity, "check latest payload");
   const { code, data } = yield call(updateCart_Fib_API, {
     id: payload.data,
     quantity: payload.quantity,
@@ -186,10 +201,12 @@ function* removeOutCartSaga({ type, payload }) {
     });
   }
 }
+// function* updateCheckoutListSaga() {}
 
 export const cartSagas = [
   takeEvery(typeCarts.addtoCart, addToCartSaga),
   takeLatest(typeCarts.fetchCartFirebase, fetchCartSaga),
-  takeEvery(typeCarts.updateCart, updateCartSaga),
+  takeLatest(typeCarts.updateCart, updateCartSaga),
   takeEvery(typeCarts.removeOutCart, removeOutCartSaga),
+  // takeEvery(typeCarts.updateCheckoutList, updateCheckoutListSaga),
 ];

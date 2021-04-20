@@ -2,7 +2,9 @@ import { typeCarts } from "../sagas/cart.saga";
 
 const initialState = {
   data: [],
+  listCheckOutId: [],
   isLoading: false,
+  isloadingUpdateCart: false,
   isCreatedOrUpdatedOrDeletedCart: false,
 };
 
@@ -13,6 +15,11 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isLoading: true,
+      };
+    case typeCarts.showLoadingUpdateCart:
+      return {
+        ...state,
+        isloadingUpdateCart: true,
       };
     case typeCarts.fetchCartFirebaseSuccess:
       return {
@@ -36,6 +43,7 @@ const reducer = (state = initialState, { type, payload }) => {
           }
           return product;
         }),
+        isloadingUpdateCart: false,
       };
     case typeCarts.removeOutCartSuccess:
       return {
@@ -44,6 +52,16 @@ const reducer = (state = initialState, { type, payload }) => {
         data: state.data.filter((product) => {
           return product.id != payload.data;
         }),
+      };
+    case typeCarts.activeToCheckout:
+      return {
+        ...state,
+        listCheckOutId: [...state.listCheckOutId, payload.data],
+      };
+    case typeCarts.inActiveToCheckout:
+      return {
+        ...state,
+        listCheckOutId: state.listCheckOutId.filter((id) => id != payload.data),
       };
     // reset lại để
     // case typeCarts.resetCreateCart:

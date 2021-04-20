@@ -16,7 +16,7 @@ const ListCardItem = ({ navigation }) => {
         }}
         showsVerticalScrollIndicator={false}
         numColumns={2}
-        data={multipleRowsFlatListFormat(data, 2)}
+        data={data}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) =>
           item == "empty" ? (

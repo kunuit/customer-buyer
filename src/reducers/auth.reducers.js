@@ -4,7 +4,7 @@ const initState = {
   dataCustomer: null,
   token: null,
   refreshToken: null,
-  isLogin: false,
+  isLogin: true,
   isRegister: false,
   errorRefreshToken: null,
   errorLogin: null,
@@ -12,7 +12,7 @@ const initState = {
   isAuthLoading: false,
   isRegisterLoading: false,
   isAdmin: false,
-  isAdminLogin: false,
+  isAdminLogin: true,
 };
 
 const reducer = (state = initState, action) => {
