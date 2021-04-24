@@ -22,7 +22,8 @@ const ProductAdmin = ({ navigation }) => {
   const { data, isLoading } = useSelector((state) => state.products);
 
   const onRefresh = () => {
-    dispatch({ type: typeProducts.fetchProductFirebase });
+    // dispatch({ type: typeProducts.fetchProductFirebase });
+    dispatch({type: typeProducts.fetchProduct})
     // if (isLoading) {
     //   setRefreshing(false);
     // }

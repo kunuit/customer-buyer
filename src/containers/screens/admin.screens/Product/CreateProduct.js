@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { typeProducts } from "../../../../sagas/product.saga";
 import PopUp from "../../../../components/Modal/PopUp";
 import { typeUpload } from "../../../../sagas/upload.saga";
+import { ActivityIndicator } from "react-native";
 
 const CreateProduct = ({ navigation, route }) => {
   const [name, setName] = useState({ value: "", error: "" });
@@ -36,7 +37,7 @@ const CreateProduct = ({ navigation, route }) => {
 
   const categoryState = useSelector((state) => state.categories);
   const supplierState = useSelector((state) => state.suppliers);
-  const uploadState = useSelector((state) => state.uploads);
+  const { isLoadingUpload } = useSelector((state) => state.uploads);
   const { isCreatedOrUpdatedOrDeletedProduct } = useSelector(
     (state) => state.products
   );
@@ -49,7 +50,6 @@ const CreateProduct = ({ navigation, route }) => {
   }, [isCreatedOrUpdatedOrDeletedProduct]);
 
   useEffect(() => {
-    console.log(uploadState.urlProducts, "check urlProducts");
     if (images.length == 0) {
       dispatch({
         type: typeUpload.resetUrlProducts,
@@ -70,6 +70,7 @@ const CreateProduct = ({ navigation, route }) => {
   };
 
   const addItem = () => {
+    console.log(`check item`, item);
     if (item) {
       setName({ value: item.name, error: "" });
       setDescription({ value: item.description, error: "" });
@@ -78,6 +79,7 @@ const CreateProduct = ({ navigation, route }) => {
       setWeight({ value: item.weight, error: "" });
       setCategory({ value: item.categoryId, error: "" });
       setSupplier({ value: item.supplierId, error: "" });
+      setImages(item.imageUrls);
     }
   };
 
@@ -87,19 +89,18 @@ const CreateProduct = ({ navigation, route }) => {
 
   const createNewProduct = async () => {
     dispatch({
-      type: item
-        ? typeProducts.updateProductFirebase
-        : typeProducts.createProduct,
+      type: item ? typeProducts.updateProduct : typeProducts.createProduct,
       payload: {
+        id: item ? item.id : null,
         data: {
-          // id: item ? item.id : Math.floor(Math.random() * 100000 + 1),
           name: name.value,
-          // description: description.value,
+          description: description.value,
           price: price.value,
           height: height.value,
           weight: weight.value,
-          // categoryId: category.value,
-          categoryId: "606fadfa83ca8724eca6775a",
+          categoryId: category.value,
+          imageUrls: item ? item.imageUrls : null,
+
           // supplierId: supplier.value,
           // status: 0,
           measureId: "606fadfa83ca8724eca6775b",
@@ -180,18 +181,17 @@ const CreateProduct = ({ navigation, route }) => {
         <TextInput
           label="Price"
           returnKeyType="next"
-          value={price.value}
+          value={price.value + ""}
           onChangeText={(text) => setPrice({ value: text, error: "" })}
           keyboardType="phone-pad"
           error={!!price.error}
           errorText={price.error}
-          secureTextEntry
         />
 
         <TextInput
           label="Height"
           returnKeyType="next"
-          value={height.value}
+          value={height.value + ""}
           onChangeText={(text) => {
             setHeight({ value: text, error: "" });
           }}
@@ -203,7 +203,7 @@ const CreateProduct = ({ navigation, route }) => {
         <TextInput
           label="Weight"
           returnKeyType="next"
-          value={weight.value}
+          value={weight.value + ""}
           onChangeText={(text) => setWeight({ value: text, error: "" })}
           keyboardType="phone-pad"
           error={!!weight.error}
@@ -212,7 +212,7 @@ const CreateProduct = ({ navigation, route }) => {
         <SelectItem
           data={categoryState.data.map((e) => {
             return {
-              name: e.nameItem,
+              name: e.name,
               value: e.id,
             };
           })}
@@ -223,36 +223,22 @@ const CreateProduct = ({ navigation, route }) => {
           errorText={category.error}
         />
 
-        <SelectItem
-          data={supplierState.data.map((e) => {
-            return {
-              name: e.name,
-              value: e.id,
-            };
-          })}
-          title="Supplier"
-          value={supplier.value}
-          onChangeValue={(e) => setSupplier({ value: e, error: "" })}
-          error={!!supplier.error}
-          errorText={supplier.error}
-        />
-
         <Button
           mode="contained"
           style={{ backgroundColor: theme.colors.primary }}
           onPress={() => createNewProduct()}
-          // disabled={isAuthLoading}
+          disabled={isLoadingUpload}
         >
-          {/* {false ? (
+          {isLoadingUpload ? (
             <ActivityIndicator
-            style={{ opacity: 1 }}
-            animating={true}
-            size='small'
-            color='#fff'
+              style={{ opacity: 1 }}
+              animating={true}
+              size="small"
+              color="#fff"
             />
-          ) : ( */}
-          <Text style={styles.text}>{item ? "Update" : "Create"}</Text>
-          {/* )} */}
+          ) : (
+            <Text style={styles.text}>{item ? "Update" : "Create"}</Text>
+          )}
         </Button>
       </Background>
 

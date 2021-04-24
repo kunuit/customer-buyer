@@ -48,7 +48,7 @@ const SupplierDetail = ({ navigation, route }) => {
         // hidden={true}
       />
       <ScrollView>
-        <ProductDetailImageContainer images={item.images} />
+        <ProductDetailImageContainer images={item.imageUrls} />
         <ProductUnitContainer
           title={item.name}
           unitText={item.representation}

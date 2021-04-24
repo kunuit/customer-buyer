@@ -4,7 +4,7 @@ const initState = {
   dataCustomer: null,
   token: null,
   refreshToken: null,
-  isLogin: true,
+  isLogin: false,
   isRegister: false,
   errorRefreshToken: null,
   errorLogin: null,
@@ -12,7 +12,7 @@ const initState = {
   isAuthLoading: false,
   isRegisterLoading: false,
   isAdmin: false,
-  isAdminLogin: true,
+  isAdminLogin: false,
 };
 
 const reducer = (state = initState, action) => {
@@ -37,19 +37,25 @@ const reducer = (state = initState, action) => {
         errorRegister: null,
       };
     case typeAuths.loginSuccess:
+      console.log(
+        `action.payload.data.userInfo == role.staff ? true : false,`,
+        action.payload.data.userInfo.role == role.staff ? true : false
+      );
       return {
         ...state,
         token: action.payload.data.token,
         refreshToken: action.payload.data.refreshToken,
         dataCustomer:
-          action.payload.data.userInfo == role.user
+          action.payload.data.userInfo.role == role.user
             ? null
             : action.payload.data.userInfo,
         dataAdmin:
-          action.payload.data.userInfo == role.staff
+          action.payload.data.userInfo.role == role.staff
             ? action.payload.data.userInfo
             : null,
-        isAdminLogin: action.payload.data.userInfo == role.staff ? true : false,
+        isAdminLogin:
+          action.payload.data.userInfo.role == role.staff ? true : false,
+        // isAdmin: action.payload.data.userInfo.role == role.staff ? true : false,
         isLogin: true,
         isAuthLoading: false,
       };

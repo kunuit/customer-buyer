@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import { theme } from "../../common/theme";
+import { statusFilter } from "../../sagas/product.saga";
 
 export const CategoryNameList = ({
   item,
@@ -14,10 +15,20 @@ export const CategoryNameList = ({
     <View style={{ flexDirection: "row" }}>
       <TouchableHighlight
         underlayColor={theme.backgrounds.white}
-        onPress={() => onChangeCategory(-1)}
+        onPress={() => onChangeCategory(statusFilter.default)}
       >
-        <View style={[styles.root, activeId == -1 && styles.active]}>
-          <Text style={[styles.text, activeId == -1 ? styles.textActive : {}]}>
+        <View
+          style={[
+            styles.root,
+            activeId == statusFilter.default && styles.active,
+          ]}
+        >
+          <Text
+            style={[
+              styles.text,
+              activeId == statusFilter.default ? styles.textActive : {},
+            ]}
+          >
             All
           </Text>
         </View>
@@ -30,7 +41,7 @@ export const CategoryNameList = ({
           <Text
             style={[styles.text, activeId == item.id ? styles.textActive : {}]}
           >
-            {item.nameItem}
+            {item.name}
           </Text>
         </View>
       </TouchableHighlight>
@@ -44,7 +55,7 @@ export const CategoryNameList = ({
         <Text
           style={[styles.text, activeId == item.id ? styles.textActive : {}]}
         >
-          {item.nameItem}
+          {item.name}
         </Text>
       </View>
     </TouchableHighlight>

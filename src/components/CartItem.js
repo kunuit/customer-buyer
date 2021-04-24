@@ -42,23 +42,25 @@ const CartItem = ({
   };
 
   return (
-    <TouchableHighlight
-      underlayColor={theme.backgrounds.white}
-      onPress={() => {
-        item.status == statusProduct.notExit
-          ? console.log("product not exits")
-          : navigation.navigate("Product Detail", item);
-      }}
-    >
+    <View>
       <View style={styles.cartItemContainer}>
         <View style={styles.cartImageContainer}>
-          <Image
-            style={styles.cartImage}
-            source={{
-              uri: item.images[0],
-              // "https://theme.hstatic.net/1000273444/1000452469/14/no-img.png?v=1804",
+          <TouchableHighlight
+            underlayColor={theme.backgrounds.white}
+            onPress={() => {
+              item.status == statusProduct.notExit
+                ? console.log("product not exits")
+                : navigation.navigate("Product Detail", item);
             }}
-          />
+          >
+            <Image
+              style={styles.cartImage}
+              source={{
+                uri: item.imageUrls[0],
+                // "https://theme.hstatic.net/1000273444/1000452469/14/no-img.png?v=1804",
+              }}
+            />
+          </TouchableHighlight>
         </View>
         <View style={styles.cartDetailContainer}>
           <View style={{ marginBottom: 5 }}>
@@ -126,7 +128,9 @@ const CartItem = ({
             // suffix={" vnd"}
             prefix={"$"}
             renderText={(formattedValue) => (
-              <Text style={styles.titleText}>{formattedValue}</Text>
+              <Text numberOfLines={1} style={styles.titleText}>
+                {formattedValue}
+              </Text>
             )}
           />
           <CheckBox
@@ -143,7 +147,7 @@ const CartItem = ({
           />
         </View>
       </View>
-    </TouchableHighlight>
+    </View>
   );
 };
 const styles = StyleSheet.create({

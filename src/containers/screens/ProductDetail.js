@@ -45,9 +45,9 @@ const ProductDetail = ({ navigation, route }) => {
 
   const handleDeletedProduct = () => {
     dispatch({
-      type: typeProducts.removeProductFirebase,
+      type: typeProducts.removeProduct,
       payload: {
-        index: item.id,
+        data: item.id,
       },
     });
   };
@@ -111,7 +111,7 @@ const ProductDetail = ({ navigation, route }) => {
         isAdmin={isAdminLogin}
       />
       {/* {isAdminLogin ? <></> : <ButtonMessenger navigation={navigation} />} */}
-      {isAdminLogin ? <></> : <ButtonContainer onAddToCart={handleAddToCart} />}
+      {isAdminLogin && <ButtonContainer onAddToCart={handleAddToCart} />}
       <ButtonBack navigation={navigation} isBackground={true} />
     </View>
   );

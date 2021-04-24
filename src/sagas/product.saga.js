@@ -14,7 +14,12 @@ import {
   removeProduct_FiB_API,
   queryProduct_FiB_API,
 } from "../apis/firebase/product.firebase";
-import { getProductsAPI, createProductAPI } from "../apis/product.api";
+import {
+  getProductsAPI,
+  createProductAPI,
+  removeProductAPI,
+  updateProductAPI,
+} from "../apis/product.api";
 import { showToast } from "../common/Layout/toast.helper";
 import { statusCode } from "../constants/API.constants";
 import Product from "../containers/screens/Product";
@@ -47,7 +52,7 @@ export const typeProducts = {
   // loading
   showLoadingProduct: "SHOW_LOADING_PRODUCT",
   showLoadingCreateProduct: "SHOW_LOADING_CREATE_PRODUCT",
-  hiddenLoadingProduct: "HIDDEN_LOADING_PRODUCT",
+  showLoadingFilterByCategory: "SHOW_LOADING_FILTER_BY_CATEGORY",
   // create product
   createProductFirebase: "CREATE_PRODUCT_FIREBASE",
   createProductFirebaseSuccess: "CREATE_PRODUCT_FIREBASE_SUCCESS",
@@ -73,12 +78,25 @@ export const typeProducts = {
   createProduct: "CREATE_PRODUCT",
   createProductSuccess: "CREATE_PRODUCT_SUCCESS",
   createProductFail: "CREATE_PRODUCT_FAIL",
+  // remove product
+  removeProduct: "REMOVE_PRODUCT",
+  removeProductSuccess: "REMOVE_PRODUCT_SUCCESS",
+  // update product
+  updateProduct: "UPDATE_PRODUCT",
+  updateProductSuccess: "UPDATE_PRODUCT_SUCCESS",
+  // filter product by category
+  filterProductByCategory: "FILTER_PRODUCT_BY_CATEGORY",
+  filterProductByCategorySuccess: "FILTER_PRODUCT_BY_CATEGORY_SUCCESS",
 };
 
 export const statusProduct = Object.freeze({
   notExit: 5,
   outOfStock: 2,
   available: 1,
+});
+
+export const statusFilter = Object.freeze({
+  default: -1,
 });
 
 function* fetchProductFirebaseSaga() {
@@ -177,11 +195,11 @@ function* createProductSaga(action) {
   const createRes = yield call(
     createProductAPI,
     { ...action.payload.data, imageUrls: urlProducts },
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikt1bmlvbiIsImZ1bGxOYW1lIjoiVsWpIFh1w6JuIEPGsOG7nW5nICIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjE4OTEyMDU3LCJleHAiOjE2MjA2NDAwNTd9.XcpK2OB8xRw-3897ZDO13-x6ca6sap5TRBZ4TsGYmM0"
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikt1bmlvbiIsImZ1bGxOYW1lIjoiVsWpIFh1w6JuIEPGsOG7nW5nICIsInJvbGUiOiJzdGFmZiIsImlhdCI6MTYxOTA1NjUyOSwiZXhwIjoxNjIwNzg0NTI5fQ.3E5t0lLzETabhZjoldgGQIFq9YPAQi4D7Mubk3Hwehc"
   );
   const { payload, code, error, message } = createRes.data;
   //! check here
-  if (code == statusCode.success) {
+  if (!error) {
     console.log(payload, "check payload create data");
     yield put({
       type: typeProducts.createProductSuccess,
@@ -194,6 +212,99 @@ function* createProductSaga(action) {
   }
 }
 
+function* removeProductSaga(action) {
+  console.log(`action.payload.data`, action.payload.data);
+  // show loadding
+  // call api
+  const removeRes = yield call(
+    removeProductAPI,
+    action.payload.data,
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikt1bmlvbiIsImZ1bGxOYW1lIjoiVsWpIFh1w6JuIEPGsOG7nW5nICIsInJvbGUiOiJzdGFmZiIsImlhdCI6MTYxOTA1NjUyOSwiZXhwIjoxNjIwNzg0NTI5fQ.3E5t0lLzETabhZjoldgGQIFq9YPAQi4D7Mubk3Hwehc"
+  );
+  const { payload, code, error, message } = removeRes.data;
+  if (!error) {
+    // findIndex product and slice to new arr
+    const productState = yield select((state) => state.products);
+    const indexProduct = productState.data.findIndex(
+      (product) => product.id == action.payload.data
+    );
+    productState.data.splice(indexProduct, 1);
+    // put success
+    yield put({
+      type: typeProducts.removeProductSuccess,
+      payload: {
+        data: productState.data,
+      },
+    });
+  } else {
+    showToast({ title: "Product", type: "error", message: message });
+  }
+}
+
+function* updateProductSaga(action) {
+  // show loading update
+  // get urlProducts from state
+  const { urlProducts } = yield select((state) => state.uploads);
+  console.log(
+    `action.payload.data.imageUrls, urlProducts`,
+    action.payload.data.imageUrls,
+    urlProducts
+  );
+  // const urlProductTmp = [...action.payload.data.imageUrls, ...urlProducts];
+  // call api
+  const updateRes = yield call(
+    updateProductAPI,
+    action.payload.id,
+    {
+      ...action.payload.data,
+      imageUrls: [...action.payload.data.imageUrls, ...urlProducts],
+    },
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikt1bmlvbiIsImZ1bGxOYW1lIjoiVsWpIFh1w6JuIEPGsOG7nW5nICIsInJvbGUiOiJzdGFmZiIsImlhdCI6MTYxOTA1NjUyOSwiZXhwIjoxNjIwNzg0NTI5fQ.3E5t0lLzETabhZjoldgGQIFq9YPAQi4D7Mubk3Hwehc"
+  );
+  console.log(updateRes, "check updateRes");
+  const { payload, code, error, message } = updateRes.data;
+  if (!error) {
+    console.log(`payload`, payload);
+    // findIndex product and slice to new arr
+    const productState = yield select((state) => state.products);
+    const indexProduct = productState.data.findIndex(
+      (product) => product.id == action.payload.id
+    );
+    // put success
+    yield put({
+      type: typeProducts.updateProductSuccess,
+      payload: {
+        data: [
+          ...productState.data.slice(0, indexProduct),
+          {
+            ...action.payload.data,
+            imageUrls: [...action.payload.data.imageUrls, ...urlProducts],
+            id: action.payload.id,
+          },
+          ...productState.data.slice(indexProduct + 1),
+        ],
+      },
+    });
+  }
+}
+
+function* filterProductByCategorySaga(action) {
+  // show loading filter,
+  yield put({ type: typeProducts.showLoadingFilterByCategory });
+  // select state product and category
+  const { data, productByCategory } = yield select((state) => state.products);
+  console.log(`action.payload.id, `, action.payload.id);
+  yield put({
+    type: typeProducts.filterProductByCategorySuccess,
+    payload: {
+      productByCategory:
+        action.payload.id == statusFilter.default
+          ? data
+          : data.filter((product) => product.categoryId == action.payload.id),
+    },
+  });
+}
+
 export const productSagas = [
   // takeEvery("FETCH_PRODUCTS", fetchAllProducts),
   takeLatest(typeProducts.fetchProductFirebase, fetchProductFirebaseSaga),
@@ -203,4 +314,7 @@ export const productSagas = [
   takeLatest(typeProducts.queryProductFirebase, queryProductFirebaseSaga),
   takeLatest(typeProducts.fetchProduct, fetchProductSaga),
   takeLatest(typeProducts.createProduct, createProductSaga),
+  takeLatest(typeProducts.removeProduct, removeProductSaga),
+  takeLatest(typeProducts.updateProduct, updateProductSaga),
+  takeLatest(typeProducts.filterProductByCategory, filterProductByCategorySaga),
 ];

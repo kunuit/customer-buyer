@@ -14,7 +14,7 @@ const CardMySupplier = ({ item, navigation }) => {
         <Image
           style={{ height: 60, width: 60, borderRadius: 30 }}
           source={{
-            uri: item.images[1],
+            uri: item.imageUrls[1],
           }}
         />
         <View style={{ marginLeft: "5%", flex: 1 }}>

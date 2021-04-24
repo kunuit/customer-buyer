@@ -3,6 +3,9 @@ import { uploadImageAPI } from "../apis/upload.api";
 import { showToast } from "../common/Layout/toast.helper";
 
 export const typeUpload = {
+  // loading
+  showLoadingUpload: "SHOW_LOADING_UPLOAD",
+  // upload
   uploadImageProduct: "UPLOAD_IMAGE_PRODUCT",
   uploadImageProductSuccess: "UPLOAD_IMAGE_PRODUCT_SUCCESS",
   // reset
@@ -10,6 +13,10 @@ export const typeUpload = {
 };
 
 function* uploadImageProductSaga({ payload }) {
+  // show loading
+  yield put({
+    type: typeUpload.showLoadingUpload,
+  });
   // add uri to formData
   let formData = new FormData();
   let filename = payload.data.split("/").pop();

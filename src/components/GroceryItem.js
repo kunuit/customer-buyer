@@ -19,20 +19,20 @@ const GroceryItem = ({ item, navigation }) => {
       <View
         style={[
           styles.cardContainer,
-          { backgroundColor: item.itemColor, borderColor: item.itemColor },
+          { backgroundColor: item.color, borderColor: item.color },
         ]}
       >
         <View style={styles.cardImageContainer}>
           <Image
             style={styles.cardImage}
             source={{
-              uri: item.itemImage,
+              uri: item.imageUrl,
             }}
           />
         </View>
         <View style={styles.cardDetailContainer}>
           <Text numberOfLines={2} style={styles.titleText}>
-            {`${item.nameItem}`}
+            {`${item.name}`}
           </Text>
         </View>
       </View>

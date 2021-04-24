@@ -68,8 +68,6 @@ function* loginSaga(action) {
   const loginRes = yield call(loginAPI, action.payload);
   const { payload, code, message } = loginRes.data;
 
-  console.log(loginRes.data, "check login Res");
-
   if (code == statusCode.success) {
     // lưu token and role vào local storage
     setLocal(typeAuths.authLocal, payload);

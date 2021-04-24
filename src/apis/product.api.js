@@ -13,15 +13,18 @@ const url = "/product";
 // };
 
 export const getProductsAPI = (token) => {
-  console.log(token, "check token");
-  return axiosService.get(`${API_ENDPOINT}${url}`);
+  return axiosService.get(`${API_ENDPOINT}${url}?perPage=20`);
 };
 
 export const createProductAPI = (data, token) => {
-  console.log(data, token, "check req send in axios");
   return axiosService.post(`${API_ENDPOINT}${url}/staff`, data, token);
 };
 
-// export const addProductAPITest = (data, token) => {
-//   return axiosService.post(`https://ea87abaa5772.ngrok.io/product`, data);
-// };
+export const removeProductAPI = (data, token) => {
+  return axiosService.delete(`${API_ENDPOINT}${url}/staff/${data}`, token);
+};
+
+export const updateProductAPI = (id, data, token) => {
+  console.log(`id, data,`, id, data);
+  return axiosService.put(`${API_ENDPOINT}${url}/staff/${id}`, data, token);
+};

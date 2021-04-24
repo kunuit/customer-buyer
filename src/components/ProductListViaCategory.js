@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -7,25 +7,26 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CardItem from "./CardItem";
 import MainLoading from "../components/Loader/MainLoading";
 import { CategoryNameList } from "./category.components/CategoryNameList";
 import { ProductListWithCondition } from "./ProductListWithCondition";
+import { statusFilter, typeProducts } from "../sagas/product.saga";
 
 export const ProductListViaCategory = ({ title, navigation, ...props }) => {
   const { data, isLoading } = useSelector((state) => state.categories);
-  const [activeId, setActiveId] = useState(-1);
+  const [activeId, setActiveId] = useState(statusFilter.default);
 
-  const handleChangeCategory = (id) => {
-    setActiveId(id);
-  };
+  const dispatch = useDispatch();
 
-  const renderProduct = () => {
-    console.log(activeId, "check data category");
-    // return <ProductListWithCondition navigation={navigation} />;
-    return <Text>Alo</Text>;
-  };
+  useEffect(() => {
+    dispatch({
+      type: typeProducts.filterProductByCategory,
+      payload: { id: activeId },
+    });
+  }, [activeId]);
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -44,11 +45,10 @@ export const ProductListViaCategory = ({ title, navigation, ...props }) => {
               <CategoryNameList
                 index={index}
                 item={item}
-                onChangeCategory={(id) => handleChangeCategory(id)}
+                onChangeCategory={(id) => setActiveId(id)}
                 activeId={activeId}
               />
             )}
-            ListFooterComponent={renderProduct()}
             keyExtractor={(item, index) => index.toString()}
           />
           <ProductListWithCondition navigation={navigation} />

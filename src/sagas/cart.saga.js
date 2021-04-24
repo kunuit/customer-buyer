@@ -6,6 +6,7 @@ import {
   takeEvery,
   takeLatest,
 } from "@redux-saga/core/effects";
+import { addToCartAPI, getCartAPI } from "../apis/cart.api";
 import {
   addToCart_FiB_API,
   getCart_FiB_API,
@@ -17,9 +18,12 @@ import { showToast } from "../common/Layout/toast.helper";
 import { statusProduct } from "./product.saga";
 
 export const typeCarts = {
-  // fetch cart
+  // fetch cart firebase
   fetchCartFirebase: "FETCH_CART_FIREBASE",
   fetchCartFirebaseSuccess: "FETCH_CART_FIREBASE_SUCCESS",
+  // fetch cart
+  fetchCart: "FETCH_CART",
+  fetchCartSuccess: "FETCH_CART_SUCCESS",
   // loading
   showLoadingCart: "SHOW_LOADING_CART",
   showLoadingUpdateCart: "SHOW_LOADING_UPDATE_CART",
@@ -45,44 +49,25 @@ export const statusCart = {
   inActiveToCheckout: 0,
 };
 
-function* fetchCartSaga({ type, payload }) {
+function* fetchCartSaga(action) {
   // show loading
   yield put({ type: typeCarts.showLoadingCart });
   // call
-  const { code, data } = yield call(getCart_FiB_API);
-  // handle
-  if (code == 200) {
-    const transitData = Object.values(data);
-    const dataProduct = yield call(getAllProduct_FiB_API);
-    const transitDataProduct = Object.values(dataProduct.data);
-
-    const realCart = transitData.map((item) => {
-      const filteredProduct = transitDataProduct.filter((product) => {
-        if (product.id == item.id) return product;
-      });
-
-      if (filteredProduct.length == 0)
-        return {
-          name: "product not exits",
-          quantity: item.quantity,
-          price: 300,
-          description: "none",
-          images: [
-            "https://theme.hstatic.net/1000273444/1000452469/14/no-img.png?v=1804",
-          ],
-          status: statusProduct.notExit,
-          id: item.id,
-        };
-      return {
-        ...filteredProduct[0],
-        quantity: item.quantity,
-      };
-    });
-
+  const { token } = yield select((state) => state.auth);
+  console.log(`token`, token);
+  const fetchRes = yield call(
+    getCartAPI,
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkN1c3RvbWVyIiwiZnVsbE5hbWUiOiJWxakgWHXDom4gQ8aw4budbmcgIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2MTkyNDU3MzksImV4cCI6MTYyMDk3MzczOX0.ScUaJHrUW-hRvU4QFPU66qA_qKHRhF7pWISQ_PnpB7w"
+  );
+  console.log(`fetchRes.data`, fetchRes.data);
+  const { payload, error, message } = fetchRes.data;
+  console.log(`payload.cartItems`, payload.cartItems);
+  if (!error) {
     yield put({
-      type: typeCarts.fetchCartFirebaseSuccess,
+      type: typeCarts.fetchCartSuccess,
       payload: {
-        data: realCart,
+        cartId: payload.id,
+        cartItems: payload.cartItems,
       },
     });
   } else {
@@ -91,62 +76,55 @@ function* fetchCartSaga({ type, payload }) {
 }
 
 function* addToCartSaga({ type, payload }) {
-  const dataCart = yield call(getCart_FiB_API);
-  const transitDataCart = Object.values(dataCart.data);
-
-  console.log(transitDataCart, "check data cart get");
-  // const filteredCart = transitDataCart.filter((cart) => {
-  //   if (cart.id == payload.data.id) return cart;
-  // });
-
-  //* check new product is included in cart
-  const filteredCart = transitDataCart.find(
-    (item) => item.id == payload.data.id
+  // select token
+  const { token } = yield select((state) => state.auth);
+  // call api
+  const addToCartRes = yield call(
+    addToCartAPI,
+    { productId: payload.data.id, quantity: payload.quantity },
+    token
   );
 
-  console.log(
-    transitDataCart.find((item) => item.id == payload.data.id),
-    "check data filter"
-  );
+  console.log(`addToCartRes.data`, addToCartRes.data);
 
-  if (filteredCart) {
-    showToast({
-      title: "Cart",
-      type: "success",
-      message: `${payload.data.name} is added to your cart`,
-    });
-    yield put({
-      type: typeCarts.updateCart,
-      payload: {
-        data: payload.data.id,
-        quantity: filteredCart.quantity + payload.quantity,
-      },
-    });
-  } else {
-    const { code, data } = yield call(addToCart_FiB_API, {
-      id: payload.data.id,
-      quantity: payload.quantity,
-    });
-    if (code == 200) {
-      showToast({
-        title: "Cart",
-        type: "success",
-        message: `${payload.data.name} is added to your cart`,
-      });
-      yield put({
-        type: typeCarts.addtoCartSuccess,
-        payload: {
-          data: { ...payload.data, quantity: payload.quantity },
-        },
-      });
-    } else {
-      showToast({
-        title: "Cart",
-        type: "error",
-        message: data,
-      });
-    }
-  }
+  // if (filteredCart) {
+  //   showToast({
+  //     title: "Cart",
+  //     type: "success",
+  //     message: `${payload.data.name} is added to your cart`,
+  //   });
+  //   yield put({
+  //     type: typeCarts.updateCart,
+  //     payload: {
+  //       data: payload.data.id,
+  //       quantity: filteredCart.quantity + payload.quantity,
+  //     },
+  //   });
+  // } else {
+  //   const { code, data } = yield call(addToCart_FiB_API, {
+  //     id: payload.data.id,
+  //     quantity: payload.quantity,
+  //   });
+  //   if (code == 200) {
+  //     showToast({
+  //       title: "Cart",
+  //       type: "success",
+  //       message: `${payload.data.name} is added to your cart`,
+  //     });
+  //     yield put({
+  //       type: typeCarts.addtoCartSuccess,
+  //       payload: {
+  //         data: { ...payload.data, quantity: payload.quantity },
+  //       },
+  //     });
+  //   } else {
+  //     showToast({
+  //       title: "Cart",
+  //       type: "error",
+  //       message: data,
+  //     });
+  //   }
+  // }
 }
 
 function* updateCartSaga({ type, payload }) {
@@ -201,12 +179,11 @@ function* removeOutCartSaga({ type, payload }) {
     });
   }
 }
-// function* updateCheckoutListSaga() {}
 
 export const cartSagas = [
   takeEvery(typeCarts.addtoCart, addToCartSaga),
-  takeLatest(typeCarts.fetchCartFirebase, fetchCartSaga),
   takeLatest(typeCarts.updateCart, updateCartSaga),
   takeEvery(typeCarts.removeOutCart, removeOutCartSaga),
   // takeEvery(typeCarts.updateCheckoutList, updateCheckoutListSaga),
+  takeLatest(typeCarts.fetchCart, fetchCartSaga),
 ];

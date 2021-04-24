@@ -21,6 +21,12 @@ const reducer = (state = initialState, action) => {
         isLoading: false,
         data: action.payload.data,
       };
+    case typeCategories.fetchCategorySuccess:
+      return {
+        ...state,
+        isLoading: false,
+        data: action.payload.data,
+      };
     default:
       return state;
   }

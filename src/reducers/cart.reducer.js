@@ -2,6 +2,7 @@ import { typeCarts } from "../sagas/cart.saga";
 
 const initialState = {
   data: [],
+  cartId: null,
   listCheckOutId: [],
   isLoading: false,
   isloadingUpdateCart: false,
@@ -21,11 +22,12 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         isloadingUpdateCart: true,
       };
-    case typeCarts.fetchCartFirebaseSuccess:
+    case typeCarts.fetchCartSuccess:
       return {
         ...state,
         isLoading: false,
-        data: payload.data,
+        data: payload.cartItems,
+        cartId: payload.cartId,
       };
     case typeCarts.addtoCartSuccess:
       return {

@@ -16,6 +16,8 @@ import MainLoading from "../../components/Loader/MainLoading";
 import NumberFormat from "react-number-format";
 import { theme } from "../../common/theme";
 import { ActivityIndicator } from "react-native-paper";
+import RequireLogin from "../../components/RequireLogin";
+import PopUp from "../../components/Modal/PopUp";
 
 const Line = () => {
   return (
@@ -33,6 +35,7 @@ const CartScreen = ({ navigation }) => {
   const { isLoading, data, isloadingUpdateCart, listCheckOutId } = useSelector(
     (state) => state.carts
   );
+  const { isLogin } = useSelector((state) => state.auth);
   const [refreshing, setRefreshing] = useState(false);
   //! huong giai quyet thi sẽ là tạo ra 1 function để quản lý listCheckOut
   console.log(listCheckOutId, "check check out state");
@@ -40,9 +43,9 @@ const CartScreen = ({ navigation }) => {
 
   useEffect(() => {
     console.log("run effect in cart screen");
-    dispatch({ type: typeCarts.fetchCartFirebase });
+    isLogin && dispatch({ type: typeCarts.fetchCart });
     setTotalPrice(0);
-  }, []);
+  }, [isLogin]);
 
   useEffect(() => {
     if (!isloadingUpdateCart) {
@@ -101,7 +104,7 @@ const CartScreen = ({ navigation }) => {
   };
 
   const onRefresh = () => {
-    dispatch({ type: typeCarts.fetchCartFirebase });
+    dispatch({ type: typeCarts.fetchCart });
     // if (isLoading) {
     //   setRefreshing(false);
     // }
@@ -118,6 +121,17 @@ const CartScreen = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          ListEmptyComponent={
+            <View
+              style={{
+                height: 200,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text>khoong co san pham in cart</Text>
+            </View>
           }
           ItemSeparatorComponent={Line}
           data={data}
@@ -142,6 +156,7 @@ const CartScreen = ({ navigation }) => {
       ) : (
         <MainLoading padding={30} />
       )}
+      {!isLogin && <RequireLogin navigation={navigation} />}
       <Button
         disabled={totalPrice && !isloadingUpdateCart ? false : true}
         style={{

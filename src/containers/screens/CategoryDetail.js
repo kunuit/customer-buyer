@@ -8,12 +8,8 @@ export default function CategoryDetail({ navigation, route }) {
   const item = route.params;
   return (
     <View style={styles.root}>
-      <TitleScreen
-        isBorder={false}
-        title={item.nameItem}
-        navigation={navigation}
-      />
-      <SearchView holSearch={item.nameItem} />
+      <TitleScreen isBorder={false} title={item.name} navigation={navigation} />
+      <SearchView holSearch={item.name} />
     </View>
   );
 }

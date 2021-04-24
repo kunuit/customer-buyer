@@ -1,18 +1,33 @@
 import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View, Text } from "react-native";
 import { useSelector } from "react-redux";
+import { windowWidth } from "../common/Dimensions";
 import CardItem from "./CardItem";
 import MainLoading from "./Loader/MainLoading";
 
 export const ProductListWithCondition = ({ navigation }) => {
-  const { data, isLoading } = useSelector((state) => state.products);
+  const { isLoading, productByCategory } = useSelector(
+    (state) => state.products
+  );
   return (
     <View style={styles.root}>
       {!isLoading ? (
         <FlatList
           showsHorizontalScrollIndicator={false}
           horizontal={true}
-          data={data}
+          data={productByCategory}
+          ListEmptyComponent={
+            <View
+              style={{
+                width: windowWidth,
+                height: 200,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text>khoong co san pham</Text>
+            </View>
+          }
           renderItem={({ item, index }) => (
             <View style={styles.cardItemContainer}>
               <CardItem

@@ -16,11 +16,12 @@ const SelectItem = ({
     <View style={styles.root}>
       <Picker
         selectedValue={value}
-        mode='dialog'
+        mode="dialog"
         style={{ width: "100%" }}
         onValueChange={(itemValue, itemIndex) => onChangeValue(itemValue)}
-        {...props}>
-        <Picker.Item color={theme.colors.notGray} label={title} value='' />
+        {...props}
+      >
+        <Picker.Item color={theme.colors.notGray} label={title} value="" />
         {data ? (
           data.map((e, i) => (
             <Picker.Item label={e.name} value={e.value} key={i} />

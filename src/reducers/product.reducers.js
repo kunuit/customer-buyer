@@ -2,7 +2,9 @@ import { typeProducts } from "../sagas/product.saga";
 
 const initialState = {
   data: [],
+  productByCategory: [],
   isLoading: false,
+  isLoadingFilterByCategory: false,
   isCreatedOrUpdatedOrDeletedProduct: false,
 };
 
@@ -14,6 +16,11 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         isLoading: true,
       };
+    case typeProducts.showLoadingFilterByCategory:
+      return {
+        ...state,
+        isLoadingFilterByCategory: true,
+      };
     case typeProducts.fetchProductFirebaseSuccess:
       return {
         ...state,
@@ -24,6 +31,7 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         data: payload.data,
+        productByCategory: payload.data,
         isLoading: false,
       };
     case typeProducts.createProductFirebaseSuccess:
@@ -48,6 +56,12 @@ const reducer = (state = initialState, { type, payload }) => {
           return product.id != payload.data;
         }),
       };
+    case typeProducts.removeProductSuccess:
+      return {
+        ...state,
+        isCreatedOrUpdatedOrDeletedProduct: true,
+        data: payload.data,
+      };
     case typeProducts.updateProductFirebaseSuccess:
       return {
         ...state,
@@ -60,12 +74,23 @@ const reducer = (state = initialState, { type, payload }) => {
           return product;
         }),
       };
+    case typeProducts.updateProductSuccess:
+      return {
+        ...state,
+        isCreatedOrUpdatedOrDeletedProduct: true,
+        data: payload.data,
+      };
     case typeProducts.resetCreateProduct:
       return {
         ...state,
         isCreatedOrUpdatedOrDeletedProduct: false,
       };
-
+    case typeProducts.filterProductByCategorySuccess:
+      return {
+        ...state,
+        productByCategory: payload.productByCategory,
+        isLoadingFilterByCategory: false,
+      };
     default:
       return state;
   }

@@ -8,7 +8,7 @@ const CategoryItem = ({ item, navigation }) => {
     <TouchableOpacity
       style={[
         styles.cardContainer,
-        { backgroundColor: item.itemColor, borderColor: item.itemColor },
+        { backgroundColor: item.color, borderColor: item.color },
       ]}
       onPress={() => {
         navigation.navigate("Category Detail", item);
@@ -18,13 +18,13 @@ const CategoryItem = ({ item, navigation }) => {
         <Image
           style={styles.cardImage}
           source={{
-            uri: item.itemImage,
+            uri: item.imageUrl,
           }}
         />
       </View>
       <View style={styles.cardDetailContainer}>
         <Text numberOfLines={2} style={styles.titleText}>
-          {`${item.nameItem}`}
+          {`${item.name}`}
         </Text>
       </View>
     </TouchableOpacity>
