@@ -17,7 +17,6 @@ import NumberFormat from "react-number-format";
 import { theme } from "../../common/theme";
 import { ActivityIndicator } from "react-native-paper";
 import RequireLogin from "../../components/RequireLogin";
-import PopUp from "../../components/Modal/PopUp";
 
 const Line = () => {
   return (
@@ -49,6 +48,8 @@ const CartScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (!isloadingUpdateCart) {
+      console.log(`listCheckOutId`, listCheckOutId);
+      console.log(`data`, data);
       updateListCheckOut();
     }
   }, [isloadingUpdateCart, listCheckOutId]);
@@ -56,7 +57,9 @@ const CartScreen = ({ navigation }) => {
   const updateListCheckOut = () => {
     const tmpPrice = listCheckOutId.reduce((acc, cur) => {
       const indexCheckout = data.findIndex((item) => item.id == cur);
-      return +data[indexCheckout].price * +data[indexCheckout].quantity + acc;
+      return (
+        +data[indexCheckout].product.price * +data[indexCheckout].quantity + acc
+      );
     }, 0);
 
     setTotalPrice(tmpPrice);

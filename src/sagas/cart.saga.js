@@ -15,6 +15,7 @@ import {
 } from "../apis/firebase/cart.firebase";
 import { getAllProduct_FiB_API } from "../apis/firebase/product.firebase";
 import { showToast } from "../common/Layout/toast.helper";
+import { statusCode } from "../constants/API.constants";
 import { statusProduct } from "./product.saga";
 
 export const typeCarts = {
@@ -75,17 +76,35 @@ function* fetchCartSaga(action) {
   }
 }
 
-function* addToCartSaga({ type, payload }) {
+function* addToCartSaga(action) {
   // select token
   const { token } = yield select((state) => state.auth);
   // call api
   const addToCartRes = yield call(
     addToCartAPI,
-    { productId: payload.data.id, quantity: payload.quantity },
+    { productId: action.payload.data.id, quantity: action.payload.quantity },
     token
   );
 
-  console.log(`addToCartRes.data`, addToCartRes.data);
+  const { status, error, payload, message } = addToCartRes.data;
+
+  if (status == statusCode.notAuth) {
+    showToast({
+      title: "Auth",
+      type: "error",
+      message: "Please Login",
+    });
+  }
+
+  // if( !error ){
+  //   yield put({
+  //     type: typeCarts.addtoCartSuccess,
+  //     payload: {
+  //       cartItems: payload.ca
+  //       quan
+  //     }
+  //   })
+  // }
 
   // if (filteredCart) {
   //   showToast({

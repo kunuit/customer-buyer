@@ -3,6 +3,7 @@ import axios from "axios";
 class AxiosService {
   constructor() {
     const instance = axios.create();
+    this.handleError = this.handleError.bind(this);
     instance.interceptors.response.use(this.handleSuccess, this.handleError);
     this.instance = instance;
   }
@@ -11,11 +12,17 @@ class AxiosService {
     return response;
   }
 
-  handleError(error) {
+  async handleError(error) {
     console.log(error, "check in axiosService");
-    if (error.response) return Promise.reject(error.response);
-    if (error.request) return Promise.reject(error.request);
-    return Promise.reject(error);
+
+    if (error.response) {
+      return new Promise((resolve, reject) => {
+        resolve({ data: error.response });
+      });
+    }
+    if (error.request) {
+      return new Promise.reject(error.request);
+    }
   }
 
   get(url, token) {
