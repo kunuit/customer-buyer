@@ -20,9 +20,9 @@ import General from "./src/containers/Tabs/General";
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  whitelist: [],
+  whitelist: ["auth", "carts", "favorites"],
   // Blacklist (Don't Save Specific Reducers)
-  blacklist: ["products", "auth", "carts"],
+  blacklist: ["products", "uploads", "suppliers"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

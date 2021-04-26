@@ -149,9 +149,3 @@ export const refreshTokenFailACT = (error) => {
     },
   };
 };
-
-export const switchIsAdminACT = () => {
-  return {
-    type: SWITCH_IS_ADMIN,
-  };
-};

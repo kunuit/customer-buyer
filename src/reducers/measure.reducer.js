@@ -1,24 +1,24 @@
 import { isLoaded } from "expo-font";
-import { typeCategories } from "../sagas/category.saga";
+import { typeMeasures } from "../sagas/measure.saga";
 // import { toastError, toastSuccess } from '../helpers/toast.Helper';
 
 const initialState = {
-  data: [],
-  isLoading: false,
+  measures: [],
+  isLoadingMeasure: false,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case typeCategories.showLoadingCategory:
+    case typeMeasures.showLoadingMeasure:
       return {
         ...state,
-        isLoading: true,
+        isLoadingMeasure: true,
       };
-    case typeCategories.fetchCategorySuccess:
+    case typeMeasures.fetchMeasureSuccess:
       return {
         ...state,
-        isLoading: false,
-        data: action.payload.data,
+        isLoadingMeasure: false,
+        measures: action.payload.measures,
       };
     default:
       return state;

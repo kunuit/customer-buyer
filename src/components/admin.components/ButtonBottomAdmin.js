@@ -11,7 +11,7 @@ const ButtonBottomAdmin = ({ onDeletedProduct, isAdmin, navigation }) => {
         <RoundedButton
           mode="contained"
           onPress={() => onDeletedProduct()}
-          style={styles.buttonItem}
+          style={[styles.buttonItem, { marginVertical: 0 }]}
         >
           <FontAwesome5 name="trash" size={20} color={theme.colors.notpink} />
         </RoundedButton>

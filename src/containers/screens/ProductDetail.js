@@ -22,6 +22,7 @@ const ProductDetail = ({ navigation, route }) => {
   const [productCount, setProductCount] = useState(1);
 
   const { isAdminLogin } = useSelector((state) => state.auth);
+  const { isLoadingAddToCart } = useSelector((state) => state.carts);
   const { isCreatedOrUpdatedOrDeletedProduct } = useSelector(
     (state) => state.products
   );
@@ -111,7 +112,18 @@ const ProductDetail = ({ navigation, route }) => {
         isAdmin={isAdminLogin}
       />
       {/* {isAdminLogin ? <></> : <ButtonMessenger navigation={navigation} />} */}
-      {isAdminLogin && <ButtonContainer onAddToCart={handleAddToCart} />}
+      {!isAdminLogin && (
+        <ButtonContainer
+          disabled={isLoadingAddToCart}
+          style={{
+            backgroundColor: isLoadingAddToCart
+              ? theme.colors.notGray
+              : theme.colors.primary,
+            width: "90%",
+          }}
+          onAddToCart={handleAddToCart}
+        />
+      )}
       <ButtonBack navigation={navigation} isBackground={true} />
     </View>
   );

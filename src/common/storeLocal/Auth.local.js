@@ -10,7 +10,7 @@ export const setLocal = async (name, data) => {
 
 export const getLocal = async (name) => {
   try {
-    return await AsyncStorage.getItem(name);
+    return await AsyncStorage.getItem("root");
   } catch (error) {
     console.log(error + "getLocal error");
   }

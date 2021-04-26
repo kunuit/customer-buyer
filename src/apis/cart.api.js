@@ -10,3 +10,11 @@ export const getCartAPI = (token) => {
 export const addToCartAPI = (body, token) => {
   return axiosService.post(`${API_ENDPOINT}${url}`, body, token);
 };
+
+export const updateCartAPI = (body, token) => {
+  return axiosService.put(`${API_ENDPOINT}${url}`, body, token);
+};
+
+export const removeOutCartAPI = (cartItemId, token) => {
+  return axiosService.delete(`${API_ENDPOINT}${url}/${cartItemId}`, token);
+};

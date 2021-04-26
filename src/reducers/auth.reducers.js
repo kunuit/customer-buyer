@@ -16,7 +16,6 @@ const initState = {
 };
 
 const reducer = (state = initState, action) => {
-  console.log(`action`, action);
   switch (action.type) {
     case typeAuths.registerSuccess:
       return {
@@ -47,8 +46,8 @@ const reducer = (state = initState, action) => {
         refreshToken: action.payload.data.refreshToken,
         dataCustomer:
           action.payload.data.userInfo.role == role.user
-            ? null
-            : action.payload.data.userInfo,
+            ? action.payload.data.userInfo
+            : null,
         dataAdmin:
           action.payload.data.userInfo.role == role.staff
             ? action.payload.data.userInfo
@@ -96,43 +95,6 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         errorLogin: action.payload.error,
-      };
-    case typeAuths.switchIsAdmin:
-      return {
-        ...state,
-        isAdmin: !state.isAdmin,
-      };
-    // case LOGIN_FIREBASE_SUCCESS:
-    //   return {
-    //     ...state,
-    //     dataCustomer: state.isAdmin ? null : action.payload.data,
-    //     dataAdmin: state.isAdmin ? action.payload.data : null,
-    //     isAdminLogin: state.isAdmin ? true : false,
-    //     isLogin: true,
-    //     isAuthLoading: false,
-    //   };
-    // case LOGIN_FIREBASE_FAIL:
-    //   return {
-    //     ...state,
-    //     errorLogin: action.payload.error,
-    //     isAuthLoading: false,
-    //   };
-    case typeAuths.isAuthLocal:
-      return {
-        ...state,
-        token: action.payload.data.token,
-        refreshToken: action.payload.data.refreshToken,
-        dataCustomer: action.payload.data,
-        dataCustomer:
-          action.payload.data.userInfo == role.user
-            ? null
-            : action.payload.data.userInfo,
-        dataAdmin:
-          action.payload.data.userInfo == role.staff
-            ? action.payload.data.userInfo
-            : null,
-        isAdminLogin: action.payload.data.userInfo == role.staff ? true : false,
-        isLogin: true,
       };
     default:
       return state;

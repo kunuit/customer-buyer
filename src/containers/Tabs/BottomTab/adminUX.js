@@ -18,6 +18,7 @@ import CartAdmin from "../../screens/admin.screens/Cart/Cart.admin";
 import { useDispatch, useSelector } from "react-redux";
 import Profile from "../../screens/Profile";
 import { typeSuppliers } from "../../../sagas/supplier.saga";
+import { typeMeasures } from "../../../sagas/measure.saga";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,6 +29,7 @@ const AdminUX = () => {
   useEffect(() => {
     // createCategory_FiB_API();
     dispatch({ type: typeSuppliers.fetchSupplierFirebase });
+    dispatch({ type: typeMeasures.fetchMeasure });
   }, []);
   return (
     <Tab.Navigator

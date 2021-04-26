@@ -36,13 +36,17 @@ const CartScreen = ({ navigation }) => {
   );
   const { isLogin } = useSelector((state) => state.auth);
   const [refreshing, setRefreshing] = useState(false);
+  const [showLoadingEditCheckList, setShowLoadingEditCheckList] = useState(
+    false
+  );
+  console.log(`showLoadingEditCheckList`, showLoadingEditCheckList);
   //! huong giai quyet thi sẽ là tạo ra 1 function để quản lý listCheckOut
   console.log(listCheckOutId, "check check out state");
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     console.log("run effect in cart screen");
-    isLogin && dispatch({ type: typeCarts.fetchCart });
+    isLogin && data.length == 0 && dispatch({ type: typeCarts.fetchCart });
     setTotalPrice(0);
   }, [isLogin]);
 
@@ -51,6 +55,7 @@ const CartScreen = ({ navigation }) => {
       console.log(`listCheckOutId`, listCheckOutId);
       console.log(`data`, data);
       updateListCheckOut();
+      setShowLoadingEditCheckList(false);
     }
   }, [isloadingUpdateCart, listCheckOutId]);
 
@@ -70,7 +75,7 @@ const CartScreen = ({ navigation }) => {
     dispatch({
       type: typeCarts.updateCart,
       payload: {
-        data: itemId,
+        cartItemId: itemId,
         quantity,
       },
     });
@@ -81,7 +86,7 @@ const CartScreen = ({ navigation }) => {
     dispatch({
       type: typeCarts.removeOutCart,
       payload: {
-        data: itemId,
+        cartItemId: itemId,
       },
     });
   };
@@ -148,6 +153,7 @@ const CartScreen = ({ navigation }) => {
                 onProductCount={(itemId, quantity) =>
                   handleProductCount(itemId, quantity)
                 }
+                showLoadingEdit={() => setShowLoadingEditCheckList(true)}
                 onDeleteProduct={(itemId) => handleDeleteProduct(itemId)}
                 onChangeCheckout={(chechoutItemId, status) => {
                   handleChangeCheckOut(chechoutItemId, status);
@@ -161,10 +167,14 @@ const CartScreen = ({ navigation }) => {
       )}
       {!isLogin && <RequireLogin navigation={navigation} />}
       <Button
-        disabled={totalPrice && !isloadingUpdateCart ? false : true}
+        disabled={
+          totalPrice && !isloadingUpdateCart && !showLoadingEditCheckList
+            ? false
+            : true
+        }
         style={{
           backgroundColor:
-            totalPrice && !isloadingUpdateCart
+            totalPrice && !isloadingUpdateCart && !showLoadingEditCheckList
               ? theme.colors.primary
               : theme.colors.notGray,
           width: "90%",
@@ -184,7 +194,7 @@ const CartScreen = ({ navigation }) => {
         >
           Go to Checkout
         </Text>
-        {isloadingUpdateCart ? (
+        {showLoadingEditCheckList || isloadingUpdateCart ? (
           <ActivityIndicator
             animating={true}
             color={theme.backgrounds.white}

@@ -7,7 +7,6 @@ const initialState = {
 // export const name = "uploads";
 
 const reducer = (state = initialState, { type, payload }) => {
-  console.log(`action`, { type });
   switch (type) {
     case typeUpload.showLoadingUpload:
       return {

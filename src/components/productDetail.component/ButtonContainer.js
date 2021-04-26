@@ -4,22 +4,14 @@ import { theme } from "../../common/theme";
 import Button from "../Button";
 import Colors from "../../constants/colors";
 
-const ButtonContainer = ({ onAddToCart }) => {
+const ButtonContainer = ({ onAddToCart, ...props }) => {
   return (
-    <Button
-      mode="contained"
-      onPress={() => onAddToCart()}
-      style={styles.buttonAddToBasket}
-    >
+    <Button mode="contained" onPress={() => onAddToCart()} {...props}>
       <Text style={styles.buttonText}>Add To Cart</Text>
     </Button>
   );
 };
 const styles = StyleSheet.create({
-  buttonAddToBasket: {
-    backgroundColor: Colors.green,
-    width: "90%",
-  },
   buttonText: {
     fontFamily: "gilroy-bold",
     fontSize: 15,

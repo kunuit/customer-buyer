@@ -27,6 +27,7 @@ const CreateProduct = ({ navigation, route }) => {
   const [height, setHeight] = useState({ value: "", error: "" });
   const [weight, setWeight] = useState({ value: "", error: "" });
   const [category, setCategory] = useState({ value: "", error: "" });
+  const [measure, setMeasure] = useState({ value: "", error: "" });
   const [parent, setParent] = useState({ value: "", error: "" });
   const [supplier, setSupplier] = useState({ value: "", error: "" });
   const [images, setImages] = useState([]);
@@ -37,6 +38,7 @@ const CreateProduct = ({ navigation, route }) => {
 
   const categoryState = useSelector((state) => state.categories);
   const supplierState = useSelector((state) => state.suppliers);
+  const { measures } = useSelector((state) => state.measures);
   const { isLoadingUpload } = useSelector((state) => state.uploads);
   const { isCreatedOrUpdatedOrDeletedProduct } = useSelector(
     (state) => state.products
@@ -79,6 +81,7 @@ const CreateProduct = ({ navigation, route }) => {
       setWeight({ value: item.weight, error: "" });
       setCategory({ value: item.categoryId, error: "" });
       setSupplier({ value: item.supplierId, error: "" });
+      setMeasure({ value: item.measureId, error: "" });
       setImages(item.imageUrls);
     }
   };
@@ -100,10 +103,9 @@ const CreateProduct = ({ navigation, route }) => {
           weight: weight.value,
           categoryId: category.value,
           imageUrls: item ? item.imageUrls : null,
-
+          measureId: measure.value,
           // supplierId: supplier.value,
           // status: 0,
-          measureId: "606fadfa83ca8724eca6775b",
         },
       },
     });
@@ -209,6 +211,21 @@ const CreateProduct = ({ navigation, route }) => {
           error={!!weight.error}
           errorText={weight.error}
         />
+
+        <SelectItem
+          data={measures.map((e) => {
+            return {
+              name: e.description,
+              value: e.id,
+            };
+          })}
+          title="Measure"
+          value={measure.value}
+          onChangeValue={(e) => setMeasure({ value: e, error: "" })}
+          error={!!measure.error}
+          errorText={measure.error}
+        />
+
         <SelectItem
           data={categoryState.data.map((e) => {
             return {

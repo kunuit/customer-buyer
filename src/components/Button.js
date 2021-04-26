@@ -14,7 +14,8 @@ const Button = ({ mode, style, children, ...props }) => (
     ]}
     labelStyle={styles.text}
     mode={mode}
-    {...props}>
+    {...props}
+  >
     {children}
   </TouchableOpacity>
 );

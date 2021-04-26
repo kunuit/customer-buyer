@@ -46,7 +46,6 @@ export const typeAuths = {
 
   logout: "LOGOUT",
   resetRegister: "RESET_REGISTER",
-  switchIsAdmin: "SWITCH_IS_ADMIN",
 
   showAuthLoading: "SHOW_AUTH_LOADING",
   showRegisterLoading: "SHOW_REGISTER_LOADING",
@@ -69,8 +68,6 @@ function* loginSaga(action) {
   const { payload, code, message } = loginRes.data;
 
   if (code == statusCode.success) {
-    // lưu token and role vào local storage
-    setLocal(typeAuths.authLocal, payload);
     // go to my profile
     yield put({
       type: typeAuths.loginSuccess,
@@ -87,30 +84,6 @@ function* loginSaga(action) {
       },
     });
   }
-}
-
-function* loginFirebaseSaga({ payload }) {
-  yield put(showAuthLoadingACT());
-
-  const loginFirebaseRes = yield call(loginFirebaseAPI, {
-    ...payload.data,
-    authLocal: typeAuths.authLocal,
-  });
-
-  console.log(loginFirebaseRes);
-
-  if (loginFirebaseRes.code && loginFirebaseRes.code == 400) {
-    yield put(loginViaFirebaseFailACT(loginFirebaseRes.message));
-  } else {
-    yield put(loginViaFirebaseSuccessACT(loginFirebaseRes));
-  }
-
-  // yield call(loginFirebaseAPI, payload.data);
-  // console.log(loginFirebaseRes);
-}
-
-function* logoutSaga() {
-  removeLocal(typeAuths.authLocal);
 }
 
 function* registerSaga(action) {
@@ -140,21 +113,7 @@ function* registerSaga(action) {
   }
 }
 
-function* checkAuthLocal() {
-  const authLocalRes = yield call(getLocal, typeAuths.authLocal);
-  if (authLocalRes) {
-    yield put({
-      type: typeAuths.isAuthLocal,
-      payload: {
-        data: authLocalRes,
-      },
-    });
-  }
-}
-
 export const authSagas = [
   takeLatest(typeAuths.login, loginSaga),
-  takeLatest(typeAuths.logout, logoutSaga),
   takeLatest(typeAuths.register, registerSaga),
-  takeLatest(typeAuths.authLocal, checkAuthLocal),
 ];

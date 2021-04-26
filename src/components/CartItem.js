@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -15,6 +15,7 @@ import NumberFormat from "react-number-format";
 import { statusProduct } from "../sagas/product.saga";
 import { theme } from "../common/theme";
 import { statusCart } from "../sagas/cart.saga";
+import { debounce } from "lodash";
 
 const CartItem = ({
   item,
@@ -22,12 +23,20 @@ const CartItem = ({
   onProductCount,
   onDeleteProduct,
   onChangeCheckout,
+  showLoadingEdit,
   navigation,
 }) => {
   const [isSelected, setIsSelected] = useState(
     listCheckOutId.some((e) => e == item.id)
   );
   const [quantityCart, setQuantityCart] = useState(item.quantity);
+
+  const delayedQuery = useCallback(
+    debounce((settedQuantity) => {
+      onProductCount(item.id, settedQuantity);
+    }, 300),
+    []
+  );
 
   useEffect(() => {
     setQuantityCart(item.quantity);
@@ -72,8 +81,9 @@ const CartItem = ({
               disabled={item.status == 5 ? true : false}
               onPress={() => {
                 if (quantityCart > 1) {
-                  onProductCount(item.productId, quantityCart - 1);
                   setQuantityCart(quantityCart - 1);
+                  delayedQuery(quantityCart - 1);
+                  showLoadingEdit();
                 }
               }}
             >
@@ -87,8 +97,9 @@ const CartItem = ({
             <RoundedButton
               disabled={item.status == 5 ? true : false}
               onPress={() => {
-                onProductCount(item.productId, quantityCart + 1);
                 setQuantityCart(quantityCart + 1);
+                delayedQuery(quantityCart + 1);
+                showLoadingEdit();
               }}
             >
               <Entypo

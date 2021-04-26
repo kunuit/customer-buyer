@@ -5,17 +5,22 @@ const initialState = {
   cartId: null,
   listCheckOutId: [],
   isLoading: false,
+  isLoadingAddToCart: false,
   isloadingUpdateCart: false,
   isCreatedOrUpdatedOrDeletedCart: false,
 };
 
 const reducer = (state = initialState, { type, payload }) => {
-  console.log(`action`, { type });
   switch (type) {
     case typeCarts.showLoadingCart:
       return {
         ...state,
         isLoading: true,
+      };
+    case typeCarts.showLoadingAddToCart:
+      return {
+        ...state,
+        isLoadingAddToCart: true,
       };
     case typeCarts.showLoadingUpdateCart:
       return {
@@ -32,29 +37,23 @@ const reducer = (state = initialState, { type, payload }) => {
     case typeCarts.addtoCartSuccess:
       return {
         ...state,
-        // add danh sách các sản phẩm vào cart
         data: [...state.data, payload.data],
+        isLoadingAddToCart: false,
       };
-    case typeCarts.updateCartSuccess:
+    case typeCarts.updateAndRemoveCartSuccess:
       return {
         ...state,
-        // duyệt qua các sản phẩm thông qua id và từ đó update sản phẩm đó ở trong state cart
-        data: state.data.map((product) => {
-          if (product.id == payload.data) {
-            return { ...product, quantity: payload.quantity };
-          }
-          return product;
-        }),
+        data: payload.data,
         isloadingUpdateCart: false,
+        isLoadingAddToCart: false,
       };
-    case typeCarts.removeOutCartSuccess:
-      return {
-        ...state,
-        // filter ra nhung product khac voi product da xoa ở cart
-        data: state.data.filter((product) => {
-          return product.id != payload.data;
-        }),
-      };
+    // case typeCarts.removeOutCartSuccess:
+    //   return {
+    //     ...state,
+    //     // filter ra nhung product khac voi product da xoa ở cart
+    //     data: payload.data,
+    //     isloadingUpdateCart: false,
+    //   };
     case typeCarts.activeToCheckout:
       return {
         ...state,
