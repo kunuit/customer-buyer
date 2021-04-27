@@ -9,7 +9,7 @@ class AxiosService {
   }
 
   handleSuccess(response) {
-    return response;
+    return response.data;
   }
 
   async handleError(error) {

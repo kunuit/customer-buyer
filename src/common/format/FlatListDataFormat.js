@@ -3,7 +3,7 @@ export const multipleRowsFlatListFormat = (dataList, numColumns) => {
   let totalItemLastRow = dataList.length - totalRows * numColumns;
   console.log(totalRows, totalItemLastRow);
   while (totalItemLastRow !== 0 && totalItemLastRow !== numColumns) {
-    dataList.push("empty");
+    dataList = [...dataList, "empty"];
     totalItemLastRow++;
   }
   return dataList;

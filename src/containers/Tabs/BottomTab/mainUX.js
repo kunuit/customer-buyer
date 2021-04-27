@@ -1,5 +1,4 @@
 import React from "react";
-import Icon from "react-native-vector-icons/Ionicons";
 import { Fontisto } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Zocial } from "@expo/vector-icons";
@@ -11,12 +10,7 @@ import Favorite from "../../screens/FavouriteScreen";
 import Profile from "../../screens/Profile";
 import { theme } from "../../../common/theme";
 import { Dimensions } from "react-native";
-import TabProfile from "../TopTab/TabProfile";
-import ProductDetail from "../../screens/ProductDetail";
 import Explore from "../../screens/Explore";
-import CartScreen from "../../screens/CartScreen";
-import CardItem from "../../../components/CardItem";
-import ListCardItem from "../../../components/ListCardItem";
 import Home from "../../screens/Home";
 import { HomeScreen } from "../../screens/auth.screens";
 import { useSelector } from "react-redux";
@@ -43,15 +37,16 @@ const MainUX = () => {
         },
         showIcon: true,
         showLabel: true,
-      }}>
+      }}
+    >
       <Tab.Screen
-        name='Shop'
+        name="Shop"
         component={Home}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <Fontisto
-              name='shopping-store'
+              name="shopping-store"
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -59,12 +54,12 @@ const MainUX = () => {
         }}
       />
       <Tab.Screen
-        name='Explore'
+        name="Explore"
         component={Explore}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <MaterialCommunityIcons
-              name='briefcase-search-outline'
+              name="briefcase-search-outline"
               size={24}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -72,13 +67,13 @@ const MainUX = () => {
         }}
       />
       <Tab.Screen
-        name='Cart'
+        name="Cart"
         component={Cart}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <Zocial
-              name='cart'
+              name="cart"
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -86,13 +81,13 @@ const MainUX = () => {
         }}
       />
       <Tab.Screen
-        name='Favorite'
+        name="Favorite"
         component={Favorite}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <MaterialIcons
-              name='favorite-outline'
+              name="favorite-outline"
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />
@@ -100,13 +95,13 @@ const MainUX = () => {
         }}
       />
       <Tab.Screen
-        name='Profile'
+        name="Profile"
         component={isLogin ? Profile : HomeScreen}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <MaterialCommunityIcons
-              name='face-profile'
+              name="face-profile"
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />

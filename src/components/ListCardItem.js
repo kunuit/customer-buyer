@@ -1,11 +1,11 @@
 import React from "react";
+import { Text } from "react-native";
 import { View, StyleSheet, FlatList, Dimensions } from "react-native";
 import { useSelector } from "react-redux";
 import { multipleRowsFlatListFormat } from "../common/format/FlatListDataFormat";
 import CardItem from "../components/CardItem";
 
-const ListCardItem = ({ navigation }) => {
-  // const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const ListCardItem = ({ navigation, products, isColumn }) => {
   const { data } = useSelector((state) => state.products);
 
   return (
@@ -16,7 +16,23 @@ const ListCardItem = ({ navigation }) => {
         }}
         showsVerticalScrollIndicator={false}
         numColumns={2}
-        data={data}
+        ListEmptyComponent={
+          <View
+            style={{
+              flex: 1,
+              height: 200,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text>khoong co san pham</Text>
+          </View>
+        }
+        data={
+          isColumn && products
+            ? multipleRowsFlatListFormat(products, 2)
+            : products
+        }
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) =>
           item == "empty" ? (
@@ -38,7 +54,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: "100%",
     flex: 1,
-    paddingBottom: Dimensions.get("window").height * 0.09,
+    // paddingBottom: Dimensions.get("window").height * 0.09,
   },
   cardItemContainer: {
     margin: 10,

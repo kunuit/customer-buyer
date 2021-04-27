@@ -26,8 +26,7 @@ function* uploadImageProductSaga({ payload }) {
   // Assume "photo" is the name of the form field the server expects
   formData.append("image", { uri: payload.data, name: filename, type });
   // call API upload
-  const uploadRes = yield call(uploadImageAPI, formData);
-  const { uploaded, url } = uploadRes.data;
+  const { uploaded, url } = yield call(uploadImageAPI, formData);
   if (uploaded) {
     yield put({
       type: typeUpload.uploadImageProductSuccess,

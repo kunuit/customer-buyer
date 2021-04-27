@@ -16,9 +16,8 @@ function* fetchMeasureSaga(action) {
   // select token
   const { token } = yield select((state) => state.auth);
   // call API
-  const MeasureRes = yield call(getMeasureAPI, token);
-  console.log(`MeasureRes.data`, MeasureRes.data);
-  const { code, error, message, payload } = MeasureRes.data;
+  const { code, error, message, payload } = yield call(getMeasureAPI, token);
+
   if (error) {
     showToast({ title: "Measure", type: "error", message: message });
   } else {

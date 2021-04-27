@@ -15,6 +15,10 @@ const url = "/product";
 export const getProductsAPI = (token) => {
   return axiosService.get(`${API_ENDPOINT}${url}?perPage=20`);
 };
+// /product/search?name=Test
+export const queryProductAPI = (searchQuery) => {
+  return axiosService.get(`${API_ENDPOINT}${url}/search?name=${searchQuery}`);
+};
 
 export const createProductAPI = (data, token) => {
   return axiosService.post(`${API_ENDPOINT}${url}/staff`, data, token);
@@ -28,3 +32,5 @@ export const updateProductAPI = (id, data, token) => {
   console.log(`id, data,`, id, data);
   return axiosService.put(`${API_ENDPOINT}${url}/staff/${id}`, data, token);
 };
+
+// export const updateFavoriteProductAPI = (id, boolean, token)

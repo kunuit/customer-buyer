@@ -123,7 +123,8 @@ const CartScreen = ({ navigation }) => {
       <View style={styles.titleTextContainer}>
         <Text style={styles.titleText}>My Cart</Text>
       </View>
-      {!isLoading ? (
+      {!isLogin && <RequireLogin navigation={navigation} />}
+      {!isLoading && isLogin ? (
         <FlatList
           style={styles.listCartItemContainer}
           showsVerticalScrollIndicator={false}
@@ -145,36 +146,40 @@ const CartScreen = ({ navigation }) => {
           data={data}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
-            <View>
-              <CartItem
-                item={item}
-                listCheckOutId={listCheckOutId}
-                navigation={navigation}
-                onProductCount={(itemId, quantity) =>
-                  handleProductCount(itemId, quantity)
-                }
-                showLoadingEdit={() => setShowLoadingEditCheckList(true)}
-                onDeleteProduct={(itemId) => handleDeleteProduct(itemId)}
-                onChangeCheckout={(chechoutItemId, status) => {
-                  handleChangeCheckOut(chechoutItemId, status);
-                }}
-              />
-            </View>
+            <CartItem
+              item={item}
+              listCheckOutId={listCheckOutId}
+              navigation={navigation}
+              onProductCount={(itemId, quantity) =>
+                handleProductCount(itemId, quantity)
+              }
+              showLoadingEdit={() => setShowLoadingEditCheckList(true)}
+              onDeleteProduct={(itemId) => handleDeleteProduct(itemId)}
+              onChangeCheckout={(chechoutItemId, status) => {
+                handleChangeCheckOut(chechoutItemId, status);
+              }}
+            />
           )}
         />
       ) : (
         <MainLoading padding={30} />
       )}
-      {!isLogin && <RequireLogin navigation={navigation} />}
+
       <Button
         disabled={
-          totalPrice && !isloadingUpdateCart && !showLoadingEditCheckList
+          totalPrice &&
+          !isloadingUpdateCart &&
+          !showLoadingEditCheckList &&
+          isLogin
             ? false
             : true
         }
         style={{
           backgroundColor:
-            totalPrice && !isloadingUpdateCart && !showLoadingEditCheckList
+            totalPrice &&
+            !isloadingUpdateCart &&
+            !showLoadingEditCheckList &&
+            isLogin
               ? theme.colors.primary
               : theme.colors.notGray,
           width: "90%",

@@ -3,7 +3,9 @@ import { typeProducts } from "../sagas/product.saga";
 const initialState = {
   data: [],
   productByCategory: [],
+  queryProduct: [],
   isLoading: false,
+  isLoadingSearchProduct: false,
   isLoadingFilterByCategory: false,
   isCreatedOrUpdatedOrDeletedProduct: false,
 };
@@ -20,25 +22,16 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         isLoadingFilterByCategory: true,
       };
-    case typeProducts.fetchProductFirebaseSuccess:
+    case typeProducts.showLoadingSearchProduct:
       return {
         ...state,
-        data: payload.data,
-        isLoading: false,
+        isLoadingSearchProduct: true,
       };
     case typeProducts.fetchProductSuccess:
       return {
         ...state,
         data: payload.data,
-        productByCategory: payload.data,
         isLoading: false,
-      };
-    case typeProducts.createProductFirebaseSuccess:
-      return {
-        ...state,
-        isCreatedOrUpdatedOrDeletedProduct: true,
-        isLoading: false,
-        data: [...state.data, payload.data],
       };
     case typeProducts.createProductSuccess:
       return {
@@ -46,32 +39,11 @@ const reducer = (state = initialState, { type, payload }) => {
         isCreatedOrUpdatedOrDeletedProduct: true,
         data: [...state.data, payload.data],
       };
-    case typeProducts.removeProductFirebaseSuccess:
-      return {
-        ...state,
-        isCreatedOrUpdatedOrDeletedProduct: true,
-        isLoading: false,
-        data: state.data.filter((product) => {
-          return product.id != payload.data;
-        }),
-      };
     case typeProducts.removeProductSuccess:
       return {
         ...state,
         isCreatedOrUpdatedOrDeletedProduct: true,
         data: payload.data,
-      };
-    case typeProducts.updateProductFirebaseSuccess:
-      return {
-        ...state,
-        isCreatedOrUpdatedOrDeletedProduct: true,
-        isLoading: false,
-        data: state.data.map((product) => {
-          if (product.id == payload.data.id) {
-            return payload.data;
-          }
-          return product;
-        }),
       };
     case typeProducts.updateProductSuccess:
       return {
@@ -83,6 +55,12 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isCreatedOrUpdatedOrDeletedProduct: false,
+      };
+    case typeProducts.queryProductSuccess:
+      return {
+        ...state,
+        queryProduct: payload.queryProduct,
+        isLoadingSearchProduct: false,
       };
     case typeProducts.filterProductByCategorySuccess:
       return {

@@ -10,7 +10,6 @@ import { windowHeight } from "../../../../common/Dimensions";
 import { theme } from "../../../../common/theme";
 import CardMyProduct from "../../../../components/admin.components/CardMyProduct.admin";
 import MainLoading from "../../../../components/Loader/MainLoading";
-import ListCardItem from "../../../../components/ListCardItem";
 import SearchView from "../../../../components/SearchView";
 import TitleScreen from "../../../../components/TitleScreen";
 import { typeProducts } from "../../../../sagas/product.saga";

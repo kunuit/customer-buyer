@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -13,38 +13,46 @@ import { MaterialIcons } from "@expo/vector-icons";
 import ListCardItem from "../../components/ListCardItem";
 import GroceriesList from "../../components/GroceriesList";
 import Colors from "../../constants/colors";
+import TitleScreen from "../../components/TitleScreen";
+import SearchView from "../../components/SearchView";
+import { typeProducts } from "../../sagas/product.saga";
+import { useDispatch, useSelector } from "react-redux";
+import MainLoading from "../../components/Loader/MainLoading";
 
 const Explore = ({ navigation }) => {
-  const [searchQuery, setSearchQuery] = React.useState("");
-
+  const dispatch = useDispatch();
+  const [searchQuery, setSearchQuery] = useState("");
   const onChangeSearch = (query) => setSearchQuery(query);
+
+  const { data, queryProduct, isLoadingSearchProduct } = useSelector(
+    (state) => state.products
+  );
+
+  useEffect(() => {
+    if (searchQuery) {
+      dispatch({
+        type: typeProducts.queryProduct,
+        payload: {
+          searchQuery,
+        },
+      });
+    }
+  }, [searchQuery]);
+
   return (
     <SafeAreaView style={styles.exploreContainer}>
-      <View style={styles.titleTextContainer}>
-        <Text style={styles.titleText}>Find Products</Text>
-      </View>
-      <View style={styles.searchContainer}>
-        <Searchbar
-          placeholder="Search Store"
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-          style={styles.searchBar}
-          clearIcon={() => (
-            <MaterialIcons name="clear" size={20} color="black" />
-          )}
-          icon={() => <MaterialIcons name="search" size={20} color="black" />}
-          inputStyle={[
-            { fontFamily: "gilroy-bold" },
-            { fontSize: 13 },
-            { borderWidth: 0 },
-          ]}
-          on
-        />
-      </View>
-      {searchQuery == "" ? (
+      <TitleScreen isBorder={false} title="Explore" />
+      <SearchView
+        holSearch="Product"
+        searchQuery={searchQuery}
+        searchQueryValue={(query) => onChangeSearch(query)}
+      />
+      {!searchQuery ? (
         <GroceriesList navigation={navigation} />
+      ) : isLoadingSearchProduct ? (
+        <MainLoading height={190} padding={30} />
       ) : (
-        <ListCardItem navigation={navigation} />
+        <ListCardItem products={queryProduct} navigation={navigation} />
       )}
     </SafeAreaView>
   );

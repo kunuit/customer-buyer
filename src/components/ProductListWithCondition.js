@@ -2,25 +2,33 @@ import React from "react";
 import { FlatList, StyleSheet, View, Text } from "react-native";
 import { useSelector } from "react-redux";
 import { windowWidth } from "../common/Dimensions";
+import { statusFilter } from "../sagas/product.saga";
 import CardItem from "./CardItem";
 import MainLoading from "./Loader/MainLoading";
 
-export const ProductListWithCondition = ({ navigation }) => {
-  const { isLoading, productByCategory } = useSelector(
+export const ProductListWithCondition = ({ activeId, navigation }) => {
+  const { data, isLoadingFilterByCategory, productByCategory } = useSelector(
     (state) => state.products
   );
+  console.log(`isLoadingFilterByCategory`, isLoadingFilterByCategory);
   return (
     <View style={styles.root}>
-      {!isLoading ? (
+      {(!isLoadingFilterByCategory && !!productByCategory[activeId]) ||
+      activeId == statusFilter.default ? (
         <FlatList
           showsHorizontalScrollIndicator={false}
           horizontal={true}
-          data={productByCategory}
+          data={
+            activeId == statusFilter.default
+              ? data
+              : productByCategory[activeId]
+          }
           ListEmptyComponent={
             <View
               style={{
                 width: windowWidth,
                 height: 200,
+                margin: 10,
                 alignItems: "center",
                 justifyContent: "center",
               }}
@@ -43,7 +51,17 @@ export const ProductListWithCondition = ({ navigation }) => {
           keyExtractor={(item, index) => index.toString()}
         />
       ) : (
-        <MainLoading height={190} padding={30} />
+        <View
+          style={{
+            width: windowWidth,
+            height: 200,
+            margin: 10,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <MainLoading height={190} padding={30} />
+        </View>
       )}
     </View>
   );

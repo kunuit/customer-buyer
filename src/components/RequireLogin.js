@@ -23,6 +23,7 @@ export default function RequireLogin({ navigation }) {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    position: "absolute",
     justifyContent: "center",
     alignItems: "center",
     height: 400,

@@ -16,5 +16,6 @@ export const updateCartAPI = (body, token) => {
 };
 
 export const removeOutCartAPI = (cartItemId, token) => {
+  console.log(`cartItemId, token`, cartItemId, token);
   return axiosService.delete(`${API_ENDPOINT}${url}/${cartItemId}`, token);
 };

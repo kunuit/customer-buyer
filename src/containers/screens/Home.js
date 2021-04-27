@@ -15,11 +15,15 @@ import Grocery from "../../components/Grocery";
 import { useDispatch, useSelector } from "react-redux";
 import { typeProducts } from "../../sagas/product.saga";
 import { ProductListViaCategory } from "../../components/ProductListViaCategory";
+import HomeBanner from "../../components/HomeBanner";
 
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  console.log(`searchQuery`, searchQuery);
   // const { isLoading } = useSelector((state) => state.products);
+  const onChangeSearch = (query) => setSearchQuery(query);
 
   const onRefresh = () => {
     dispatch({ type: typeProducts.fetchProduct });
@@ -31,7 +35,10 @@ const Home = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.homeScreenContainer}>
       <TitleScreen isBorder={false} title="Home" />
-      <SearchView />
+      <SearchView
+        searchQuery={searchQuery}
+        searchQueryValue={(query) => onChangeSearch(query)}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -39,11 +46,16 @@ const Home = ({ navigation }) => {
         }
       >
         <View style={styles.productListContainer}>
+          <HomeBanner />
           <ProductList title="Exclusive Offer" navigation={navigation} />
           <Grocery title="Categories" navigation={navigation} />
           <ProductList title="Best Selling" navigation={navigation} />
           <ProductListViaCategory
             title="Product with category"
+            navigation={navigation}
+          />
+          <ProductListViaCategory
+            title="Product with category 2"
             navigation={navigation}
           />
         </View>

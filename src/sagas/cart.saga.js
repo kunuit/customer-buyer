@@ -63,9 +63,8 @@ function* fetchCartSaga(action) {
   // call
   const { token } = yield select((state) => state.auth);
   console.log(`token`, token);
-  const fetchRes = yield call(getCartAPI, token);
-  console.log(`fetchRes.data`, fetchRes.data);
-  const { payload, error, message } = fetchRes.data;
+  const { payload, error, message } = yield call(getCartAPI, token);
+
   console.log(`payload.cartItems`, payload.cartItems);
   if (!error) {
     yield put({
@@ -76,7 +75,7 @@ function* fetchCartSaga(action) {
       },
     });
   } else {
-    showToast({ title: "Cart", type: "error", message: data });
+    showToast({ title: "Cart", type: "error", message });
   }
 }
 
@@ -105,14 +104,11 @@ function* addToCartSaga(action) {
     // select token
     const { token } = yield select((state) => state.auth);
     // call api
-    const addToCartRes = yield call(
+    const { status, error, payload, message } = yield call(
       addToCartAPI,
       { productId: action.payload.data.id, quantity: action.payload.quantity },
       token
     );
-
-    console.log(`addToCartRes.data`, addToCartRes.data);
-    const { status, error, payload, message } = addToCartRes.data;
 
     if (status == statusCode.notAuth) {
       showToast({
@@ -148,7 +144,7 @@ function* updateCartSaga(action) {
 
   const { token } = yield select((state) => state.auth);
 
-  const updateRes = yield call(
+  const { code, error, message, payload } = yield call(
     updateCartAPI,
     {
       cartItemId: action.payload.cartItemId,
@@ -157,9 +153,6 @@ function* updateCartSaga(action) {
     token
   );
 
-  console.log(`updateRes.data`, updateRes.data);
-
-  const { code, error, message, payload } = updateRes.data;
   if (error) {
     showToast({
       title: "Cart",
@@ -190,17 +183,17 @@ function* updateCartSaga(action) {
 function* removeOutCartSaga(action) {
   // show loadingUpdate
   yield put({ type: typeCarts.showLoadingUpdateCart });
+  // get token
+  const { token } = yield select((state) => state.auth);
   // call api remove cartItem
-  const removeOutCartRes = yield call(
+  const { code, error, message, payload } = yield call(
     removeOutCartAPI,
     action.payload.cartItemId,
     token
   );
-  // get token and data of cart
-  const { token } = yield select((state) => state.auth);
+  // get data of cart
   const { data } = yield select((state) => state.carts);
 
-  const { code, error, message, payload } = removeOutCartRes.data;
   // error -> show error; !error -> find index to remove it at current cart
   if (!error) {
     // findIndex

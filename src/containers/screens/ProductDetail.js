@@ -20,6 +20,7 @@ import ButtonMessenger from "../../components/ButtonMessenger";
 const ProductDetail = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const [productCount, setProductCount] = useState(1);
+  const [item, setItem] = useState(route.params);
 
   const { isAdminLogin } = useSelector((state) => state.auth);
   const { isLoadingAddToCart } = useSelector((state) => state.carts);
@@ -28,10 +29,13 @@ const ProductDetail = ({ navigation, route }) => {
   );
   const listFavorite = useSelector((state) => state.favorites);
 
-  const item = route.params;
   const [heart, setHeart] = useState(
     listFavorite.data.some((itemFavorite) => itemFavorite.id == item.id)
   );
+
+  // useEffect(() => {
+  //   dispatch({type: typeProducts.getOneProduct})
+  // },[])
 
   useEffect(() => {
     if (isCreatedOrUpdatedOrDeletedProduct) {

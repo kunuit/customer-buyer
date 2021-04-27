@@ -18,8 +18,7 @@ function* fetchCategorySaga(action) {
   // show loading
   yield put({ type: typeCategories.showLoadingCategory });
   // call API
-  const categoryRes = yield call(getCategoriesAPI);
-  const { code, error, message, payload } = categoryRes.data;
+  const { code, error, message, payload } = yield call(getCategoriesAPI);
   if (!error) {
     yield put({
       type: typeCategories.fetchCategorySuccess,

@@ -6,22 +6,8 @@ import { Searchbar } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { theme } from "../common/theme";
 
-const SearchView = ({ holSearch, typeAction }) => {
-  const dispatch = useDispatch();
-  const [searchQuery, setSearchQuery] = React.useState("");
-
-  const onChangeSearch = (query) => setSearchQuery(query);
-
-  useEffect(() => {
-    if (typeAction && searchQuery) {
-      dispatch({
-        type: typeAction,
-        payload: {
-          data: searchQuery,
-        },
-      });
-    }
-  }, [searchQuery]);
+const SearchView = ({ holSearch, searchQuery, searchQueryValue }) => {
+  const onChangeSearch = (query) => searchQueryValue(query);
 
   return (
     <View style={styles.searchContainer}>

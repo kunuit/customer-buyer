@@ -1,5 +1,6 @@
 import {
   call,
+  debounce,
   delay,
   put,
   select,
@@ -19,6 +20,7 @@ import {
   createProductAPI,
   removeProductAPI,
   updateProductAPI,
+  queryProductAPI,
 } from "../apis/product.api";
 import { showToast } from "../common/Layout/toast.helper";
 import { statusCode } from "../constants/API.constants";
@@ -53,6 +55,7 @@ export const typeProducts = {
   showLoadingProduct: "SHOW_LOADING_PRODUCT",
   showLoadingCreateProduct: "SHOW_LOADING_CREATE_PRODUCT",
   showLoadingFilterByCategory: "SHOW_LOADING_FILTER_BY_CATEGORY",
+  showLoadingSearchProduct: "SHOW_LOADING_SEARCH_PRODUCT",
   // create product
   createProductFirebase: "CREATE_PRODUCT_FIREBASE",
   createProductFirebaseSuccess: "CREATE_PRODUCT_FIREBASE_SUCCESS",
@@ -68,8 +71,8 @@ export const typeProducts = {
   removeProductFirebaseSuccess: "REMOVE_PRODUCT_FIREBASE_SUCCESS",
   removeProductFirebaseFail: "REMOVE_PRODUCT_FIREBASE_FAIL",
   // query product
-  queryProductFirebase: "QUERY_PRODUCT_FIREBASE",
-  queryProductFirebaseSuccess: "QUERY_PRODUCT_FIREBASE_SUCCESS",
+  queryProduct: "QUERY_PRODUCT",
+  queryProductSuccess: "QUERY_PRODUCT_SUCCESS",
   // fetchProduct
   fetchProduct: "FETCH_PRODUCT",
   fetchProductSuccess: "FETCH_PRODUCT_SUCCESS",
@@ -99,83 +102,34 @@ export const statusFilter = Object.freeze({
   default: -1,
 });
 
-function* fetchProductFirebaseSaga() {
-  yield put({ type: typeProducts.showLoadingProduct });
-
-  const productRes = yield call(getAllProduct_FiB_API);
-  const { code, data } = productRes;
-  const transitData = Object.values(data);
-  if (code == 200) {
-    yield put({
-      type: typeProducts.fetchProductFirebaseSuccess,
-      payload: {
-        data: transitData,
-      },
-    });
-  } else {
-    showToast({ title: Product, type: "error", message: data });
-  }
-}
-
-function* createProductFirebaseSaga({ type, payload }) {
-  const createProductRes = yield call(createProduct_FiB_API, payload.data);
-  const { code, data } = createProductRes;
-  if (code == 200) {
-    yield put({
-      type: typeProducts.createProductFirebaseSuccess,
-      payload: {
-        data: payload.data,
-      },
-    });
-  } else {
-    showToast({ title: Product, type: "error", message: data });
-  }
-}
-
-function* updateProructFirebaseSaga({ type, payload }) {
-  console.log(payload, "check update");
-  const updateProductRes = yield call(updateProduct_FiB_API, payload.data);
-  const { code, data } = updateProductRes;
-  if (code == 200) {
-    yield put({
-      type: typeProducts.updateProductFirebaseSuccess,
-      payload: {
-        data: payload.data,
-      },
-    });
-  } else {
-    showToast({ title: Product, type: "error", message: data });
-  }
-}
-
-function* removeProductFirebaseSaga({ type, payload }) {
-  const removeProductRes = yield call(removeProduct_FiB_API, payload.index);
-  const { code, data } = removeProductRes;
-  if (code == 200) {
-    yield put({
-      type: typeProducts.removeProductFirebaseSuccess,
-      payload: {
-        data: payload.index,
-      },
-    });
-  } else {
-    showToast({ title: "Product", type: "error", message: data });
-  }
-}
-
-function* queryProductFirebaseSaga({ type, payload }) {
-  yield put({ type: typeProducts.showLoadingProduct });
+function* queryProductSaga(action) {
+  // show Loading search
+  yield put({ type: typeProducts.showLoadingSearchProduct });
+  // delay 500 ms
   yield delay(300);
-
-  const queryRes = yield call(queryProduct_FiB_API, payload.data);
+  // call search api
+  const { error, message, code, payload } = yield call(
+    queryProductAPI,
+    action.payload.searchQuery
+  );
+  // error -> showToast, !error call action success
+  if (error) {
+    showToast({ title: "Search", type: "error", message: message });
+  } else {
+    yield put({
+      type: typeProducts.queryProductSuccess,
+      payload: {
+        queryProduct: payload,
+      },
+    });
+  }
 }
 
 function* fetchProductSaga(action) {
   // loading
   yield put({ type: typeProducts.showLoadingProduct });
   // call API product
-  const productRes = yield call(getProductsAPI);
-  const { payload, code, error, message } = productRes.data;
+  const { payload, code, error, message } = yield call(getProductsAPI);
   // nếu đúng thì gọi action success sai thì show Toast
   if (code == statusCode.success) {
     console.log(payload, "check payload data");
@@ -192,19 +146,19 @@ function* fetchProductSaga(action) {
 
 function* createProductSaga(action) {
   const { urlProducts } = yield select((state) => state.uploads);
-  const createRes = yield call(
+  const { token } = yield select((state) => state.auth);
+  const { payload, code, error, message } = yield call(
     createProductAPI,
     { ...action.payload.data, imageUrls: urlProducts },
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikt1bmlvbiIsImZ1bGxOYW1lIjoiVsWpIFh1w6JuIEPGsOG7nW5nICIsInJvbGUiOiJzdGFmZiIsImlhdCI6MTYxOTA1NjUyOSwiZXhwIjoxNjIwNzg0NTI5fQ.3E5t0lLzETabhZjoldgGQIFq9YPAQi4D7Mubk3Hwehc"
+    token
   );
-  const { payload, code, error, message } = createRes.data;
   //! check here
   if (!error) {
     console.log(payload, "check payload create data");
     yield put({
       type: typeProducts.createProductSuccess,
       payload: {
-        data: { ...action.payload.data, imageUrls: urlProducts },
+        data: payload,
       },
     });
   } else {
@@ -214,14 +168,14 @@ function* createProductSaga(action) {
 
 function* removeProductSaga(action) {
   console.log(`action.payload.data`, action.payload.data);
+  const { token } = yield select((state) => state.auth);
   // show loadding
   // call api
-  const removeRes = yield call(
+  const { payload, code, error, message } = yield call(
     removeProductAPI,
     action.payload.data,
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikt1bmlvbiIsImZ1bGxOYW1lIjoiVsWpIFh1w6JuIEPGsOG7nW5nICIsInJvbGUiOiJzdGFmZiIsImlhdCI6MTYxOTA1NjUyOSwiZXhwIjoxNjIwNzg0NTI5fQ.3E5t0lLzETabhZjoldgGQIFq9YPAQi4D7Mubk3Hwehc"
+    token
   );
-  const { payload, code, error, message } = removeRes.data;
   if (!error) {
     // findIndex product and slice to new arr
     const productState = yield select((state) => state.products);
@@ -245,6 +199,7 @@ function* updateProductSaga(action) {
   // show loading update
   // get urlProducts from state
   const { urlProducts } = yield select((state) => state.uploads);
+  const { token } = yield select((state) => state.auth);
   console.log(
     `action.payload.data.imageUrls, urlProducts`,
     action.payload.data.imageUrls,
@@ -252,17 +207,15 @@ function* updateProductSaga(action) {
   );
   // const urlProductTmp = [...action.payload.data.imageUrls, ...urlProducts];
   // call api
-  const updateRes = yield call(
+  const { payload, code, error, message } = yield call(
     updateProductAPI,
     action.payload.id,
     {
       ...action.payload.data,
       imageUrls: [...action.payload.data.imageUrls, ...urlProducts],
     },
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikt1bmlvbiIsImZ1bGxOYW1lIjoiVsWpIFh1w6JuIEPGsOG7nW5nICIsInJvbGUiOiJzdGFmZiIsImlhdCI6MTYxOTA1NjUyOSwiZXhwIjoxNjIwNzg0NTI5fQ.3E5t0lLzETabhZjoldgGQIFq9YPAQi4D7Mubk3Hwehc"
+    token
   );
-  console.log(updateRes, "check updateRes");
-  const { payload, code, error, message } = updateRes.data;
   if (!error) {
     console.log(`payload`, payload);
     // findIndex product and slice to new arr
@@ -289,32 +242,37 @@ function* updateProductSaga(action) {
 }
 
 function* filterProductByCategorySaga(action) {
-  // show loading filter,
-  yield put({ type: typeProducts.showLoadingFilterByCategory });
-  // select state product and category
+  // select products are filtered
   const { data, productByCategory } = yield select((state) => state.products);
-  console.log(`action.payload.id, `, action.payload.id);
-  yield put({
-    type: typeProducts.filterProductByCategorySuccess,
-    payload: {
-      productByCategory:
-        action.payload.id == statusFilter.default
-          ? data
-          : data.filter((product) => product.categoryId == action.payload.id),
-    },
-  });
+  // check it id category is existed in productBYCategory
+  console.log(
+    `productByCategory[action.payload.id]`,
+    productByCategory[action.payload.id]
+  );
+  if (!productByCategory[action.payload.id]) {
+    // show loading filter,
+    yield put({ type: typeProducts.showLoadingFilterByCategory });
+    // select state product and category
+    yield put({
+      type: typeProducts.filterProductByCategorySuccess,
+      payload: {
+        productByCategory: {
+          ...productByCategory,
+          [action.payload.id]: data.filter(
+            (product) => product.categoryId == action.payload.id
+          ),
+        },
+      },
+    });
+  }
 }
 
 export const productSagas = [
-  // takeEvery("FETCH_PRODUCTS", fetchAllProducts),
-  takeLatest(typeProducts.fetchProductFirebase, fetchProductFirebaseSaga),
-  takeLatest(typeProducts.createProductFirebase, createProductFirebaseSaga),
-  takeLatest(typeProducts.updateProductFirebase, updateProructFirebaseSaga),
-  takeLatest(typeProducts.removeProductFirebase, removeProductFirebaseSaga),
-  takeLatest(typeProducts.queryProductFirebase, queryProductFirebaseSaga),
+  takeLatest(typeProducts.queryProduct, queryProductSaga),
   takeLatest(typeProducts.fetchProduct, fetchProductSaga),
   takeLatest(typeProducts.createProduct, createProductSaga),
   takeLatest(typeProducts.removeProduct, removeProductSaga),
   takeLatest(typeProducts.updateProduct, updateProductSaga),
   takeLatest(typeProducts.filterProductByCategory, filterProductByCategorySaga),
+  takeLatest(typeProducts.queryProduct, queryProductSaga),
 ];

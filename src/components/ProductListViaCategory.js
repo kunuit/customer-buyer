@@ -5,6 +5,7 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
+  TouchableHighlight,
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +14,7 @@ import MainLoading from "../components/Loader/MainLoading";
 import { CategoryNameList } from "./category.components/CategoryNameList";
 import { ProductListWithCondition } from "./ProductListWithCondition";
 import { statusFilter, typeProducts } from "../sagas/product.saga";
+import { theme } from "../common/theme";
 
 export const ProductListViaCategory = ({ title, navigation, ...props }) => {
   const { data, isLoading } = useSelector((state) => state.categories);
@@ -21,10 +23,12 @@ export const ProductListViaCategory = ({ title, navigation, ...props }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({
-      type: typeProducts.filterProductByCategory,
-      payload: { id: activeId },
-    });
+    if (activeId != statusFilter.default) {
+      dispatch({
+        type: typeProducts.filterProductByCategory,
+        payload: { id: activeId },
+      });
+    }
   }, [activeId]);
 
   return (
@@ -41,9 +45,30 @@ export const ProductListViaCategory = ({ title, navigation, ...props }) => {
             showsHorizontalScrollIndicator={false}
             horizontal={true}
             data={data}
-            renderItem={({ item, index }) => (
+            ListHeaderComponent={
+              <TouchableHighlight
+                underlayColor={theme.backgrounds.white}
+                onPress={() => setActiveId(statusFilter.default)}
+              >
+                <View
+                  style={[
+                    styles.root,
+                    activeId == statusFilter.default && styles.active,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.text,
+                      activeId == statusFilter.default ? styles.textActive : {},
+                    ]}
+                  >
+                    All
+                  </Text>
+                </View>
+              </TouchableHighlight>
+            }
+            renderItem={({ item }) => (
               <CategoryNameList
-                index={index}
                 item={item}
                 onChangeCategory={(id) => setActiveId(id)}
                 activeId={activeId}
@@ -51,7 +76,10 @@ export const ProductListViaCategory = ({ title, navigation, ...props }) => {
             )}
             keyExtractor={(item, index) => index.toString()}
           />
-          <ProductListWithCondition navigation={navigation} />
+          <ProductListWithCondition
+            activeId={activeId}
+            navigation={navigation}
+          />
         </View>
       ) : (
         <MainLoading height={190} padding={30} />
@@ -89,5 +117,25 @@ const styles = StyleSheet.create({
   nameDetail: {
     backgroundColor: "red",
     margin: 3,
+  },
+  root: {
+    flex: 1,
+    padding: 10,
+    paddingVertical: 5,
+    margin: 5,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: theme.colors.lineBorder,
+  },
+  text: {
+    textAlign: "center",
+    color: theme.colors.notBlack,
+  },
+  active: {
+    backgroundColor: theme.colors.primary,
+    borderColor: theme.colors.primary,
+  },
+  textActive: {
+    color: theme.backgrounds.white,
   },
 });

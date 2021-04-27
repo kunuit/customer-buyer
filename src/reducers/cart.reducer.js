@@ -1,3 +1,4 @@
+import { typeAuths } from "../sagas/auth.saga";
 import { typeCarts } from "../sagas/cart.saga";
 
 const initialState = {
@@ -63,6 +64,12 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         listCheckOutId: state.listCheckOutId.filter((id) => id != payload.data),
+      };
+    case typeAuths.logout:
+      return {
+        ...state,
+        listCheckOutId: [],
+        data: [],
       };
     // reset lại để
     // case typeCarts.resetCreateCart:

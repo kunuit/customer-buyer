@@ -64,8 +64,7 @@ function* loginSaga(action) {
   // show loading and block button
   yield put({ type: typeAuths.showAuthLoading });
   //call api
-  const loginRes = yield call(loginAPI, action.payload);
-  const { payload, code, message } = loginRes.data;
+  const { payload, code, message } = yield call(loginAPI, action.payload);
 
   if (code == statusCode.success) {
     // go to my profile
@@ -90,9 +89,8 @@ function* registerSaga(action) {
   // show loading and block button
   yield put({ type: typeAuths.showRegisterLoading });
   //call api
-  const registerRes = yield call(registerAPI, action.payload);
+  const { payload, code, message } = yield call(registerAPI, action.payload);
 
-  const { payload, code, message } = registerRes.data;
   console.log(`message`, message);
   if (code == statusCode.success) {
     // back to login or home
