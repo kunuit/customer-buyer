@@ -20,17 +20,6 @@ export const ProductListViaCategory = ({ title, navigation, ...props }) => {
   const { data, isLoading } = useSelector((state) => state.categories);
   const [activeId, setActiveId] = useState(statusFilter.default);
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (activeId != statusFilter.default) {
-      dispatch({
-        type: typeProducts.filterProductByCategory,
-        payload: { id: activeId },
-      });
-    }
-  }, [activeId]);
-
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>

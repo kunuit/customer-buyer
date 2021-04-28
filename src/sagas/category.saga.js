@@ -4,6 +4,7 @@ import { getCategoriesAPI } from "../apis/category.api";
 import { getAllCategory_FiB_API } from "../apis/firebase/category.firebase";
 import { getProductsAPI } from "../apis/product.api";
 import { showToast } from "../common/Layout/toast.helper";
+import { typeProducts } from "./product.saga";
 
 export const typeCategories = {
   // loading
@@ -25,6 +26,9 @@ function* fetchCategorySaga(action) {
       payload: {
         data: payload,
       },
+    });
+    yield put({
+      type: typeProducts.fetchProductByCategory,
     });
   } else {
     showToast({ title: "Category", type: "error", message: message });

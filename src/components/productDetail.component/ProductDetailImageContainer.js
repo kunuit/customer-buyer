@@ -8,6 +8,7 @@ import Swiper from "react-native-swiper";
 //   "https://pngimg.com/uploads/apple/apple_PNG12489.png",
 // ];
 const ProductDetailImageContainer = ({ images }) => {
+  console.log(`images`, images);
   return (
     <View style={styles.productDetailImageContainer}>
       <Swiper
@@ -17,13 +18,23 @@ const ProductDetailImageContainer = ({ images }) => {
         autoplayTimeout={4}
         activeDot={<View style={styles.activeDot} />}
       >
-        {images.map((item, index) => (
+        {images ? (
+          images.map((item, index) => (
+            <Image
+              key={index}
+              style={styles.productDetailImage}
+              source={{ uri: item }}
+            />
+          ))
+        ) : (
           <Image
-            key={index}
             style={styles.productDetailImage}
-            source={{ uri: item }}
+            source={{
+              uri:
+                "https://cdn4.iconfinder.com/data/icons/refresh_cl/256/System/Box_Empty.png",
+            }}
           />
-        ))}
+        )}
       </Swiper>
     </View>
   );

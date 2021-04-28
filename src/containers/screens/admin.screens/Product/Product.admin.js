@@ -18,14 +18,21 @@ import { useState } from "react";
 const ProductAdmin = ({ navigation }) => {
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
-  const { data, isLoading } = useSelector((state) => state.products);
+  const { data, isLoading, isLoadingFetchAddProduct } = useSelector(
+    (state) => state.products
+  );
 
   const onRefresh = () => {
     // dispatch({ type: typeProducts.fetchProductFirebase });
-    dispatch({type: typeProducts.fetchProduct})
+    dispatch({ type: typeProducts.fetchProduct });
     // if (isLoading) {
     //   setRefreshing(false);
     // }
+  };
+
+  const handleLoadMoreProduct = () => {
+    console.log(`here`);
+    dispatch({ type: typeProducts.fetchAddProduct });
   };
 
   return (
@@ -49,6 +56,13 @@ const ProductAdmin = ({ navigation }) => {
             <CardMyProduct item={item} navigation={navigation} />
           )}
           keyExtractor={(item, index) => index.toString()}
+          onEndReached={() => {
+            dispatch({ type: typeProducts.fetchAddProduct });
+          }}
+          onEndReachedThreshold={0.001}
+          ListFooterComponent={
+            isLoadingFetchAddProduct && <MainLoading padding={10} />
+          }
         />
       ) : (
         <MainLoading padding={30} />
@@ -71,6 +85,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     paddingBottom: windowHeight * 0.09,
+  },
+  listCardItemContainer: {
+    flex: 1,
   },
   fab: {
     position: "absolute",

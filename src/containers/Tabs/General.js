@@ -33,6 +33,7 @@ const General = () => {
     // dispatch({ type: typeProducts.fetchProductFirebase });
     dispatch({ type: typeProducts.fetchProduct });
     dispatch({ type: typeCategories.fetchCategory });
+    // dispatch({ type: typeProducts.fetchProductByCategory });
     // dispatch({ type: typeFavorites.fetchFavoriteFirebase });
   }, []);
 

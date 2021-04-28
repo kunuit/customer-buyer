@@ -12,8 +12,18 @@ const url = "/product";
 //   return axiosService.get(`${API_ENDPOINT}${url}${queryParams}`);
 // };
 
-export const getProductsAPI = (token) => {
-  return axiosService.get(`${API_ENDPOINT}${url}?perPage=20`);
+export const getProductsAPI = (page) => {
+  return axiosService.get(`${API_ENDPOINT}${url}?page=${page}`);
+};
+
+export const getProductByIdAPI = (id, token) => {
+  return axiosService.get(`${API_ENDPOINT}${url}/${id}`, token);
+};
+
+export const getProductByCategoryAPI = (id, page) => {
+  return axiosService.get(
+    `${API_ENDPOINT}${url}?categoryId=${id}&perPage=5&page=${page}`
+  );
 };
 // /product/search?name=Test
 export const queryProductAPI = (searchQuery) => {

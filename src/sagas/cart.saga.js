@@ -85,13 +85,13 @@ function* addToCartSaga(action) {
   // select data in cart
   const { data } = yield select((state) => state.carts);
   const indexProductInCart = data.findIndex(
-    (item) => item.productId == action.payload.data.id
+    (item) => item.productId == action.payload.data._id
   );
   if (indexProductInCart != -1) {
     yield put({
       type: typeCarts.updateCart,
       payload: {
-        cartItemId: data[indexProductInCart].id,
+        cartItemId: data[indexProductInCart]._id,
         quantity: data[indexProductInCart].quantity + action.payload.quantity,
       },
     });
@@ -106,7 +106,7 @@ function* addToCartSaga(action) {
     // call api
     const { status, error, payload, message } = yield call(
       addToCartAPI,
-      { productId: action.payload.data.id, quantity: action.payload.quantity },
+      { productId: action.payload.data._id, quantity: action.payload.quantity },
       token
     );
 

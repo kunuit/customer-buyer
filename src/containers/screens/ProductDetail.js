@@ -16,26 +16,40 @@ import { typeProducts } from "../../sagas/product.saga";
 import { typeCarts } from "../../sagas/cart.saga";
 import { typeFavorites } from "../../sagas/favorite.saga";
 import ButtonMessenger from "../../components/ButtonMessenger";
+import MainLoading from "../../components/Loader/MainLoading";
+import { Text } from "react-native";
+import { windowWidth } from "../../common/Dimensions";
 
 const ProductDetail = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const [productCount, setProductCount] = useState(1);
   const [item, setItem] = useState(route.params);
-
   const { isAdminLogin } = useSelector((state) => state.auth);
   const { isLoadingAddToCart } = useSelector((state) => state.carts);
-  const { isCreatedOrUpdatedOrDeletedProduct } = useSelector(
-    (state) => state.products
-  );
-  const listFavorite = useSelector((state) => state.favorites);
+  const {
+    isLoadingProductDetail,
+    isCreatedOrUpdatedOrDeletedProduct,
+    currentProduct,
+  } = useSelector((state) => state.products);
+  // const listFavorite = useSelector((state) => state.favorites);
 
-  const [heart, setHeart] = useState(
-    listFavorite.data.some((itemFavorite) => itemFavorite.id == item.id)
-  );
+  useEffect(() => {
+    dispatch({
+      type: typeProducts.fetchOneProduct,
+      payload: {
+        productId: item._id,
+      },
+    });
+  }, []);
 
-  // useEffect(() => {
-  //   dispatch({type: typeProducts.getOneProduct})
-  // },[])
+  const [heart, setHeart] = useState(item.favorited);
+
+  useEffect(() => {
+    if (currentProduct) {
+      setItem(currentProduct);
+      setHeart(currentProduct.favorited);
+    }
+  }, [currentProduct]);
 
   useEffect(() => {
     if (isCreatedOrUpdatedOrDeletedProduct) {
@@ -52,7 +66,7 @@ const ProductDetail = ({ navigation, route }) => {
     dispatch({
       type: typeProducts.removeProduct,
       payload: {
-        data: item.id,
+        data: item._id,
       },
     });
   };
@@ -87,48 +101,56 @@ const ProductDetail = ({ navigation, route }) => {
         backgroundColor={theme.backgrounds.itemImageDetail}
         barStyle="dark-content"
       />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <ProductDetailImageContainer images={item.imageUrls} />
-        <View style={styles.productDetailInfoContainer}>
-          <ProductUnitContainer
-            title={item.name}
-            isEdit={isAdminLogin ? true : false}
-            upDateProduct={redirect}
-            heart={heart}
-            onSetFavorite={() => handleSetFavorite()}
+      {isLoadingProductDetail && item._id != route.params._id ? (
+        <MainLoading padding={30} />
+      ) : (
+        <View>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <ProductDetailImageContainer images={item.imageUrls} />
+            <View style={styles.productDetailInfoContainer}>
+              <ProductUnitContainer
+                title={item.name}
+                isEdit={isAdminLogin ? true : false}
+                upDateProduct={redirect}
+                heart={heart}
+                onSetFavorite={() => handleSetFavorite()}
+              />
+              <QuantityAjustContainer
+                productCount={productCount}
+                onSetProductCount={(productCounted) =>
+                  setProductCount(productCounted)
+                }
+                price={item.price}
+                isEdit={isAdminLogin ? true : false}
+              />
+              <DescriptionContainer description={item.description} />
+              <NutritionContainer />
+              <ReviewContainer />
+            </View>
+          </ScrollView>
+          <ButtonBottomAdmin
+            navigation={navigation}
+            onDeletedProduct={handleDeletedProduct}
+            isAdmin={isAdminLogin}
           />
-          <QuantityAjustContainer
-            productCount={productCount}
-            onSetProductCount={(productCounted) =>
-              setProductCount(productCounted)
-            }
-            price={item.price}
-            isEdit={isAdminLogin ? true : false}
-          />
-          <DescriptionContainer description={item.description} />
-          <NutritionContainer />
-          <ReviewContainer />
+          {/* {isAdminLogin ? <></> : <ButtonMessenger navigation={navigation} />} */}
+          <View style={{ alignItems: "center" }}>
+            {!isAdminLogin && (
+              <ButtonContainer
+                disabled={isLoadingAddToCart}
+                style={{
+                  backgroundColor: isLoadingAddToCart
+                    ? theme.colors.notGray
+                    : theme.colors.primary,
+                  width: windowWidth * 0.9,
+                }}
+                onAddToCart={handleAddToCart}
+              />
+            )}
+          </View>
+          <ButtonBack navigation={navigation} isBackground={true} />
         </View>
-      </ScrollView>
-      <ButtonBottomAdmin
-        navigation={navigation}
-        onDeletedProduct={handleDeletedProduct}
-        isAdmin={isAdminLogin}
-      />
-      {/* {isAdminLogin ? <></> : <ButtonMessenger navigation={navigation} />} */}
-      {!isAdminLogin && (
-        <ButtonContainer
-          disabled={isLoadingAddToCart}
-          style={{
-            backgroundColor: isLoadingAddToCart
-              ? theme.colors.notGray
-              : theme.colors.primary,
-            width: "90%",
-          }}
-          onAddToCart={handleAddToCart}
-        />
       )}
-      <ButtonBack navigation={navigation} isBackground={true} />
     </View>
   );
 };

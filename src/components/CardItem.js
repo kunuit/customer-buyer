@@ -41,9 +41,9 @@ const CardItem = ({
           <Image
             style={styles.cardImage}
             source={{
-              uri: item.imageUrls
-                ? item.imageUrls[0]
-                : "https://i.pinimg.com/originals/eb/d4/de/ebd4deb64c74e2f1246626d5a290274d.png",
+              uri: !item.imageUrls
+                ? "https://i.pinimg.com/originals/eb/d4/de/ebd4deb64c74e2f1246626d5a290274d.png"
+                : item.imageUrls[0],
             }}
           />
         </View>

@@ -2,9 +2,13 @@ import { typeProducts } from "../sagas/product.saga";
 
 const initialState = {
   data: [],
+  currentProduct: [],
   productByCategory: [],
   queryProduct: [],
+  currentPage: 1,
   isLoading: false,
+  isLoadingProductDetail: false,
+  isLoadingFetchAddProduct: false,
   isLoadingSearchProduct: false,
   isLoadingFilterByCategory: false,
   isCreatedOrUpdatedOrDeletedProduct: false,
@@ -27,11 +31,40 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         isLoadingSearchProduct: true,
       };
+    case typeProducts.showLoadingFetchAddProduct:
+      return {
+        ...state,
+        isLoadingFetchAddProduct: true,
+      };
+    case typeProducts.showLoadingProductDetail:
+      return {
+        ...state,
+        isLoadingProductDetail: true,
+      };
+    case typeProducts.hiddenLoadingFetchAddProduct:
+      return {
+        ...state,
+        isLoadingFetchAddProduct: false,
+      };
     case typeProducts.fetchProductSuccess:
       return {
         ...state,
         data: payload.data,
         isLoading: false,
+        currentPage: 1,
+      };
+    case typeProducts.fetchAddProductSuccess:
+      return {
+        ...state,
+        data: [...state.data, ...payload.newData],
+        currentPage: state.currentPage + 1,
+        isLoadingFetchAddProduct: false,
+      };
+    case typeProducts.fetchOneProductSuccess:
+      return {
+        ...state,
+        currentProduct: payload.currentProduct,
+        isLoadingProductDetail: false,
       };
     case typeProducts.createProductSuccess:
       return {
@@ -62,11 +95,10 @@ const reducer = (state = initialState, { type, payload }) => {
         queryProduct: payload.queryProduct,
         isLoadingSearchProduct: false,
       };
-    case typeProducts.filterProductByCategorySuccess:
+    case typeProducts.fetchProductByCategorySuccess:
       return {
         ...state,
         productByCategory: payload.productByCategory,
-        isLoadingFilterByCategory: false,
       };
     default:
       return state;

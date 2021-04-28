@@ -1,4 +1,5 @@
 import {
+  all,
   call,
   debounce,
   delay,
@@ -21,6 +22,8 @@ import {
   removeProductAPI,
   updateProductAPI,
   queryProductAPI,
+  getProductByIdAPI,
+  getProductByCategoryAPI,
 } from "../apis/product.api";
 import { showToast } from "../common/Layout/toast.helper";
 import { statusCode } from "../constants/API.constants";
@@ -47,15 +50,14 @@ import Product from "../containers/screens/Product";
 //   }
 // }
 export const typeProducts = {
-  // get product
-  fetchProductFirebase: "FETCH_PRODUCT_FIREBASE",
-  fetchProductFirebaseSuccess: "FETCH_PRODUCT_FIREBASE_SUCCESS",
-  fetchProductFirebaseFail: "FETCH_PRODUCT_FIREBASE_FAIL",
   // loading
   showLoadingProduct: "SHOW_LOADING_PRODUCT",
+  showLoadingProductDetail: "SHOW_LOADING_PRODUCT_DETAIL",
   showLoadingCreateProduct: "SHOW_LOADING_CREATE_PRODUCT",
   showLoadingFilterByCategory: "SHOW_LOADING_FILTER_BY_CATEGORY",
   showLoadingSearchProduct: "SHOW_LOADING_SEARCH_PRODUCT",
+  showLoadingFetchAddProduct: "SHOW_LOADING_FETCH_ADD_PRODUCT",
+  hiddenLoadingFetchAddProduct: "HIDDEN_LOADING_FETCH_ADD_PRODUCT",
   // create product
   createProductFirebase: "CREATE_PRODUCT_FIREBASE",
   createProductFirebaseSuccess: "CREATE_PRODUCT_FIREBASE_SUCCESS",
@@ -77,6 +79,15 @@ export const typeProducts = {
   fetchProduct: "FETCH_PRODUCT",
   fetchProductSuccess: "FETCH_PRODUCT_SUCCESS",
   fetchProductFail: "FETCH_PRODUCT_FAIL",
+  // get one product by Id
+  fetchOneProduct: "FETCH_ONE_PRODUCT",
+  fetchOneProductSuccess: "FETCH_ONE_PRODUCT_SUCCESS",
+  // fetchAddProduct
+  fetchAddProduct: "FETCH_ADD_PRODUCT",
+  fetchAddProductSuccess: "FETCH_ADD_PRODUCT_SUCCESS",
+  // fetchProduct by Category
+  fetchProductByCategory: "FETCH_PRODUCT_BY_CATEGORY",
+  fetchProductByCategorySuccess: "FETCH_PRODUCT_BY_CATEGORY_SUCCESS",
   // create product
   createProduct: "CREATE_PRODUCT",
   createProductSuccess: "CREATE_PRODUCT_SUCCESS",
@@ -129,7 +140,7 @@ function* fetchProductSaga(action) {
   // loading
   yield put({ type: typeProducts.showLoadingProduct });
   // call API product
-  const { payload, code, error, message } = yield call(getProductsAPI);
+  const { payload, code, error, message } = yield call(getProductsAPI, 1);
   // nếu đúng thì gọi action success sai thì show Toast
   if (code == statusCode.success) {
     console.log(payload, "check payload data");
@@ -141,6 +152,81 @@ function* fetchProductSaga(action) {
     });
   } else {
     showToast({ title: "Product", type: "error", message: message });
+  }
+}
+
+function* fetchAddProductSaga(action) {
+  console.log(`action`, action);
+  // loading
+  yield put({ type: typeProducts.showLoadingFetchAddProduct });
+  // get current page
+  const { currentPage } = yield select((state) => state.products);
+  // call API product
+  const { payload, code, error, message } = yield call(
+    getProductsAPI,
+    currentPage + 1
+  );
+  if (error) {
+    showToast({ title: "Product", type: "error", message: message });
+  } else {
+    console.log(payload, "check payload data new");
+    if (payload.length == 0) {
+      yield put({ type: typeProducts.hiddenLoadingFetchAddProduct });
+    } else {
+      yield put({
+        type: typeProducts.fetchAddProductSuccess,
+        payload: {
+          newData: payload,
+        },
+      });
+    }
+  }
+}
+
+function* fetchProductByCategorySaga(action) {
+  const { data } = yield select((state) => state.categories);
+
+  const productByCategoryRes = yield all(
+    data.map((item) => {
+      console.log(`item.id`, item.id);
+      return call(getProductByCategoryAPI, item.id, 1);
+    })
+  );
+
+  console.log(`productByCategoryRes`, productByCategoryRes);
+  yield put({
+    type: typeProducts.fetchProductByCategorySuccess,
+    payload: {
+      productByCategory: productByCategoryRes.map((res) => {
+        return res.payload;
+      }),
+    },
+  });
+}
+
+function* fetchOneProductSaga(action) {
+  // show Loading
+  yield put({ type: typeProducts.showLoadingProductDetail });
+  // get token
+  const { token } = yield select((state) => state.auth);
+  // call API
+  const { payload, code, error, message } = yield call(
+    getProductByIdAPI,
+    action.payload.productId,
+    token
+  );
+
+  if (error) {
+    showToast({ title: "Product", type: "error", message: message });
+  } else {
+    const { data } = yield select((state) => state.products);
+
+    yield put({
+      type: typeProducts.fetchOneProductSuccess,
+      payload: {
+        currentProduct: payload,
+      },
+    });
   }
 }
 
@@ -270,6 +356,9 @@ function* filterProductByCategorySaga(action) {
 export const productSagas = [
   takeLatest(typeProducts.queryProduct, queryProductSaga),
   takeLatest(typeProducts.fetchProduct, fetchProductSaga),
+  takeEvery(typeProducts.fetchOneProduct, fetchOneProductSaga),
+  takeLatest(typeProducts.fetchAddProduct, fetchAddProductSaga),
+  takeLatest(typeProducts.fetchProductByCategory, fetchProductByCategorySaga),
   takeLatest(typeProducts.createProduct, createProductSaga),
   takeLatest(typeProducts.removeProduct, removeProductSaga),
   takeLatest(typeProducts.updateProduct, updateProductSaga),
