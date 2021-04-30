@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
-import { Entypo, FontAwesome5, Fontisto, Ionicons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  Entypo,
+  FontAwesome5,
+  Fontisto,
+  Ionicons,
+} from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Zocial } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { theme } from "../../../common/theme";
 import { Dimensions } from "react-native";
-import TabProfile from "../TopTab/TabProfile";
-import TabProductAdmin from "../TopTab/TabProduct.admin";
-import TabSupplier from "../TopTab/TabSupplier";
 import TabStock from "../TopTab/TabStock";
-import TabCartAdmin from "../TopTab/TabCart.admin";
 import { HomeScreen } from "../../screens/auth.screens";
 import ProductAdmin from "../../screens/admin.screens/Product/Product.admin";
 import SupplierAdmin from "../../screens/admin.screens/Supplier/Supplier.admin";
@@ -19,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Profile from "../../screens/Profile";
 import { typeSuppliers } from "../../../sagas/supplier.saga";
 import { typeMeasures } from "../../../sagas/measure.saga";
+import { statusFetch } from "../../../sagas/utilSagas.saga";
 
 const Tab = createBottomTabNavigator();
 
@@ -27,8 +29,12 @@ const AdminUX = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // createCategory_FiB_API();
-    dispatch({ type: typeSuppliers.fetchSupplierFirebase });
+    dispatch({
+      type: typeSuppliers.fetchSupplier,
+      payload: {
+        status: statusFetch.load,
+      },
+    });
     dispatch({ type: typeMeasures.fetchMeasure });
   }, []);
   return (
@@ -93,13 +99,13 @@ const AdminUX = () => {
         }}
       />
       <Tab.Screen
-        name="Cart"
+        name="Report"
         component={CartAdmin}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
-            <Zocial
-              name="cart"
+            <AntDesign
+              name="linechart"
               size={25}
               color={focused ? theme.colors.primary : theme.colors.notBlack}
             />

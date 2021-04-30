@@ -13,11 +13,15 @@ import CardItem from "./CardItem";
 import MainLoading from "../components/Loader/MainLoading";
 import { CategoryNameList } from "./category.components/CategoryNameList";
 import { ProductListWithCondition } from "./ProductListWithCondition";
-import { statusFilter, typeProducts } from "../sagas/product.saga";
+import { typeProducts } from "../sagas/product.saga";
 import { theme } from "../common/theme";
+import { statusFilter } from "../sagas/utilSagas.saga";
 
 export const ProductListViaCategory = ({ title, navigation, ...props }) => {
   const { data, isLoading } = useSelector((state) => state.categories);
+  const { productByCategory, isLoadingFilterByCategory } = useSelector(
+    (state) => state.products
+  );
   const [activeId, setActiveId] = useState(statusFilter.default);
 
   return (

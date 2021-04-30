@@ -12,17 +12,17 @@ const CartAdmin = ({ navigation }) => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   return (
     <SafeAreaView style={styles.exploreContainer}>
-      <TitleScreen isBorder={false} title="My Cart" />
+      <TitleScreen isBorder={false} title="My Report" />
 
-      <SearchView holSearch="my cart" />
+      <SearchView holSearch="my report" />
 
       <FlatList
         style={styles.listCardItemContainer}
         showsVerticalScrollIndicator={false}
         data={fakeData}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <CardMyCart key={index} item={item} navigation={navigation} />
+        renderItem={({ item }) => (
+          <CardMyCart item={item} navigation={navigation} />
         )}
       />
     </SafeAreaView>

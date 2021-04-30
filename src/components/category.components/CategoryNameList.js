@@ -4,7 +4,6 @@ import { theme } from "../../common/theme";
 
 export const CategoryNameList = ({
   item,
-  index,
   onChangeCategory,
   activeId,
   ...props
@@ -12,11 +11,11 @@ export const CategoryNameList = ({
   return (
     <TouchableHighlight
       underlayColor={theme.backgrounds.white}
-      onPress={() => onChangeCategory(item.id)}
+      onPress={() => onChangeCategory(item._id)}
     >
-      <View style={[styles.root, activeId == item.id && styles.active]}>
+      <View style={[styles.root, activeId == item._id && styles.active]}>
         <Text
-          style={[styles.text, activeId == item.id ? styles.textActive : {}]}
+          style={[styles.text, activeId == item._id ? styles.textActive : {}]}
         >
           {item.name}
         </Text>

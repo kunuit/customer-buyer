@@ -17,6 +17,7 @@ import { typeProducts } from "../../sagas/product.saga";
 import { ProductListViaCategory } from "../../components/ProductListViaCategory";
 import HomeBanner from "../../components/HomeBanner";
 import { CategoryListHome } from "../../components/category.components/CategoryListHome";
+import { statusFetch } from "../../sagas/utilSagas.saga";
 
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -27,7 +28,12 @@ const Home = ({ navigation }) => {
   const onChangeSearch = (query) => setSearchQuery(query);
 
   const onRefresh = () => {
-    dispatch({ type: typeProducts.fetchProduct });
+    dispatch({
+      type: typeProducts.fetchProduct,
+      payload: {
+        status: statusFetch.load,
+      },
+    });
     // if (isLoading) {
     //   setRefreshing(false);
     // }
@@ -51,14 +57,14 @@ const Home = ({ navigation }) => {
           <ProductList title="Exclusive Offer" navigation={navigation} />
           <Grocery title="Categories" navigation={navigation} />
           <ProductList title="Best Selling" navigation={navigation} />
-          {/* <ProductListViaCategory
+          <ProductListViaCategory
             title="Product with category"
             navigation={navigation}
-            />
-            <ProductListViaCategory
+          />
+          <ProductListViaCategory
             title="Product with category 2"
             navigation={navigation}
-          /> */}
+          />
           <CategoryListHome navigation={navigation} />
         </View>
       </ScrollView>

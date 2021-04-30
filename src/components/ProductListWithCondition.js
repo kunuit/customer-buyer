@@ -2,7 +2,8 @@ import React from "react";
 import { FlatList, StyleSheet, View, Text } from "react-native";
 import { useSelector } from "react-redux";
 import { windowWidth } from "../common/Dimensions";
-import { statusFilter } from "../sagas/product.saga";
+import { statusFilter } from "../sagas/utilSagas.saga";
+
 import CardItem from "./CardItem";
 import MainLoading from "./Loader/MainLoading";
 
@@ -20,8 +21,8 @@ export const ProductListWithCondition = ({ activeId, navigation }) => {
           horizontal={true}
           data={
             activeId == statusFilter.default
-              ? data
-              : productByCategory[activeId]
+              ? data.slice(0, 4)
+              : productByCategory[activeId].products.slice(0, 4)
           }
           ListEmptyComponent={
             <View

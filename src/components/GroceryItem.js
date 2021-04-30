@@ -9,11 +9,12 @@ import {
 import { theme } from "../common/theme";
 
 const GroceryItem = ({ item, navigation }) => {
+  console.log(`item in grocery`, item);
   return (
     <TouchableHighlight
       underlayColor={theme.backgrounds.white}
       onPress={() => {
-        navigation.navigate("Category Detail", item);
+        navigation.navigate("Category Detail", item._id);
       }}
     >
       <View

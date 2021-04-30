@@ -13,6 +13,7 @@ import MainLoading from "../../../../components/Loader/MainLoading";
 import SearchView from "../../../../components/SearchView";
 import TitleScreen from "../../../../components/TitleScreen";
 import { typeSuppliers } from "../../../../sagas/supplier.saga";
+import { statusFetch } from "../../../../sagas/utilSagas.saga";
 
 const SupplierAdmin = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -20,7 +21,12 @@ const SupplierAdmin = ({ navigation }) => {
   const { data, isLoading } = useSelector((state) => state.suppliers);
 
   const onRefresh = () => {
-    dispatch({ type: typeSuppliers.fetchSupplierFirebase });
+    dispatch({
+      type: typeSuppliers.fetchSupplier,
+      payload: {
+        status: statusFetch.load,
+      },
+    });
     // if (isLoading) {
     //   setRefreshing(false);
     // }

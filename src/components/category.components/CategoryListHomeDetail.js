@@ -5,88 +5,85 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  TouchableHighlight,
 } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { windowWidth } from "../../common/Dimensions";
 import CardItem from "../CardItem";
 import MainLoading from "../Loader/MainLoading";
-import { ProductListWithCondition } from "../ProductListWithCondition";
 
-export const CategoryListHomeDetail = ({
-  item,
-  index,
-  navigation,
-  ...props
-}) => {
+export const CategoryListHomeDetail = ({ item, navigation, ...props }) => {
   const { data, isLoading } = useSelector((state) => state.categories);
   const { isLoadingFilterByCategory, productByCategory } = useSelector(
     (state) => state.products
   );
-  console.log(`productByCategory[index]`, productByCategory[index]);
+
+  console.log(
+    `Object.values(productByCategory[item])`,
+    productByCategory[item]
+  );
 
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>{item.name ? item.name : "No Title"}</Text>
+        <Text style={styles.title}>
+          {productByCategory[item].name
+            ? productByCategory[item].name
+            : "No Title"}
+        </Text>
         <TouchableOpacity
           onPress={() => navigation.navigate("Category Detail", item)}
         >
           <Text style={styles.seeAllText}>See all</Text>
         </TouchableOpacity>
       </View>
-      {!isLoading ? (
-        <View style={styles.root}>
-          {!isLoadingFilterByCategory ? (
-            <FlatList
-              showsHorizontalScrollIndicator={false}
-              horizontal={true}
-              data={productByCategory[index]}
-              ListEmptyComponent={
-                <View
-                  style={{
-                    width: windowWidth,
-                    height: 200,
-                    margin: 10,
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text>khoong co san pham</Text>
-                </View>
-              }
-              renderItem={({ item, index }) => (
-                <View style={styles.cardItemContainer}>
-                  <CardItem
-                    item={item}
-                    heightCard={200}
-                    fontSizeTitle={16}
-                    fontSizeDes={14}
-                    numberOfLines={1}
-                    navigation={navigation}
-                  />
-                </View>
-              )}
-              keyExtractor={(item, index) => index.toString()}
-            />
-          ) : (
-            <View
-              style={{
-                width: windowWidth,
-                height: 200,
-                margin: 10,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <MainLoading height={190} padding={30} />
-            </View>
-          )}
-        </View>
-      ) : (
-        <MainLoading height={190} padding={30} />
-      )}
+      <View style={styles.root}>
+        {!isLoadingFilterByCategory ? (
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}
+            initialNumToRender={4}
+            data={productByCategory[item].products}
+            ListEmptyComponent={
+              <View
+                style={{
+                  width: windowWidth,
+                  height: 200,
+                  margin: 10,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Text>khoong co san pham</Text>
+              </View>
+            }
+            renderItem={({ item }) => (
+              <View style={styles.cardItemContainer}>
+                <CardItem
+                  item={item}
+                  heightCard={200}
+                  fontSizeTitle={16}
+                  fontSizeDes={14}
+                  numberOfLines={1}
+                  navigation={navigation}
+                />
+              </View>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        ) : (
+          <View
+            style={{
+              width: windowWidth,
+              height: 200,
+              margin: 10,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <MainLoading height={190} padding={30} />
+          </View>
+        )}
+      </View>
     </View>
   );
 };

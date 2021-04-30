@@ -15,19 +15,18 @@ import { CategoryListHomeDetail } from "./CategoryListHomeDetail";
 
 export const CategoryListHome = ({ navigation, ...props }) => {
   const { data, isLoading } = useSelector((state) => state.categories);
+  const { productByCategory } = useSelector((state) => state.products);
+  console.log(`productByCategory`, Object.values(productByCategory));
 
   return (
     <View style={styles.container}>
       {!isLoading ? (
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={data}
-          renderItem={({ item, index }) => (
-            <CategoryListHomeDetail
-              item={item}
-              index={index}
-              navigation={navigation}
-            />
+          data={Object.keys(productByCategory)}
+          renderItem={({ item }) => (
+            // console.log(`item`, item), (<Text>alo alo</Text>)
+            <CategoryListHomeDetail item={item} navigation={navigation} />
           )}
           keyExtractor={(item, index) => index.toString()}
         />

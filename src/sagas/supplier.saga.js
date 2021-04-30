@@ -13,51 +13,58 @@ import {
   removeSupplier_FiB_API,
   updateSupplier_FiB_API,
 } from "../apis/firebase/supplier.firebase";
+import { getSuppliersAPI } from "../apis/supplier.api";
 
 import { showToast } from "../common/Layout/toast.helper";
+import { statusFetch } from "./utilSagas.saga";
 
 export const typeSuppliers = {
   // get Supplier
-  fetchSupplierFirebase: "FETCH_Supplier_FIREBASE",
-  fetchSupplierFirebaseSuccess: "FETCH_Supplier_FIREBASE_SUCCESS",
-  fetchSupplierFirebaseFail: "FETCH_Supplier_FIREBASE_FAIL",
+  fetchSupplier: "FETCH_SUPPLIER",
+  fetchSupplierSuccess: "FETCH_SUPPLIER_SUCCESS",
   // loading
-  showLoadingSupplier: "SHOW_LOADING_Supplier",
-  showLoadingCreateSupplier: "SHOW_LOADING_CREATE_Supplier",
-  hiddenLoadingSupplier: "HIDDEN_LOADING_Supplier",
-  // create Supplier
-  createSupplierFirebase: "CREATE_Supplier_FIREBASE",
-  createSupplierFirebaseSuccess: "CREATE_Supplier_FIREBASE_SUCCESS",
-  createSupplierFirebaseFail: "CREATE_Supplier_FIREBASE_FAIL",
+  showLoadingSupplier: "SHOW_LOADING_SUPPLIER",
+  showLoadingCreateSupplier: "SHOW_LOADING_CREATE_SUPPLIER",
+  showLoadingFetchAddSupplier: "SHOW_LOADING_FETCH_ADD_SUPPLIER",
+  hiddenLoadingSupplier: "HIDDEN_LOADING_SUPPLIER",
   // reset form create Supplier
-  resetCreateSupplier: "RESET_CREATE_Supplier",
-  // update Supplier
-  updateSupplierFirebase: "UPDATE_Supplier_FIREBASE",
-  updateSupplierFirebaseSuccess: "UPDATE_Supplier_FIREBASE_SUCCESS",
-  updateSupplierFirebaseFail: "UPDATE_Supplier_FIREBASE_FAIL",
-  // remove Supplier
-  removeSupplierFirebase: "REMOVE_Supplier_FIREBASE",
-  removeSupplierFirebaseSuccess: "REMOVE_Supplier_FIREBASE_SUCCESS",
-  removeSupplierFirebaseFail: "REMOVE_Supplier_FIREBASE_FAIL",
-  // query Supplier
-  querySupplierFirebase: "QUERY_Supplier_FIREBASE",
-  querySupplierFirebaseSuccess: "QUERY_Supplier_FIREBASE_SUCCESS",
+  resetCreateSupplier: "RESET_CREATE_SUPPLIER",
 };
 
-function* fetchSupplierSaga() {
-  yield put({ type: typeSuppliers.showLoadingSupplier });
+function* fetchSupplierSaga(action) {
+  // show loading
+  yield put({
+    type:
+      action.payload.status == statusFetch.load
+        ? typeSuppliers.showLoadingSupplier
+        : typeSuppliers.showLoadingFetchAddSupplier,
+  });
+  // select
+  const { supplierPagination, data } = yield select((state) => state.suppliers);
+  const { token } = yield select((state) => state.auth);
+  // call API
+  const { payload, code, error, message, pagination } = yield call(
+    getSuppliersAPI,
+    action.payload.status == statusFetch.load
+      ? 1
+      : supplierPagination.currentPage + 1,
+    token
+  );
 
-  const { code, data } = yield call(getAllSupplier_FiB_API);
-  const transitData = Object.values(data);
-  if (code == 200) {
+  if (error) {
+    showToast({ title: "Supplier", type: "error", message });
+  } else {
+    console.log(payload, pagination, "check payload supplier");
     yield put({
-      type: typeSuppliers.fetchSupplierFirebaseSuccess,
+      type: typeSuppliers.fetchSupplierSuccess,
       payload: {
-        data: transitData,
+        data:
+          action.payload.status == statusFetch.loadMore
+            ? [...data, ...payload]
+            : payload,
+        pagination,
       },
     });
-  } else {
-    showToast({ title: Supplier, type: "error", message: data });
   }
 }
 
@@ -114,9 +121,9 @@ function* querySupplierSaga({ type, payload }) {
 
 export const SupplierSagas = [
   // takeEvery("FETCH_SupplierS", fetchAllSuppliers),
-  takeLatest(typeSuppliers.fetchSupplierFirebase, fetchSupplierSaga),
-  takeLatest(typeSuppliers.createSupplierFirebase, createSupplierSaga),
-  takeLatest(typeSuppliers.updateSupplierFirebase, updateProructSaga),
-  takeLatest(typeSuppliers.removeSupplierFirebase, removeSupplierSaga),
-  takeLatest(typeSuppliers.querySupplierFirebase, querySupplierSaga),
+  takeLatest(typeSuppliers.fetchSupplier, fetchSupplierSaga),
+  // takeLatest(typeSuppliers.createSupplierFirebase, createSupplierSaga),
+  // takeLatest(typeSuppliers.updateSupplierFirebase, updateProructSaga),
+  // takeLatest(typeSuppliers.removeSupplierFirebase, removeSupplierSaga),
+  // takeLatest(typeSuppliers.querySupplierFirebase, querySupplierSaga),
 ];

@@ -5,12 +5,13 @@ const initialState = {
   currentProduct: [],
   productByCategory: [],
   queryProduct: [],
-  currentPage: 1,
+  currentPageAddProductByCategory: 1,
   isLoading: false,
   isLoadingProductDetail: false,
   isLoadingFetchAddProduct: false,
   isLoadingSearchProduct: false,
   isLoadingFilterByCategory: false,
+  isLoadingAddProductByCategory: false,
   isCreatedOrUpdatedOrDeletedProduct: false,
 };
 
@@ -41,6 +42,11 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         isLoadingProductDetail: true,
       };
+    case typeProducts.showLoadingFetchAddProductByCategory:
+      return {
+        ...state,
+        isLoadingAddProductByCategory: true,
+      };
     case typeProducts.hiddenLoadingFetchAddProduct:
       return {
         ...state,
@@ -50,14 +56,8 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         data: payload.data,
+        productPagination: payload.pagination,
         isLoading: false,
-        currentPage: 1,
-      };
-    case typeProducts.fetchAddProductSuccess:
-      return {
-        ...state,
-        data: [...state.data, ...payload.newData],
-        currentPage: state.currentPage + 1,
         isLoadingFetchAddProduct: false,
       };
     case typeProducts.fetchOneProductSuccess:
@@ -99,6 +99,16 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         productByCategory: payload.productByCategory,
+        currentPageAddProductByCategory: 1,
+        isLoadingFilterByCategory: false,
+      };
+    case typeProducts.fetchAddProductByCategorySuccess:
+      return {
+        ...state,
+        productByCategory: payload.productByCategory,
+        currentPageAddProductByCategory:
+          state.currentPageAddProductByCategory + 1,
+        isLoadingAddProductByCategory: false,
       };
     default:
       return state;

@@ -11,7 +11,7 @@ const CategoryItem = ({ item, navigation }) => {
         { backgroundColor: item.color, borderColor: item.color },
       ]}
       onPress={() => {
-        navigation.navigate("Category Detail", item);
+        navigation.navigate("Category Detail", item._id);
       }}
     >
       <View style={styles.cardImageContainer}>

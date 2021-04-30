@@ -22,7 +22,7 @@ export const getProductByIdAPI = (id, token) => {
 
 export const getProductByCategoryAPI = (id, page) => {
   return axiosService.get(
-    `${API_ENDPOINT}${url}?categoryId=${id}&perPage=5&page=${page}`
+    `${API_ENDPOINT}${url}?categoryId=${id}&perPage=10&page=${page}`
   );
 };
 // /product/search?name=Test

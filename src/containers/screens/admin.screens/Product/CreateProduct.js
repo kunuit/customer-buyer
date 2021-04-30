@@ -77,11 +77,11 @@ const CreateProduct = ({ navigation, route }) => {
       setName({ value: item.name, error: "" });
       setDescription({ value: item.description, error: "" });
       setPrice({ value: item.price, error: "" });
-      setHeight({ value: item.height, error: "" });
-      setWeight({ value: item.weight, error: "" });
-      setCategory({ value: item.categoryId, error: "" });
+      setHeight({ value: item.height ? item.height : "", error: "" });
+      setWeight({ value: item.weight ? item.weight : "", error: "" });
+      setCategory({ value: item.category._id, error: "" });
       setSupplier({ value: item.supplierId, error: "" });
-      setMeasure({ value: item.measureId, error: "" });
+      setMeasure({ value: item.measure._id, error: "" });
       setImages(item.imageUrls);
     }
   };

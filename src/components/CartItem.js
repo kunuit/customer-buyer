@@ -16,6 +16,7 @@ import { statusProduct } from "../sagas/product.saga";
 import { theme } from "../common/theme";
 import { statusCart } from "../sagas/cart.saga";
 import { debounce } from "lodash";
+import { showToast } from "../common/Layout/toast.helper";
 
 const CartItem = ({
   item,
@@ -26,6 +27,7 @@ const CartItem = ({
   showLoadingEdit,
   navigation,
 }) => {
+  console.log(`item`, item.product.isDelete);
   const [isSelected, setIsSelected] = useState(
     listCheckOutId.some((e) => e == item.id)
   );
@@ -57,8 +59,12 @@ const CartItem = ({
           <TouchableHighlight
             underlayColor={theme.backgrounds.white}
             onPress={() => {
-              item.status == statusProduct.notExit
-                ? console.log("product not exits")
+              item.product.isDelete == statusProduct.isDeleted
+                ? showToast({
+                    title: "Cart",
+                    type: "info",
+                    message: "The product is deleted",
+                  })
                 : navigation.navigate("Product Detail", item.product);
             }}
           >
@@ -78,7 +84,9 @@ const CartItem = ({
           </View>
           <View style={styles.quantityAjustContainer}>
             <RoundedButton
-              disabled={item.status == 5 ? true : false}
+              disabled={
+                item.product.isDelete == statusProduct.isDeleted ? true : false
+              }
               onPress={() => {
                 if (quantityCart > 1) {
                   setQuantityCart(quantityCart - 1);
@@ -95,7 +103,9 @@ const CartItem = ({
               </Text>
             </View>
             <RoundedButton
-              disabled={item.status == 5 ? true : false}
+              disabled={
+                item.product.isDelete == statusProduct.isDeleted ? true : false
+              }
               onPress={() => {
                 setQuantityCart(quantityCart + 1);
                 delayedQuery(quantityCart + 1);
@@ -146,7 +156,9 @@ const CartItem = ({
           />
           <CheckBox
             value={isSelected}
-            disabled={item.status == statusProduct.notExit ? true : false}
+            disabled={
+              item.product.isDelete == statusProduct.isDeleted ? true : false
+            }
             onValueChange={() => {
               onActiveProductCheckOut();
             }}

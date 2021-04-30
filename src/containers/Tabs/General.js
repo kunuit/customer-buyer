@@ -21,6 +21,7 @@ import CartScreen from "../screens/CartScreen";
 import { typeFavorites } from "../../sagas/favorite.saga";
 import CategoryDetail from "../screens/CategoryDetail";
 import MessengerDetail from "../screens/MessengerDetail";
+import { statusFetch } from "../../sagas/utilSagas.saga";
 
 const Stack = createStackNavigator();
 
@@ -31,7 +32,12 @@ const General = () => {
   useEffect(() => {
     // createCategory_FiB_API();
     // dispatch({ type: typeProducts.fetchProductFirebase });
-    dispatch({ type: typeProducts.fetchProduct });
+    dispatch({
+      type: typeProducts.fetchProduct,
+      payload: {
+        status: statusFetch.load,
+      },
+    });
     dispatch({ type: typeCategories.fetchCategory });
     // dispatch({ type: typeProducts.fetchProductByCategory });
     // dispatch({ type: typeFavorites.fetchFavoriteFirebase });

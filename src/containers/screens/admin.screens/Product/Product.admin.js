@@ -12,27 +12,29 @@ import CardMyProduct from "../../../../components/admin.components/CardMyProduct
 import MainLoading from "../../../../components/Loader/MainLoading";
 import SearchView from "../../../../components/SearchView";
 import TitleScreen from "../../../../components/TitleScreen";
-import { typeProducts } from "../../../../sagas/product.saga";
+import {
+  typeProducts,
+} from "../../../../sagas/product.saga";
 import { useState } from "react";
+import { statusFetch } from "../../../../sagas/utilSagas.saga";
 
 const ProductAdmin = ({ navigation }) => {
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
-  const { data, isLoading, isLoadingFetchAddProduct } = useSelector(
-    (state) => state.products
-  );
+  const {
+    data,
+    isLoading,
+    isLoadingFetchAddProduct,
+    productPagination,
+  } = useSelector((state) => state.products);
 
   const onRefresh = () => {
-    // dispatch({ type: typeProducts.fetchProductFirebase });
-    dispatch({ type: typeProducts.fetchProduct });
-    // if (isLoading) {
-    //   setRefreshing(false);
-    // }
-  };
-
-  const handleLoadMoreProduct = () => {
-    console.log(`here`);
-    dispatch({ type: typeProducts.fetchAddProduct });
+    dispatch({
+      type: typeProducts.fetchProduct,
+      payload: {
+        status: statusFetch.load,
+      },
+    });
   };
 
   return (
@@ -57,7 +59,15 @@ const ProductAdmin = ({ navigation }) => {
           )}
           keyExtractor={(item, index) => index.toString()}
           onEndReached={() => {
-            dispatch({ type: typeProducts.fetchAddProduct });
+            //! check error in here 
+            if (productPagination.totalPage > productPagination.currentPage) {
+              dispatch({
+                type: typeProducts.fetchProduct,
+                payload: {
+                  status: statusFetch.loadMore,
+                },
+              });
+            }
           }}
           onEndReachedThreshold={0.001}
           ListFooterComponent={
