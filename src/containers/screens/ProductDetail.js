@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, View, ScrollView, StatusBar } from "react-native";
 
 import ProductDetailImageContainer from "../../components/productDetail.component/ProductDetailImageContainer";
@@ -19,6 +19,7 @@ import ButtonMessenger from "../../components/ButtonMessenger";
 import MainLoading from "../../components/Loader/MainLoading";
 import { Text } from "react-native";
 import { windowWidth } from "../../common/Dimensions";
+import { debounce } from "lodash";
 
 const ProductDetail = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -81,17 +82,34 @@ const ProductDetail = ({ navigation, route }) => {
     });
   };
 
+  const delayedFavorite = useCallback(
+    debounce((settedHeart) => {
+      // onProductCount(item.id, settedQuantity);
+      console.log(`heart in product detail`, settedHeart);
+      dispatch({
+        type: settedHeart
+          ? typeFavorites.inactiveFavoriteProduct
+          : typeFavorites.activeFavoriteProduct,
+        payload: {
+          productId: item._id,
+        },
+      });
+    }, 300),
+    []
+  );
+
   const handleSetFavorite = () => {
     console.log(heart);
     setHeart(!heart);
-    dispatch({
-      type: heart
-        ? typeFavorites.inactiveFavoriteProduct
-        : typeFavorites.activeFavoriteProduct,
-      payload: {
-        data: item,
-      },
-    });
+    delayedFavorite(heart);
+    // dispatch({
+    //   type: heart
+    //     ? typeFavorites.inactiveFavoriteProduct
+    //     : typeFavorites.activeFavoriteProduct,
+    //   payload: {
+    //     data: item,
+    //   },
+    // });
   };
 
   return (

@@ -15,13 +15,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { useDispatch, useSelector } from "react-redux";
 import { typeProducts } from "../../sagas/product.saga";
 import { typeCategories } from "../../sagas/category.saga";
-import { typeAuths } from "../../sagas/auth.saga";
-import { getLocal } from "../../common/storeLocal/Auth.local";
-import CartScreen from "../screens/CartScreen";
-import { typeFavorites } from "../../sagas/favorite.saga";
 import CategoryDetail from "../screens/CategoryDetail";
 import MessengerDetail from "../screens/MessengerDetail";
 import { statusFetch } from "../../sagas/utilSagas.saga";
+import { typeFavorites } from "../../sagas/favorite.saga";
 
 const Stack = createStackNavigator();
 
@@ -30,8 +27,6 @@ const General = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // createCategory_FiB_API();
-    // dispatch({ type: typeProducts.fetchProductFirebase });
     dispatch({
       type: typeProducts.fetchProduct,
       payload: {
@@ -39,8 +34,7 @@ const General = () => {
       },
     });
     dispatch({ type: typeCategories.fetchCategory });
-    // dispatch({ type: typeProducts.fetchProductByCategory });
-    // dispatch({ type: typeFavorites.fetchFavoriteFirebase });
+    dispatch({ type: typeFavorites.fetchFavorite });
   }, []);
 
   return (

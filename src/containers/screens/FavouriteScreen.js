@@ -28,12 +28,14 @@ const Line = () => {
 
 const CartScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  const { isLoading, data } = useSelector((state) => state.favorites);
+  const { isLoadingFetchFavoriteProduct, favoriteProducts } = useSelector(
+    (state) => state.favorites
+  );
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
-    dispatch({ type: typeFavorites.fetchFavoriteFirebase });
-    // if (isLoading) {
+    dispatch({ type: typeFavorites.fetchFavorite });
+    // if (isLoadingFetchFavoriteProduct) {
     //   setRefreshing(false);
     // }
   };
@@ -43,7 +45,7 @@ const CartScreen = ({ navigation }) => {
       <View style={styles.titleTextContainer}>
         <Text style={styles.titleText}>Favourite</Text>
       </View>
-      {isLoading ? (
+      {isLoadingFetchFavoriteProduct ? (
         <MainLoading padding={30} />
       ) : (
         <FlatList
@@ -52,11 +54,11 @@ const CartScreen = ({ navigation }) => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          data={data}
+          data={favoriteProducts}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <View>
-              <FavouriteItem item={item} navigation={navigation} />
+              <FavouriteItem item={item.product} navigation={navigation} />
               <Line />
             </View>
           )}

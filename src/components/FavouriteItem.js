@@ -11,11 +11,25 @@ import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import Colors from "../constants/colors";
 import NumberFormat from "react-number-format";
 import { theme } from "../common/theme";
+import { statusFetch } from "../sagas/utilSagas.saga";
+import { statusProduct } from "../sagas/product.saga";
+import { showToast } from "../common/Layout/toast.helper";
+
 const FavouriteItem = ({ item, navigation }) => {
   return (
     <TouchableHighlight
       underlayColor={theme.backgrounds.white}
-      onPress={() => navigation.navigate("Product Detail", item)}
+      onPress={() => {
+        if (item.isDelete == statusProduct.isDeleted) {
+          showToast({
+            title: "Favorite",
+            type: "info",
+            message: "The product is not found",
+          });
+        } else {
+          navigation.navigate("Product Detail", item);
+        }
+      }}
     >
       <View style={styles.cartItemContainer}>
         <View style={styles.cartImageContainer}>

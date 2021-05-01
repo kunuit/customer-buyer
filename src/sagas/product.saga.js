@@ -130,7 +130,6 @@ function* fetchProductSaga(action) {
   );
   // nếu đúng thì gọi action success sai thì show Toast
   if (code == statusCode.success) {
-    console.log(payload, pagination, "check payload data");
     yield put({
       type: typeProducts.fetchProductSuccess,
       payload: {
@@ -181,7 +180,6 @@ function* fetchProductByCategorySaga(action) {
   // call all API with each category
   const productByCategoryRes = yield all(
     data.map((item) => {
-      console.log(`item.id`, item.id);
       return call(getProductByCategoryAPI, item.id, 1);
     })
   );

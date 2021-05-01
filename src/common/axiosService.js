@@ -74,12 +74,14 @@ class AxiosService {
     }
   }
 
-  delete(url, token) {
+  delete(url, token, body) {
     if (token) {
+      console.log("run here");
       return this.instance.delete(url, {
         headers: {
           authorization: "Bearer " + token, //the token is a variable which holds the token
         },
+        data: body,
       });
     } else {
       return this.instance.delete(url);

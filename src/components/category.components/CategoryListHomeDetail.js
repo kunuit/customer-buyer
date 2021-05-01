@@ -17,11 +17,6 @@ export const CategoryListHomeDetail = ({ item, navigation, ...props }) => {
     (state) => state.products
   );
 
-  console.log(
-    `Object.values(productByCategory[item])`,
-    productByCategory[item]
-  );
-
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
