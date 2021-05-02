@@ -78,17 +78,6 @@ function* activeFavoriteProductSaga(action) {
   // handle
   if (error) {
     showToast({ title: "Favorite", type: "error", message });
-  } else {
-    console.log(`payload of favorite`, payload);
-    // select favoriteProducts to splice
-    const { favoriteProducts } = yield select((state) => state.favorites);
-    //! wait kong populate product for me
-    yield put({
-      type: typeFavorites.fetchFavoriteSuccess,
-      payload: {
-        newFavoriteProducts: [...favoriteProducts],
-      },
-    });
   }
 }
 
@@ -115,24 +104,6 @@ function* inactiveFavoriteProductSaga(action) {
   // handle
   if (error) {
     showToast({ title: "Favorite", type: "error", message });
-  } else {
-    // select favoriteProducts to splice
-    const { favoriteProducts } = yield select((state) => state.favorites);
-
-    const indexProductInFavorite = favoriteProducts.findIndex(
-      (product) => product.productId == action.payload.productId
-    );
-
-    console.log(`indexProductInFavorite`, indexProductInFavorite);
-
-    favoriteProducts.splice(indexProductInFavorite, 1);
-    //! splice la no tu xoa lun ben reducer
-    yield put({
-      type: typeFavorites.fetchFavoriteSuccess,
-      payload: {
-        newFavoriteProducts: favoriteProducts,
-      },
-    });
   }
 }
 

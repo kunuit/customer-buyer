@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useIsFocused } from "@react-navigation/core";
+import React, { useEffect, useState } from "react";
 import {
   Dimensions,
   View,
@@ -27,11 +28,16 @@ const Line = () => {
 };
 
 const CartScreen = ({ navigation }) => {
+  const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const { isLoadingFetchFavoriteProduct, favoriteProducts } = useSelector(
     (state) => state.favorites
   );
   const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    dispatch({ type: typeFavorites.fetchFavorite });
+  }, [isFocused]);
 
   const onRefresh = () => {
     dispatch({ type: typeFavorites.fetchFavorite });
