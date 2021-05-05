@@ -3,6 +3,6 @@ import { API_ENDPOINT } from "../constants/API.constants";
 
 const url = "/measure";
 
-export const getMeasureAPI = (token) => {
-  return axiosService.get(`${API_ENDPOINT}${url}`, token);
+export const getMeasureAPI = () => {
+  return axiosService.get(`${API_ENDPOINT}${url}`);
 };

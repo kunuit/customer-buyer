@@ -3,15 +3,15 @@ import { API_ENDPOINT } from "../constants/API.constants";
 
 const url = "/behavior/favorite";
 
-export const getFavoriteProducts = (token) => {
-  return axiosService.get(`${API_ENDPOINT}${url}`, token);
+export const getFavoriteProducts = () => {
+  return axiosService.get(`${API_ENDPOINT}${url}`);
 };
 
-export const activeProdctToFavorite = (body, token) => {
-  return axiosService.post(`${API_ENDPOINT}${url}`, body, token);
+export const activeProdctToFavorite = (body) => {
+  return axiosService.post(`${API_ENDPOINT}${url}`, body);
 };
 
-export const inactiveProductToFavorite = (body, token) => {
-  console.log(`{body, token}`, { body, token });
-  return axiosService.delete(`${API_ENDPOINT}${url}`, token, body);
+export const inactiveProductToFavorite = (body) => {
+  console.log(`{body, token}`, { body });
+  return axiosService.delete(`${API_ENDPOINT}${url}`, body);
 };

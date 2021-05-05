@@ -121,6 +121,7 @@ function* fetchProductSaga(action) {
   });
   // get current page
   const { productPagination, data } = yield select((state) => state.products);
+
   // call API product
   const { payload, code, error, message, pagination } = yield call(
     getProductsAPI,

@@ -16,8 +16,8 @@ export const getProductsAPI = (page) => {
   return axiosService.get(`${API_ENDPOINT}${url}?page=${page}`);
 };
 
-export const getProductByIdAPI = (id, token) => {
-  return axiosService.get(`${API_ENDPOINT}${url}/${id}`, token);
+export const getProductByIdAPI = (id) => {
+  return axiosService.get(`${API_ENDPOINT}${url}/${id}`);
 };
 
 export const getProductByCategoryAPI = (id, page) => {
@@ -30,17 +30,17 @@ export const queryProductAPI = (searchQuery) => {
   return axiosService.get(`${API_ENDPOINT}${url}/search?name=${searchQuery}`);
 };
 
-export const createProductAPI = (data, token) => {
-  return axiosService.post(`${API_ENDPOINT}${url}/staff`, data, token);
+export const createProductAPI = (data) => {
+  return axiosService.post(`${API_ENDPOINT}${url}/staff`, data);
 };
 
-export const removeProductAPI = (data, token) => {
-  return axiosService.delete(`${API_ENDPOINT}${url}/staff/${data}`, token);
+export const removeProductAPI = (data) => {
+  return axiosService.delete(`${API_ENDPOINT}${url}/staff/${data}`);
 };
 
-export const updateProductAPI = (id, data, token) => {
+export const updateProductAPI = (id, data) => {
   console.log(`id, data,`, id, data);
-  return axiosService.put(`${API_ENDPOINT}${url}/staff/${id}`, data, token);
+  return axiosService.put(`${API_ENDPOINT}${url}/staff/${id}`, data);
 };
 
-// export const updateFavoriteProductAPI = (id, boolean, token)
+// export const updateFavoriteProductAPI = (id, boolean, )

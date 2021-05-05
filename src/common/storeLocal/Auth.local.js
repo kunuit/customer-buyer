@@ -2,6 +2,7 @@ import { AsyncStorage } from "react-native";
 
 export const setLocal = async (name, data) => {
   try {
+    console.log(`name,data`, name, data);
     await AsyncStorage.setItem(name, JSON.stringify(data));
   } catch (error) {
     console.log(error + "setLocal error");
@@ -10,7 +11,7 @@ export const setLocal = async (name, data) => {
 
 export const getLocal = async (name) => {
   try {
-    return await AsyncStorage.getItem("root");
+    return await AsyncStorage.getItem(name);
   } catch (error) {
     console.log(error + "getLocal error");
   }

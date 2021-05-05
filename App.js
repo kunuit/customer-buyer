@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useMemo, useRef } from "react";
 
-import { StatusBar, StyleSheet, View } from "react-native";
+import { StatusBar, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStore, applyMiddleware, compose } from "redux";
 
@@ -16,6 +16,7 @@ import { theme } from "./src/common/theme";
 import reducers from "./src/reducers";
 import Toast from "react-native-toast-message";
 import General from "./src/containers/Tabs/General";
+import AppDetail from "./AppDetail";
 
 const persistConfig = {
   key: "root",
@@ -48,35 +49,56 @@ let persistor = persistStore(store);
 
 sagaMiddleware.run(rootSaga);
 
-const App = () => {
-  let [fontsLoaded] = useFonts({
-    "gilroy-medium": require("./assets/fonts/Gilroy-Medium.ttf"),
-    "gilroy-light": require("./assets/fonts/Gilroy-Light.otf"),
-    "gilroy-bold": require("./assets/fonts/Gilroy-ExtraBold.otf"),
-    "gilroy-semiBold": require("./assets/fonts/Gilroy-SemiBold.ttf"),
-  });
-  if (!fontsLoaded) return <View />;
+// const App = () => {
+//   let [fontsLoaded] = useFonts({
+//     "gilroy-medium": require("./assets/fonts/Gilroy-Medium.ttf"),
+//     "gilroy-light": require("./assets/fonts/Gilroy-Light.otf"),
+//     "gilroy-bold": require("./assets/fonts/Gilroy-ExtraBold.otf"),
+//     "gilroy-semiBold": require("./assets/fonts/Gilroy-SemiBold.ttf"),
+//   });
+//   if (!fontsLoaded) return <View />;
 
-  return (
-    <View style={styles.container}>
-      <StatusBar
-        animated={true}
-        backgroundColor={theme.backgrounds.white}
-        barStyle="dark-content"
-      />
-      <General />
+//   const bottomSheetRef = useRef < BottomSheet > null;
 
-      <Toast ref={(ref) => Toast.setRef(ref)} />
-    </View>
-  );
-};
+//   // variables
+//   const snapPoints = useMemo(() => ["25%", "50%"], []);
+
+//   // callbacks
+//   const handleSheetChanges = useCallback((index) => {
+//     console.log("handleSheetChanges", index);
+//   }, []);
+
+//   return (
+//     <View style={styles.container}>
+//       {/* <StatusBar
+//         animated={true}
+//         backgroundColor={theme.backgrounds.white}
+//         barStyle="dark-content"
+//       />
+//       <General /> */}
+
+//       <BottomSheet
+//         ref={bottomSheetRef}
+//         index={1}
+//         snapPoints={snapPoints}
+//         onChange={handleSheetChanges}
+//       >
+//         <View style={styles.contentContainer}>
+//           <Text>Awesome 🎉</Text>
+//         </View>
+//       </BottomSheet>
+
+//       {/* <Toast ref={(ref) => Toast.setRef(ref)} /> */}
+//     </View>
+//   );
+// };
 
 export default () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
-          <App />
+          <AppDetail />
         </NavigationContainer>
       </PersistGate>
     </Provider>
@@ -87,5 +109,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.backgrounds.white,
+  },
+
+  contentContainer: {
+    flex: 1,
+    alignItems: "center",
   },
 });

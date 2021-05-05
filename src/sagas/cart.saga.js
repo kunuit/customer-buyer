@@ -23,11 +23,9 @@ import { getAllProduct_FiB_API } from "../apis/firebase/product.firebase";
 import { showToast } from "../common/Layout/toast.helper";
 import { statusCode } from "../constants/API.constants";
 import { statusProduct } from "./product.saga";
+import { requireLoginSaga } from "./utilSagas.saga";
 
 export const typeCarts = {
-  // fetch cart firebase
-  fetchCartFirebase: "FETCH_CART_FIREBASE",
-  fetchCartFirebaseSuccess: "FETCH_CART_FIREBASE_SUCCESS",
   // fetch cart
   fetchCart: "FETCH_CART",
   fetchCartSuccess: "FETCH_CART_SUCCESS",
@@ -60,10 +58,12 @@ export const statusCart = {
 function* fetchCartSaga(action) {
   // show loading
   yield put({ type: typeCarts.showLoadingCart });
+  // check token
+  const isToken = yield call(requireLoginSaga);
+  console.log(`isToken`, isToken);
+  if (!isToken) return;
   // call
-  const { token } = yield select((state) => state.auth);
-  console.log(`token`, token);
-  const { payload, error, message } = yield call(getCartAPI, token);
+  const { payload, error, message } = yield call(getCartAPI);
 
   console.log(`payload.cartItems`, payload.cartItems);
   if (!error) {
@@ -82,6 +82,11 @@ function* fetchCartSaga(action) {
 function* addToCartSaga(action) {
   // show loading add to cart
   yield put({ type: typeCarts.showLoadingAddToCart });
+
+  // check token
+  const isToken = yield call(requireLoginSaga);
+  console.log(`isToken`, isToken);
+  if (!isToken) return;
   // select data in cart
   const { data } = yield select((state) => state.carts);
   const indexProductInCart = data.findIndex(
@@ -101,15 +106,17 @@ function* addToCartSaga(action) {
       message: "Add to cart is success",
     });
   } else {
-    // select token
-    const { token } = yield select((state) => state.auth);
     // call api
-    const { status, error, payload, message } = yield call(
-      addToCartAPI,
-      { productId: action.payload.data._id, quantity: action.payload.quantity },
-      token
-    );
-
+    const { status, error, payload, message } = yield call(addToCartAPI, {
+      productId: action.payload.data._id,
+      quantity: action.payload.quantity,
+    });
+    console.log(`{ status, error, payload, message }`, {
+      status,
+      error,
+      payload,
+      message,
+    });
     if (status == statusCode.notAuth) {
       showToast({
         title: "Auth",
@@ -120,7 +127,7 @@ function* addToCartSaga(action) {
       showToast({
         title: "Cart",
         type: "success",
-        message: message,
+        message,
       });
       yield put({
         type: typeCarts.addtoCartSuccess,
@@ -132,7 +139,7 @@ function* addToCartSaga(action) {
       showToast({
         title: "Cart",
         type: "error",
-        message: message,
+        message,
       });
     }
   }

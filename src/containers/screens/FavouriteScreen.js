@@ -10,9 +10,11 @@ import {
   RefreshControl,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import LottieView from "lottie-react-native";
 import Button from "../../components/Button";
 import FavouriteItem from "../../components/FavouriteItem";
 import MainLoading from "../../components/Loader/MainLoading";
+import RequireLogin from "../../components/RequireLogin";
 import Colors from "../../constants/colors";
 import { typeFavorites } from "../../sagas/favorite.saga";
 
@@ -27,16 +29,19 @@ const Line = () => {
   );
 };
 
-const CartScreen = ({ navigation }) => {
+const FavoriteScreen = ({ navigation }) => {
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const { isLoadingFetchFavoriteProduct, favoriteProducts } = useSelector(
     (state) => state.favorites
   );
+  const { isLogin } = useSelector((state) => state.auth);
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
-    dispatch({ type: typeFavorites.fetchFavorite });
+    if (isLogin) {
+      dispatch({ type: typeFavorites.fetchFavorite });
+    }
   }, [isFocused]);
 
   const onRefresh = () => {
@@ -51,9 +56,8 @@ const CartScreen = ({ navigation }) => {
       <View style={styles.titleTextContainer}>
         <Text style={styles.titleText}>Favourite</Text>
       </View>
-      {isLoadingFetchFavoriteProduct ? (
-        <MainLoading padding={30} />
-      ) : (
+      {!isLogin && <RequireLogin navigation={navigation} />}
+      {!isLoadingFetchFavoriteProduct && isLogin ? (
         <FlatList
           style={styles.listCartItemContainer}
           showsVerticalScrollIndicator={false}
@@ -68,6 +72,14 @@ const CartScreen = ({ navigation }) => {
               <Line />
             </View>
           )}
+        />
+      ) : (
+        // <MainLoading padding={30} />
+        <LottieView
+          source={require("../../../assets/stayHome.json")}
+          autoPlay
+          loop
+          style={{ height: 300 }}
         />
       )}
       <Button
@@ -111,4 +123,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CartScreen;
+export default FavoriteScreen;

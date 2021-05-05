@@ -20,6 +20,7 @@ import {
 import { getProductById_Fib_API } from "../apis/firebase/product.firebase";
 
 import { showToast } from "../common/Layout/toast.helper";
+import { requireLoginSaga } from "./utilSagas.saga";
 
 export const typeFavorites = {
   // fetch Favorite
@@ -39,12 +40,11 @@ function* fetchFavoriteSaga(action) {
   // show loading
   yield put({ type: typeFavorites.showLoadingFavorite });
   // get token
-  const { token } = yield select((state) => state.auth);
+  const isToken = yield call(requireLoginSaga);
+  console.log(`isToken`, isToken);
+  if (!isToken) return;
   // call
-  const { error, message, code, payload } = yield call(
-    getFavoriteProducts,
-    token
-  );
+  const { error, message, code, payload } = yield call(getFavoriteProducts);
   // handle
   if (error) {
     showToast({ title: "Favorite", type: "error", message });
@@ -60,15 +60,15 @@ function* fetchFavoriteSaga(action) {
 }
 
 function* activeFavoriteProductSaga(action) {
-  // get token
-  const { token } = yield select((state) => state.auth);
+  // check token
+  const isToken = yield call(requireLoginSaga);
+  console.log(`isToken`, isToken);
+  if (!isToken) return;
   // call
   console.log(`action.payload.productId`, action.payload.productId);
-  const { error, message, code, payload } = yield call(
-    activeProdctToFavorite,
-    { productId: action.payload.productId },
-    token
-  );
+  const { error, message, code, payload } = yield call(activeProdctToFavorite, {
+    productId: action.payload.productId,
+  });
   console.log(`{ error, message, code, payload }`, {
     error,
     message,
@@ -82,16 +82,16 @@ function* activeFavoriteProductSaga(action) {
 }
 
 function* inactiveFavoriteProductSaga(action) {
-  // get token
-  const { token } = yield select((state) => state.auth);
-  console.log(`action.payload.productId`, action.payload.productId);
+  // check token
+  const isToken = yield call(requireLoginSaga);
+  console.log(`isToken`, isToken);
+  if (!isToken) return;
   // call
   const { error, message, code, payload } = yield call(
     inactiveProductToFavorite,
     {
       productId: action.payload.productId,
-    },
-    token
+    }
   );
 
   console.log(`{ error, message, code, payload }`, {

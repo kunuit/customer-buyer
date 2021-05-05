@@ -13,9 +13,11 @@ const initState = {
   isRegisterLoading: false,
   isAdmin: false,
   isAdminLogin: false,
+  isRequireLogin: false,
 };
 
 const reducer = (state = initState, action) => {
+  console.log(`state.isRequireLogin`, state.isRequireLogin);
   switch (action.type) {
     case typeAuths.registerSuccess:
       return {
@@ -57,6 +59,7 @@ const reducer = (state = initState, action) => {
         // isAdmin: action.payload.data.userInfo.role == role.staff ? true : false,
         isLogin: true,
         isAuthLoading: false,
+        isRequireLogin: false,
       };
     case typeAuths.loginFail:
       return {
@@ -95,6 +98,11 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         errorLogin: action.payload.error,
+      };
+    case typeAuths.requireLogin:
+      return {
+        ...state,
+        isRequireLogin: action.payload.statusRequireLogin,
       };
     default:
       return state;

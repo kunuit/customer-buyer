@@ -3,6 +3,6 @@ import { API_ENDPOINT } from "../constants/API.constants";
 
 const url = "/category";
 
-export const getCategoriesAPI = (token) => {
+export const getCategoriesAPI = () => {
   return axiosService.get(`${API_ENDPOINT}${url}`);
 };

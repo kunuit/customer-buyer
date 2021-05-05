@@ -13,6 +13,7 @@ import CartItem from "../../components/CartItem";
 import Colors from "../../constants/colors";
 import { statusCart, typeCarts } from "../../sagas/cart.saga";
 import MainLoading from "../../components/Loader/MainLoading";
+import LottieView from "lottie-react-native";
 import NumberFormat from "react-number-format";
 import { theme } from "../../common/theme";
 import { ActivityIndicator } from "react-native-paper";
@@ -162,7 +163,13 @@ const CartScreen = ({ navigation }) => {
           )}
         />
       ) : (
-        <MainLoading padding={30} />
+        // <MainLoading padding={30} />
+        <LottieView
+          source={require("../../../assets/stayHome.json")}
+          autoPlay
+          loop
+          style={{ height: 300 }}
+        />
       )}
 
       <Button
@@ -174,6 +181,7 @@ const CartScreen = ({ navigation }) => {
             ? false
             : true
         }
+        onPress={() => navigation.navigate("Order Detail", totalPrice)}
         style={{
           backgroundColor:
             totalPrice &&

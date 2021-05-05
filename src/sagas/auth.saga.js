@@ -1,5 +1,10 @@
 import { takeEvery, put, call, takeLatest, select } from "redux-saga/effects";
-import { loginAdminAPI, loginAPI, registerAPI } from "../apis/auth.api";
+import {
+  loginAdminAPI,
+  loginAPI,
+  registerAPI,
+  setTokenHeaderSevice,
+} from "../apis/auth.api";
 
 import {
   loginFirebaseAPI,
@@ -52,6 +57,8 @@ export const typeAuths = {
 
   refreshTokenSuccess: "REFRESH_TOKEN_SUCCESS",
   refreshTokenFail: "REFRESH_TOKEN_FAIL",
+
+  requireLogin: "REQUIRE_LOGIN",
 };
 
 export const role = {
@@ -74,6 +81,8 @@ function* loginSaga(action) {
         data: payload,
       },
     });
+
+    yield call(setTokenHeaderSevice, payload.token);
   } else {
     // res error
     yield put({
@@ -111,7 +120,13 @@ function* registerSaga(action) {
   }
 }
 
+function* logoutSaga() {
+  console.log("logout in saga");
+  yield call(setTokenHeaderSevice, null);
+}
+
 export const authSagas = [
   takeLatest(typeAuths.login, loginSaga),
   takeLatest(typeAuths.register, registerSaga),
+  takeLatest(typeAuths.logout, logoutSaga),
 ];

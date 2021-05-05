@@ -31,6 +31,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import androidx.multidex.MultiDexApplication;
+import com.airbnb.android.react.lottie.LottiePackage;
 
 public class MainApplication extends MultiDexApplication implements ReactApplication {
   private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(
@@ -47,6 +48,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     protected List<ReactPackage> getPackages() {
       List<ReactPackage> packages = new PackageList(this).getPackages();
       packages.add(new ModuleRegistryAdapter(mModuleRegistryProvider));
+      packages.add(new LottiePackage());
       return packages;
     }
 

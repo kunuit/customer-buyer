@@ -3,6 +3,6 @@ import { API_ENDPOINT } from "../constants/API.constants";
 
 const url = "/upload";
 
-export const uploadImageAPI = (data, token) => {
-  return axiosService.postFormData(`${API_ENDPOINT}${url}`, data, token);
+export const uploadImageAPI = (data) => {
+  return axiosService.postFormData(`${API_ENDPOINT}${url}`, data);
 };

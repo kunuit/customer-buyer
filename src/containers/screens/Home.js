@@ -34,9 +34,9 @@ const Home = ({ navigation }) => {
         status: statusFetch.load,
       },
     });
-    // if (isLoading) {
-    //   setRefreshing(false);
-    // }
+    dispatch({
+      type: typeProducts.fetchProductByCategory,
+    });
   };
 
   return (
@@ -61,11 +61,11 @@ const Home = ({ navigation }) => {
             title="Product with category"
             navigation={navigation}
           />
-          <ProductListViaCategory
+          {/* <ProductListViaCategory
             title="Product with category 2"
             navigation={navigation}
-          />
-          <CategoryListHome navigation={navigation} />
+          /> */}
+          {/* <CategoryListHome navigation={navigation} /> */}
         </View>
       </ScrollView>
     </SafeAreaView>
