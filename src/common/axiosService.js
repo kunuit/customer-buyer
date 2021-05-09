@@ -15,22 +15,20 @@ class AxiosService {
     //   };
     //   return config;
     // });
-  }
 
-  //TODO come home to check that when logout and login
-  setTokenHeader(token) {
-    console.log(`token`, token);
-    return this.instance.interceptors.request.use((config) => {
-      if (token) {
-        config.headers = {
-          authorization: `Bearer ${token}`,
-        };
-        console.log(`config`, config);
-      } else {
-        config.headers = {};
-      }
+    this.instance.interceptors.request.use((config) => {
+      config.headers = this.token
+        ? {
+            authorization: `Bearer ${this.token}`,
+          }
+        : {};
+
       return config;
     });
+  }
+
+  setToken(token) {
+    this.token = token;
   }
 
   async handleSuccess(response) {

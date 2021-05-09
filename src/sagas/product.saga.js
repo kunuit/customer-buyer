@@ -310,12 +310,11 @@ function* updateProductSaga(action) {
   // call api
   const { payload, code, error, message } = yield call(
     updateProductAPI,
-    action.payload.id,
+    action.payload._id,
     {
       ...action.payload.data,
       imageUrls: [...action.payload.data.imageUrls, ...urlProducts],
-    },
-    token
+    }
   );
   if (!error) {
     console.log(`payload`, payload);

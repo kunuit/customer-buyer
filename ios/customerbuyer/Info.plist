@@ -67,6 +67,8 @@
     </array>
     <key>UIRequiresFullScreen</key>
     <true/>
+    <key>UIUserInterfaceStyle</key>
+    <string>Light</string>
     <key>CFBundleDisplayName</key>
     <string>customer-buyer</string>
   </dict>

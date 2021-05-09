@@ -94,7 +94,7 @@ const CreateProduct = ({ navigation, route }) => {
     dispatch({
       type: item ? typeProducts.updateProduct : typeProducts.createProduct,
       payload: {
-        id: item ? item.id : null,
+        _id: item ? item._id : null,
         data: {
           name: name.value,
           description: description.value,

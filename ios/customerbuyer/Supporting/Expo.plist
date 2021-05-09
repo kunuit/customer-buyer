@@ -4,8 +4,6 @@
   <dict>
     <key>EXUpdatesSDKVersion</key>
     <string>40.0.0</string>
-    <key>EXUpdatesURL</key>
-    <string>https://exp.host/@kunuit/customer-buyer</string>
     <key>EXUpdatesEnabled</key>
     <true/>
     <key>EXUpdatesCheckOnLaunch</key>

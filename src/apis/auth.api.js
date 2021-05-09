@@ -14,7 +14,7 @@ export const registerAPI = (data) => {
 
 export const setTokenHeaderSevice = (token) => {
   console.log(`token in auth API`, token);
-  return axiosService.setTokenHeader(token);
+  return axiosService.setToken(token);
 };
 
 export const refreshTokenAPI = (data) => {

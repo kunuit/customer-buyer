@@ -32,6 +32,7 @@
     "expo-status-bar": "~1.0.3",
     "expo-updates": "~0.4.0",
     "firebase": "^8.3.2",
+    "jsc-android": "^250230.2.1",
     "lodash": "^4.17.21",
     "lottie-ios": "3.1.8",
     "lottie-react-native": "^4.0.2",
