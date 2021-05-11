@@ -37,9 +37,8 @@ const CartScreen = ({ navigation }) => {
   );
   const { isLogin } = useSelector((state) => state.auth);
   const [refreshing, setRefreshing] = useState(false);
-  const [showLoadingEditCheckList, setShowLoadingEditCheckList] = useState(
-    false
-  );
+  const [showLoadingEditCheckList, setShowLoadingEditCheckList] =
+    useState(false);
   console.log(`showLoadingEditCheckList`, showLoadingEditCheckList);
   //! huong giai quyet thi sẽ là tạo ra 1 function để quản lý listCheckOut
   console.log(listCheckOutId, "check check out state");

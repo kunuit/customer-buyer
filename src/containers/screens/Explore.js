@@ -17,7 +17,7 @@ import TitleScreen from "../../components/TitleScreen";
 import SearchView from "../../components/SearchView";
 import { typeProducts } from "../../sagas/product.saga";
 import { useDispatch, useSelector } from "react-redux";
-import MainLoading from "../../components/Loader/MainLoading";
+import LottieView from "lottie-react-native";
 
 const Explore = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -50,9 +50,18 @@ const Explore = ({ navigation }) => {
       {!searchQuery ? (
         <GroceriesList navigation={navigation} />
       ) : isLoadingSearchProduct ? (
-        <MainLoading height={190} padding={30} />
+        <LottieView
+          source={require("../../../assets/stayHome.json")}
+          autoPlay
+          loop
+          style={{ height: 200 }}
+        />
       ) : (
-        <ListCardItem products={queryProduct} navigation={navigation} />
+        <ListCardItem
+          products={queryProduct}
+          navigation={navigation}
+          isColumn={true}
+        />
       )}
     </SafeAreaView>
   );
