@@ -114,16 +114,6 @@ const ProductDetail = ({ navigation, route }) => {
 
   return (
     <View style={styles.productDetailContainer}>
-<<<<<<< HEAD
-      <ScrollView>
-        <ProductDetailImageContainer />
-        <View style={styles.productDetailInfoContainer}>
-          <ProductUnitContainer isEdit={isAdminLogin ? true : false} />
-          <QuantityAjustContainer />
-          <DescriptionContainer />
-          <NutritionContainer />
-          <ReviewContainer />
-=======
       <StatusBar
         animated={true}
         backgroundColor={theme.backgrounds.itemImageDetail}
@@ -177,7 +167,6 @@ const ProductDetail = ({ navigation, route }) => {
             )}
           </View>
           <ButtonBack navigation={navigation} isBackground={true} />
->>>>>>> react-native-cli
         </View>
       )}
     </View>

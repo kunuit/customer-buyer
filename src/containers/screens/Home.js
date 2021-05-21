@@ -12,9 +12,7 @@ import ProductList from "../../components/ProductList";
 import SearchView from "../../components/SearchView";
 import TitleScreen from "../../components/TitleScreen";
 import Grocery from "../../components/Grocery";
-<<<<<<< HEAD
-import HomeBanner from "../../components/HomeBanner";
-=======
+
 import { useDispatch, useSelector } from "react-redux";
 import { typeProducts } from "../../sagas/product.saga";
 import { ProductListViaCategory } from "../../components/ProductListViaCategory";
@@ -41,7 +39,6 @@ const Home = ({ navigation }) => {
       type: typeProducts.fetchProductByCategory,
     });
   };
->>>>>>> react-native-cli
 
   return (
     <SafeAreaView style={styles.homeScreenContainer}>
@@ -58,11 +55,7 @@ const Home = ({ navigation }) => {
       >
         <View style={styles.productListContainer}>
           <HomeBanner />
-<<<<<<< HEAD
-          <ProductList title="Exclusive Offer" />
-          <ProductList title="Best Selling" />
-          <Grocery title="Groceries" />
-=======
+
           <ProductList title="Exclusive Offer" navigation={navigation} />
           <Grocery title="Categories" navigation={navigation} />
           <ProductList title="Best Selling" navigation={navigation} />
@@ -75,7 +68,6 @@ const Home = ({ navigation }) => {
             navigation={navigation}
           /> */}
           {/* <CategoryListHome navigation={navigation} /> */}
->>>>>>> react-native-cli
         </View>
       </ScrollView>
     </SafeAreaView>

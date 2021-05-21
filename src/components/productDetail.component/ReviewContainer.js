@@ -1,9 +1,6 @@
 import React from "react";
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
-<<<<<<< HEAD
-=======
 
->>>>>>> react-native-cli
 import { View, StyleSheet, Text } from "react-native";
 import RoundedButton from "../RoundedButton";
 import { Rating } from "react-native-ratings";
@@ -38,18 +35,6 @@ class ReviewContainer extends React.Component {
         <View style={styles.reviewTittleContainer}>
           <Text style={styles.reviewTittle}>Review</Text>
           <View style={styles.ratingContainer}>
-<<<<<<< HEAD
-            <View style={styles.star}>
-              <Rating
-                type="custom"
-                imageSize={18}
-                startingValue={3}
-                jumpValue={1}
-                ratingColor="#F3603F"
-                onFinishRating={this.ratingCompleted}
-              />
-            </View>
-=======
             <Rating
               type="custom"
               imageSize={18}
@@ -58,7 +43,6 @@ class ReviewContainer extends React.Component {
               ratingColor="#F3603F"
               onFinishRating={this.ratingCompleted}
             />
->>>>>>> react-native-cli
             <RoundedButton style={styles.buttonExtend} onPress={this.extend}>
               <AntDesign name={this.state.name} size={24} color="black" />
             </RoundedButton>

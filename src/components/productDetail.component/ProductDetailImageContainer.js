@@ -18,9 +18,6 @@ const ProductDetailImageContainer = ({ images }) => {
         autoplayTimeout={4}
         activeDot={<View style={styles.activeDot} />}
       >
-<<<<<<< HEAD
-        {images.map((item, index) => (
-=======
         {images ? (
           images.map((item, index) => (
             <Image
@@ -30,12 +27,10 @@ const ProductDetailImageContainer = ({ images }) => {
             />
           ))
         ) : (
->>>>>>> react-native-cli
           <Image
             style={styles.productDetailImage}
             source={{
-              uri:
-                "https://cdn4.iconfinder.com/data/icons/refresh_cl/256/System/Box_Empty.png",
+              uri: "https://cdn4.iconfinder.com/data/icons/refresh_cl/256/System/Box_Empty.png",
             }}
           />
         )}

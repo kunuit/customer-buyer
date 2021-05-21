@@ -14,6 +14,7 @@ import Explore from "../../screens/Explore";
 import Home from "../../screens/Home";
 import { HomeScreen } from "../../screens/auth.screens";
 import { useSelector } from "react-redux";
+import ProductDetail from "../../screens/ProductDetail";
 
 const Tab = createBottomTabNavigator();
 

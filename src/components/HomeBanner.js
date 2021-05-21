@@ -12,17 +12,11 @@ const HomeBanner = () => {
     <View style={styles.bannerImageContainer}>
       <Swiper
         // style={styles.wrapper}
-<<<<<<< HEAD
-        // dotStyle={{ bottom: "5%" }}
-        showsButtons={false}
-        autoplay={true}
-        autoplayTimeout={4}
-=======
+
         dotStyle={{ bottom: "-6%" }}
         showsButtons={false}
         autoplay={true}
         autoplayTimeout={3000}
->>>>>>> react-native-cli
         activeDot={<View style={styles.activeDot} />}
       >
         {images.map((item, index) => (
@@ -38,40 +32,26 @@ const HomeBanner = () => {
 };
 const styles = StyleSheet.create({
   bannerImageContainer: {
-<<<<<<< HEAD
-    width: "100%",
-    height: Dimensions.get("screen").height * 0.25,
-=======
     flex: 1,
     marginVertical: 5,
     height: 150,
->>>>>>> react-native-cli
     justifyContent: "center",
     alignItems: "center",
   },
   bannerImage: {
-<<<<<<< HEAD
-    width: "100%",
-    height: Dimensions.get("screen").height * 0.25,
-=======
     flex: 1,
     height: 150,
->>>>>>> react-native-cli
+
     resizeMode: "contain",
   },
   activeDot: {
     backgroundColor: "#53B175",
     width: 25,
-<<<<<<< HEAD
-    height: 8,
-    borderRadius: 4,
-    marginHorizontal: 3,
-=======
+
     height: 6,
     borderRadius: 4,
     marginHorizontal: 3,
     bottom: "-6%",
->>>>>>> react-native-cli
   },
 });
 export default HomeBanner;
