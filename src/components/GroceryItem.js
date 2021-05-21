@@ -1,30 +1,42 @@
-import React, { useEffect, useState } from "react";
-import Colors from "../constants/colors";
-import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
-import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
-import RoundedButton from "../components/RoundedButton";
-const GroceryItem = ({ item }) => {
+import React from "react";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableHighlight,
+} from "react-native";
+import { theme } from "../common/theme";
+
+const GroceryItem = ({ item, navigation }) => {
   return (
-    <TouchableOpacity
-      style={[
-        styles.cardContainer,
-        { backgroundColor: item.itemColor, borderColor: item.itemColor },
-      ]}
+    <TouchableHighlight
+      underlayColor={theme.backgrounds.white}
+      onPress={() => {
+        navigation.navigate("Category Detail", item._id);
+      }}
     >
-      <View style={styles.cardImageContainer}>
-        <Image
-          style={styles.cardImage}
-          source={{
-            uri: item.itemImage,
-          }}
-        />
+      <View
+        style={[
+          styles.cardContainer,
+          { backgroundColor: item.color, borderColor: item.color },
+        ]}
+      >
+        <View style={styles.cardImageContainer}>
+          <Image
+            style={styles.cardImage}
+            source={{
+              uri: item.imageUrl,
+            }}
+          />
+        </View>
+        <View style={styles.cardDetailContainer}>
+          <Text numberOfLines={2} style={styles.titleText}>
+            {`${item.name}`}
+          </Text>
+        </View>
       </View>
-      <View style={styles.cardDetailContainer}>
-        <Text numberOfLines={2} style={styles.titleText}>
-          {`${item.nameItem}`}
-        </Text>
-      </View>
-    </TouchableOpacity>
+    </TouchableHighlight>
   );
 };
 const styles = StyleSheet.create({

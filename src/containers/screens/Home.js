@@ -1,35 +1,81 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
-  Text,
   StyleSheet,
-  TextInput,
   SafeAreaView,
   ScrollView,
   Dimensions,
-  TouchableOpacity,
+  RefreshControl,
 } from "react-native";
-import CategoriesList from "../../components/CategoriesList";
-import { Searchbar } from "react-native-paper";
-import { MaterialIcons } from "@expo/vector-icons";
+
 import ProductList from "../../components/ProductList";
 import SearchView from "../../components/SearchView";
 import TitleScreen from "../../components/TitleScreen";
-import GroceriesList from "../../components/GroceriesList";
 import Grocery from "../../components/Grocery";
+<<<<<<< HEAD
 import HomeBanner from "../../components/HomeBanner";
+=======
+import { useDispatch, useSelector } from "react-redux";
+import { typeProducts } from "../../sagas/product.saga";
+import { ProductListViaCategory } from "../../components/ProductListViaCategory";
+import HomeBanner from "../../components/HomeBanner";
+import { CategoryListHome } from "../../components/category.components/CategoryListHome";
+import { statusFetch } from "../../sagas/utilSagas.saga";
 
-const Home = () => {
+const Home = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const [refreshing, setRefreshing] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  console.log(`searchQuery`, searchQuery);
+  // const { isLoading } = useSelector((state) => state.products);
+  const onChangeSearch = (query) => setSearchQuery(query);
+
+  const onRefresh = () => {
+    dispatch({
+      type: typeProducts.fetchProduct,
+      payload: {
+        status: statusFetch.load,
+      },
+    });
+    dispatch({
+      type: typeProducts.fetchProductByCategory,
+    });
+  };
+>>>>>>> react-native-cli
+
   return (
     <SafeAreaView style={styles.homeScreenContainer}>
-      <TitleScreen isBorder={false}>Home</TitleScreen>
-      <SearchView />
-      <ScrollView>
+      <TitleScreen isBorder={false} title="Home" />
+      <SearchView
+        searchQuery={searchQuery}
+        searchQueryValue={(query) => onChangeSearch(query)}
+      />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <View style={styles.productListContainer}>
           <HomeBanner />
+<<<<<<< HEAD
           <ProductList title="Exclusive Offer" />
           <ProductList title="Best Selling" />
           <Grocery title="Groceries" />
+=======
+          <ProductList title="Exclusive Offer" navigation={navigation} />
+          <Grocery title="Categories" navigation={navigation} />
+          <ProductList title="Best Selling" navigation={navigation} />
+          <ProductListViaCategory
+            title="Product with category"
+            navigation={navigation}
+          />
+          {/* <ProductListViaCategory
+            title="Product with category 2"
+            navigation={navigation}
+          /> */}
+          {/* <CategoryListHome navigation={navigation} /> */}
+>>>>>>> react-native-cli
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -1,41 +1,52 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   View,
   StyleSheet,
   Text,
-  Image,
-  TouchableWithoutFeedback,
   FlatList,
-  Dimensions,
   TouchableOpacity,
 } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
+import { useSelector } from "react-redux";
 import CardItem from "./CardItem";
-const ProductList = ({ title, ...props }) => {
+import MainLoading from "../components/Loader/MainLoading";
+
+const ProductList = ({ title, navigation, ...props }) => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const { data, isLoading } = useSelector((state) => state.products);
+
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{title ? title : "No Title"}</Text>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Category Detail")}
+        >
           <Text style={styles.seeAllText}>See all</Text>
         </TouchableOpacity>
       </View>
-      <FlatList
-        showsHorizontalScrollIndicator={false}
-        horizontal={true}
-        data={fakeData}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.cardItemContainer}>
-            <CardItem
-              item={item}
-              heightCard={200}
-              fontSizeTitle={16}
-              fontSizeDes={14}
-            />
-          </View>
-        )}
-      />
+      {!isLoading ? (
+        <FlatList
+          showsHorizontalScrollIndicator={false}
+          horizontal={true}
+          data={data}
+          renderItem={({ item, index }) => (
+            <View style={styles.cardItemContainer}>
+              <CardItem
+                item={item}
+                heightCard={200}
+                fontSizeTitle={16}
+                fontSizeDes={14}
+                numberOfLines={1}
+                navigation={navigation}
+              />
+            </View>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      ) : (
+        <MainLoading height={190} padding={30} />
+      )}
     </View>
   );
 };
@@ -66,6 +77,7 @@ const styles = StyleSheet.create({
   cardItemContainer: {
     margin: 10,
     flex: 1,
+    width: 135,
   },
 });
 

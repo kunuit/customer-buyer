@@ -28,7 +28,7 @@ const Profile = () => {
           renderItem={({ item }) => {
             return <InfoCard nameIcon={item.nameIcon} name={item.name} />;
           }}
-          keyExtractor={(item) => item.name}
+          keyExtractor={(item, index) => index.toString()}
           ListHeaderComponent={InfoProfile}
           ListFooterComponent={ButtonLogOut}
         />

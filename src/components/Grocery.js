@@ -1,44 +1,53 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   View,
   StyleSheet,
   Text,
-  Image,
-  TouchableWithoutFeedback,
   FlatList,
-  Dimensions,
   TouchableOpacity,
 } from "react-native";
+import { useSelector } from "react-redux";
+import { multipleRowsFlatListFormat } from "../common/format/FlatListDataFormat";
 import CardItem from "./CardItem";
 import GroceriesList from "./GroceriesList";
-const Grocery = ({ title, ...props }) => {
+
+const Grocery = ({ title, navigation, ...props }) => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  const { data } = useSelector((state) => state.products);
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{title ? title : "No Title"}</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Explore")}>
           <Text style={styles.seeAllText}>See all</Text>
         </TouchableOpacity>
       </View>
-      <GroceriesList />
-      <FlatList
-        showsHorizontalScrollIndicator={false}
-        horizontal={true}
+      <GroceriesList navigation={navigation} isHome={true} />
+      {/* <FlatList
+        columnWrapperStyle={{
+          flex: 1,
+        }}
         showsVerticalScrollIndicator={false}
-        data={fakeData}
+        numColumns={2}
+        data={multipleRowsFlatListFormat(data, 2)}
+        renderItem={({ item, index }) =>
+          item == "empty" ? (
+            <View style={styles.cardItemContainer}></View>
+          ) : (
+            <View style={styles.cardItemContainer}>
+              <CardItem
+                item={item}
+                heightCard={210}
+                fontSizeTitle={16}
+                fontSizeDes={14}
+                numberOfLines={1}
+              />
+            </View>
+          )
+        }
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.cardItemContainer}>
-            <CardItem
-              item={item}
-              heightCard={200}
-              fontSizeTitle={16}
-              fontSizeDes={14}
-            />
-          </View>
-        )}
-      />
+      /> */}
     </View>
   );
 };

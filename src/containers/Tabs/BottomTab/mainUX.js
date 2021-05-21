@@ -1,5 +1,4 @@
 import React from "react";
-import Icon from "react-native-vector-icons/Ionicons";
 import { Fontisto } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Zocial } from "@expo/vector-icons";
@@ -11,17 +10,15 @@ import Favorite from "../../screens/FavouriteScreen";
 import Profile from "../../screens/Profile";
 import { theme } from "../../../common/theme";
 import { Dimensions } from "react-native";
-import TabProfile from "../TopTab/TabProfile";
-import ProductDetail from "../../screens/ProductDetail";
 import Explore from "../../screens/Explore";
-import CartScreen from "../../screens/CartScreen";
-import CardItem from "../../../components/CardItem";
-import ListCardItem from "../../../components/ListCardItem";
 import Home from "../../screens/Home";
+import { HomeScreen } from "../../screens/auth.screens";
+import { useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 
 const MainUX = () => {
+  const { isLogin } = useSelector((state) => state.auth);
   return (
     <Tab.Navigator
       tabBarOptions={{
@@ -99,7 +96,7 @@ const MainUX = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={TabProfile}
+        component={isLogin ? Profile : HomeScreen}
         showIcon={true}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (

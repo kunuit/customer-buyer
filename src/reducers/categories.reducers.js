@@ -1,18 +1,24 @@
 import { isLoaded } from "expo-font";
-import * as productTask from "../constants/product.constants";
+import { typeCategories } from "../sagas/category.saga";
 // import { toastError, toastSuccess } from '../helpers/toast.Helper';
 
 const initialState = {
   data: [],
-  isLoaded: false,
+  isLoading: false,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "GET_CATEGORIES":
+    case typeCategories.showLoadingCategory:
       return {
         ...state,
-        data: action.payload,
+        isLoading: true,
+      };
+    case typeCategories.fetchCategorySuccess:
+      return {
+        ...state,
+        isLoading: false,
+        data: action.payload.data,
       };
     default:
       return state;

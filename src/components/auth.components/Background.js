@@ -9,18 +9,21 @@ import {
   SafeAreaView,
 } from "react-native";
 import { theme } from "../../common/theme";
+import ButtonBack from "../ButtonBack";
 
-// type Props = {
-//   children: React.ReactNode;
-// };
-
-const Background = ({ children }) => (
+const Background = ({
+  children,
+  isButtonBack = false,
+  navigation,
+  relative = false,
+}) => (
   <View style={styles.background}>
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ alignItems: "center" }}>{children}</View>
       </ScrollView>
     </SafeAreaView>
+    {isButtonBack ? <ButtonBack navigation={navigation} /> : <></>}
   </View>
 );
 
@@ -30,7 +33,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.backgrounds.white,
     justifyContent: "center",
     alignItems: "center",
-    paddingBottom: Dimensions.get("screen").height * 0.12,
+    // paddingBottom: Dimensions.get("window").height * 0.09 + 37,
   },
   container: {
     width: "90%",

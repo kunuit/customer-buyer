@@ -1,27 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Colors from "../constants/colors";
 import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import RoundedButton from "../components/RoundedButton";
-const CategoryItem = ({ item }) => {
+const CategoryItem = ({ item, navigation }) => {
   return (
     <TouchableOpacity
       style={[
         styles.cardContainer,
-        { backgroundColor: item.itemColor, borderColor: item.itemColor },
+        { backgroundColor: item.color, borderColor: item.color },
       ]}
+      onPress={() => {
+        navigation.navigate("Category Detail", item._id);
+      }}
     >
       <View style={styles.cardImageContainer}>
         <Image
           style={styles.cardImage}
           source={{
-            uri: item.itemImage,
+            uri: item.imageUrl,
           }}
         />
       </View>
       <View style={styles.cardDetailContainer}>
         <Text numberOfLines={2} style={styles.titleText}>
-          {`${item.nameItem}`}
+          {`${item.name}`}
         </Text>
       </View>
     </TouchableOpacity>
@@ -36,7 +39,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 20,
     borderWidth: 1,
-    // flexDirection: "row",
   },
   cardImageContainer: {
     marginBottom: 20,

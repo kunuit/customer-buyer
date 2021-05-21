@@ -3,10 +3,15 @@ import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
 import RoundedButton from "../RoundedButton";
 import { View, StyleSheet, Text } from "react-native";
 import { theme } from "../../common/theme";
-import { useState } from "react";
 
-const ProductUnitContainer = ({ title, unitText, isEdit }) => {
-  const [heart, setHeart] = useState(false);
+const ProductUnitContainer = ({
+  title,
+  unitText,
+  isEdit,
+  upDateProduct,
+  heart,
+  onSetFavorite,
+}) => {
   return (
     <View style={styles.productUnitContainer}>
       <View>
@@ -20,20 +25,24 @@ const ProductUnitContainer = ({ title, unitText, isEdit }) => {
       <View>
         {isEdit ? (
           <RoundedButton
-            mode='contained'
-            onPress={() => console.log("edit product unit Containter")}
-            style={styles.buttonItem}>
-            <FontAwesome name='edit' size={24} color='black' />
+            mode="contained"
+            onPress={() => upDateProduct()}
+            style={styles.buttonItem}
+          >
+            <FontAwesome name="edit" size={24} color="black" />
           </RoundedButton>
         ) : (
           <RoundedButton
-            mode='contained'
-            onPress={() => setHeart(!heart)}
-            style={styles.buttonItem}>
+            mode="contained"
+            onPress={() => {
+              onSetFavorite();
+            }}
+            style={styles.buttonItem}
+          >
             {heart ? (
-              <AntDesign name='heart' size={24} color='pink' />
+              <AntDesign name="heart" size={24} color="pink" />
             ) : (
-              <AntDesign name='hearto' size={24} color='black' />
+              <AntDesign name="hearto" size={24} color="black" />
             )}
           </RoundedButton>
         )}

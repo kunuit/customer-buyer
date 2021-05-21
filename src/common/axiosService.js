@@ -1,60 +1,90 @@
 import axios from "axios";
-
+import { useSelector } from "react-redux";
+import { getLocal } from "./storeLocal/Auth.local";
 class AxiosService {
   constructor() {
     const instance = axios.create();
+    this.handleError = this.handleError.bind(this);
     instance.interceptors.response.use(this.handleSuccess, this.handleError);
     this.instance = instance;
+    // // using Interceptors
+    // instance.interceptors.request.use(async (config) => {
+    //   console.log(`await getLocal("token")`, await getLocal("token"));
+    //   config.headers = {
+    //     authorization: "Bearer " + (await getLocal("token")),
+    //   };
+    //   return config;
+    // });
+
+    this.instance.interceptors.request.use((config) => {
+      config.headers = this.token
+        ? {
+            authorization: `Bearer ${this.token}`,
+          }
+        : {};
+
+      return config;
+    });
   }
 
-  handleSuccess(response) {
-    return response;
+  setToken(token) {
+    this.token = token;
   }
 
-  handleError(error) {
+  async handleSuccess(response) {
+    return response.data;
+  }
+
+  async handleError(error) {
     console.log(error, "check in axiosService");
-    if (error.response) return Promise.reject(error.response);
-    if (error.request) return Promise.reject(error.request);
-    return Promise.reject(error);
+
+    if (error.response) {
+      return new Promise((resolve, reject) => {
+        resolve({ data: error.response });
+      });
+    }
+    if (error.request) {
+      return new Promise.reject(error.request);
+    }
   }
 
   get(url) {
     return this.instance.get(url);
   }
 
-  getWithToken(url, token) {
-    console.log(url, token, "check api");
-    return this.instance.get(url, {
+  postFormData(url, body, token) {
+    return this.instance.post(url, body, {
       headers: {
-        authorization: "Bearer " + token,
+        "Content-Type": "multipart/form-data",
+        authorization: "Bearer " + token, //the token is a variable which holds the token
       },
     });
   }
 
   post(url, body) {
-    return this.instance.post(url, body, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-  }
-
-  postWithToken(url, body, token) {
-    return this.instance.post(url, body, {
-      headers: {
-        authorization: "Bearer " + token, //the token is a variable which holds the token
-      },
-    });
+    return this.instance.post(url, body);
   }
 
   put(url, body) {
     return this.instance.put(url, body);
   }
 
-  delete(url) {
-    return this.instance.delete(url);
+  delete(url, body) {
+    console.log("run here");
+    return this.instance.delete(url, {
+      data: body,
+    });
   }
 }
 
 export default new AxiosService();
+
+export const Method = Object.freeze({
+  get: "get",
+  put: "put",
+  post: "post",
+  delete: "delete",
+});
 
 // khi import su dung class AxiosService
 // thi no se chay toan tu //!new!

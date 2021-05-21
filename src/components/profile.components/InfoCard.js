@@ -5,16 +5,16 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { showToast } from "../../common/Layout/toast.helper";
 import { theme } from "../../common/theme";
 
-const InfoCard = (props) => {
-  const { nameIcon, name } = props;
+const InfoCard = ({ nameIcon, name }) => {
   return (
     <TouchableOpacity
       style={{ elevation: 0 }}
-      onPress={() => showToast({ title: name, type: "info", message: name })}>
+      onPress={() => showToast({ title: name, type: "info", message: name })}
+    >
       <View style={styles.root}>
         <Icon name={nameIcon} size={30} color={theme.colors.notBlack} />
         <Text style={styles.nameItem}>{name}</Text>
-        <Icon name='chevron-forward' size={20} color={theme.colors.notBlack} />
+        <Icon name="chevron-forward" size={20} color={theme.colors.notBlack} />
       </View>
     </TouchableOpacity>
   );

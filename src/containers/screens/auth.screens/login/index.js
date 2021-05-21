@@ -15,21 +15,27 @@ import Button from "../../../../components/Button";
 import TextInput from "../../../../components/TextInput";
 import { theme } from "../../../../common/theme";
 import {
-  emailValidator,
   infoValidator,
   passwordValidator,
 } from "../../../../common/validation";
-import * as authStyle from "../../../../constants/auth.constants";
 
-import { loginACT } from "../../../../actions/auth.action";
+import {
+  loginACT,
+  loginGoogleACT,
+  loginViaFirebaseACT,
+} from "../../../../actions/auth.action";
 import TextError from "../../../../components/TextError";
+import { showToast } from "../../../../common/Layout/toast.helper";
+import { typeAuths } from "../../../../sagas/auth.saga";
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
 
-  const { errorLogin, isAuthLoading } = useSelector((state) => state.auth);
+  const { errorLogin, isAuthLoading, isLogin } = useSelector(
+    (state) => state.auth
+  );
 
   const _onLoginPressed = () => {
     const emailError = infoValidator(email.value);
@@ -42,11 +48,33 @@ const LoginScreen = ({ navigation }) => {
     }
 
     //! dispatch to check loginACT
-    dispatch(loginACT({ info: email.value, password: password.value }));
+    dispatch({
+      type: typeAuths.login,
+      payload: { username: email.value, password: password.value },
+    });
+
+    //! dispatch to login via Firebase
+    // dispatch(
+    //   loginViaFirebaseACT({ email: email.value, password: password.value })
+    // );
   };
 
+  const _onGoogleLoginPressed = () => {
+    showToast({
+      title: "Sign in",
+      type: "info",
+      message: "Sorry can not do it",
+    });
+  };
+
+  useEffect(() => {
+    if (isLogin) {
+      navigation.navigate("Bottom tab");
+    }
+  }, [isLogin]);
+
   return (
-    <Background>
+    <Background isButtonBack={true} navigation={navigation}>
       <Logo />
 
       <Header>Welcome back.</Header>
@@ -54,21 +82,21 @@ const LoginScreen = ({ navigation }) => {
       {errorLogin ? <TextError error={errorLogin} /> : <></>}
 
       <TextInput
-        label='Email or Username'
-        returnKeyType='next'
+        label="Email or Username"
+        returnKeyType="next"
         value={email.value}
         onChangeText={(text) => setEmail({ value: text, error: "" })}
         error={!!email.error}
         errorText={email.error}
-        autoCapitalize='none'
-        autoCompleteType='email'
-        textContentType='emailAddress'
-        keyboardType='email-address'
+        autoCapitalize="none"
+        autoCompleteType="email"
+        textContentType="emailAddress"
+        keyboardType="email-address"
       />
 
       <TextInput
-        label='Password'
-        returnKeyType='done'
+        label="Password"
+        returnKeyType="done"
         value={password.value}
         onChangeText={(text) => setPassword({ value: text, error: "" })}
         error={!!password.error}
@@ -78,22 +106,24 @@ const LoginScreen = ({ navigation }) => {
 
       <View style={styles.forgotPassword}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("ForgotPasswordScreen")}>
+          onPress={() => navigation.navigate("ForgotPasswordScreen")}
+        >
           <Text style={styles.label}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
 
       <Button
-        mode='contained'
+        mode="contained"
         style={{ backgroundColor: theme.colors.primary }}
         onPress={_onLoginPressed}
-        disabled={isAuthLoading}>
+        disabled={isAuthLoading}
+      >
         {isAuthLoading ? (
           <ActivityIndicator
             style={{ opacity: 1 }}
             animating={true}
-            size='small'
-            color='#fff'
+            size="small"
+            color="#fff"
           />
         ) : (
           <Text style={styles.text}>Login</Text>
@@ -106,6 +136,14 @@ const LoginScreen = ({ navigation }) => {
           <Text style={styles.link}>Register</Text>
         </TouchableOpacity>
       </View>
+
+      <Button
+        mode="contained"
+        style={{ backgroundColor: theme.colors.placeholder }}
+        onPress={_onGoogleLoginPressed}
+      >
+        <Text>Google Sign-In</Text>
+      </Button>
     </Background>
   );
 };

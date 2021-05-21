@@ -1,58 +1,132 @@
 import { takeEvery, put, call, takeLatest, select } from "redux-saga/effects";
-import { loginAdminAPI, loginAPI, registerAPI } from "../apis/auth.api";
+import {
+  loginAdminAPI,
+  loginAPI,
+  registerAPI,
+  setTokenHeaderSevice,
+} from "../apis/auth.api";
 
-import { LOGIN, REGISTER } from "../constants/auth.constants";
+import {
+  loginFirebaseAPI,
+  logoutFirebaseAPI,
+} from "../apis/firebase/auth.firebase";
+
 import {
   hideAuthLoadingACT,
   loginFailACT,
   loginSuccessACT,
+  loginViaFirebaseACT,
+  loginViaFirebaseFailACT,
+  loginViaFirebaseSuccessACT,
   registerFailACT,
   registerSuccessACT,
   showAuthLoadingACT,
 } from "../actions/auth.action";
+import { onGoogleButtonPressAPI } from "../apis/firebase/auth.firebase";
+import {
+  getLocal,
+  removeLocal,
+  setLocal,
+} from "../common/storeLocal/Auth.local";
+import { statusCode } from "../constants/API.constants";
 
-function* loginSaga({ payload }) {
-  // get is customer or admin login
-  const { isAdmin } = yield select((state) => state.auth);
+export const typeAuths = {
+  authLocal: "AUTH_LOCAL",
+  isAuthLocal: "IS_AUTH_LOCAL",
+  login: "LOGIN",
+  loginFail: "LOGIN_FAIL",
+  loginSuccess: "LOGIN_SUCCESS",
+
+  googleLogin: "GOOGLE_LOGIN",
+  googleLoginFail: "GOOGLE_LOGIN_FAIL",
+  googleLoginSuccess: "GOOGLE_LOGIN_SUCCESS",
+
+  loginFirebase: "LOGIN_FIREBASE",
+  loginFirebaseSuccess: "LOGIN_FIREBASE_SUCCESS",
+  loginFirebaseFail: "LOGIN_FIREBASE_FAIL",
+
+  register: "REGISTER",
+  registerFail: "REGISTER_FAIL",
+  registerSuccess: "REGISTER_SUCCESS",
+
+  logout: "LOGOUT",
+  resetRegister: "RESET_REGISTER",
+
+  showAuthLoading: "SHOW_AUTH_LOADING",
+  showRegisterLoading: "SHOW_REGISTER_LOADING",
+
+  refreshTokenSuccess: "REFRESH_TOKEN_SUCCESS",
+  refreshTokenFail: "REFRESH_TOKEN_FAIL",
+
+  requireLogin: "REQUIRE_LOGIN",
+};
+
+export const role = {
+  user: "user",
+  staff: "staff",
+  owner: "owner",
+};
+
+function* loginSaga(action) {
   // show loading and block button
-  yield put(showAuthLoadingACT());
+  yield put({ type: typeAuths.showAuthLoading });
   //call api
-  const loginRes = isAdmin ? loginAdminAPI() : loginAPI();
-  // ? yield call(loginAPI, payload.data)
-  // : yield call(loginAdminAPI, payload.data);
+  const { payload, code, message } = yield call(loginAPI, action.payload);
 
-  const { data, statusCode } = loginRes.data;
-
-  if (statusCode == 200) {
+  if (code == statusCode.success) {
     // go to my profile
-    yield put(loginSuccessACT(data));
+    yield put({
+      type: typeAuths.loginSuccess,
+      payload: {
+        data: payload,
+      },
+    });
+
+    yield call(setTokenHeaderSevice, payload.token);
   } else {
     // res error
-    yield put(loginFailACT(data));
+    yield put({
+      type: typeAuths.loginFail,
+      payload: {
+        error: message,
+      },
+    });
   }
-  // hide loading and unblock button
-  yield put(hideAuthLoadingACT());
 }
 
-function* registerSaga({ payload }) {
+function* registerSaga(action) {
   // show loading and block button
-  yield put(showAuthLoadingACT());
+  yield put({ type: typeAuths.showRegisterLoading });
   //call api
-  const registerRes = yield call(registerAPI, payload.data);
+  const { payload, code, message } = yield call(registerAPI, action.payload);
 
-  const { data, statusCode } = registerRes.data;
-  if (statusCode == 200) {
+  console.log(`message`, message);
+  if (code == statusCode.success) {
     // back to login or home
-    yield put(registerSuccessACT(data));
+    yield put({
+      type: typeAuths.registerSuccess,
+      payload: {
+        data: payload,
+      },
+    });
   } else {
     // res error
-    yield put(registerFailACT(data));
+    yield put({
+      type: typeAuths.registerFail,
+      payload: {
+        error: message,
+      },
+    });
   }
-  // hide loading and unblock button
-  yield put(hideAuthLoadingACT());
+}
+
+function* logoutSaga() {
+  console.log("logout in saga");
+  yield call(setTokenHeaderSevice, null);
 }
 
 export const authSagas = [
-  takeLatest(LOGIN, loginSaga),
-  takeLatest(REGISTER, registerSaga),
+  takeLatest(typeAuths.login, loginSaga),
+  takeLatest(typeAuths.register, registerSaga),
+  takeLatest(typeAuths.logout, logoutSaga),
 ];

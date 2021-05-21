@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import Colors from "../constants/colors";
 const Button = (props) => {
   return (
-    <TouchableOpacity onPress={props.onPress}>
+    <TouchableOpacity onPress={props.onPress} disabled={props.disabled}>
       <View style={[styles.button, props.style]}>
         <Text style={{ textAlign: "center" }}>{props.children}</Text>
       </View>

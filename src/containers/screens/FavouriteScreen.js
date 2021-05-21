@@ -1,4 +1,5 @@
-import React from "react";
+import { useIsFocused } from "@react-navigation/core";
+import React, { useEffect, useState } from "react";
 import {
   Dimensions,
   View,
@@ -6,10 +7,17 @@ import {
   StyleSheet,
   FlatList,
   SafeAreaView,
+  RefreshControl,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import LottieView from "lottie-react-native";
 import Button from "../../components/Button";
 import FavouriteItem from "../../components/FavouriteItem";
+import MainLoading from "../../components/Loader/MainLoading";
+import RequireLogin from "../../components/RequireLogin";
 import Colors from "../../constants/colors";
+import { typeFavorites } from "../../sagas/favorite.saga";
+
 const Line = () => {
   return (
     <View
@@ -20,25 +28,60 @@ const Line = () => {
     />
   );
 };
-const CartScreen = () => {
-  const fakeData = [1, 2, 3, 4, 5, 6, 7];
+
+const FavoriteScreen = ({ navigation }) => {
+  const isFocused = useIsFocused();
+  const dispatch = useDispatch();
+  const { isLoadingFetchFavoriteProduct, favoriteProducts } = useSelector(
+    (state) => state.favorites
+  );
+  const { isLogin } = useSelector((state) => state.auth);
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    if (isLogin) {
+      dispatch({ type: typeFavorites.fetchFavorite });
+    }
+  }, [isFocused]);
+
+  const onRefresh = () => {
+    dispatch({ type: typeFavorites.fetchFavorite });
+    // if (isLoadingFetchFavoriteProduct) {
+    //   setRefreshing(false);
+    // }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.titleTextContainer}>
         <Text style={styles.titleText}>Favourite</Text>
       </View>
-      <FlatList
-        style={styles.listCartItemContainer}
-        showsVerticalScrollIndicator={false}
-        data={fakeData}
-        keyExtractor={(item, index) => item.toString()}
-        renderItem={({ item }) => (
-          <View>
-            <FavouriteItem />
-            <Line />
-          </View>
-        )}
-      />
+      {!isLogin && <RequireLogin navigation={navigation} />}
+      {!isLoadingFetchFavoriteProduct && isLogin ? (
+        <FlatList
+          style={styles.listCartItemContainer}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          data={favoriteProducts}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <View>
+              <FavouriteItem item={item.product} navigation={navigation} />
+              <Line />
+            </View>
+          )}
+        />
+      ) : (
+        // <MainLoading padding={30} />
+        <LottieView
+          source={require("../../../assets/stayHome.json")}
+          autoPlay
+          loop
+          style={{ height: 300 }}
+        />
+      )}
       <Button
         style={{
           backgroundColor: Colors.green,
@@ -80,4 +123,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CartScreen;
+export default FavoriteScreen;

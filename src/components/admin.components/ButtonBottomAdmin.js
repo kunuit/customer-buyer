@@ -1,50 +1,56 @@
 import React from "react";
-import { View, StyleSheet, Text, Dimensions } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { theme } from "../../common/theme";
-import Button from "../Button";
-import Colors from "../../constants/colors";
+import RoundedButton from "../RoundedButton";
+import { AntDesign, FontAwesome5, Zocial } from "@expo/vector-icons";
 
-const ButtonBottomAdmin = () => {
+const ButtonBottomAdmin = ({ onDeletedProduct, isAdmin, navigation }) => {
   return (
-    <View style={styles.root}>
-      <Button
-        mode='contained'
-        onPress={() => console.log("Update Item")}
-        style={styles.buttonUpdate}>
-        <Text style={styles.buttonText}>Update</Text>
-      </Button>
-
-      <Button
-        mode='contained'
-        onPress={() => console.log("Delete Item")}
-        style={styles.buttonDelete}>
-        <Text style={styles.buttonText}>Delete</Text>
-      </Button>
+    <View style={[styles.root, { borderRadius: isAdmin ? 50 : 15 }]}>
+      {isAdmin ? (
+        <RoundedButton
+          mode="contained"
+          onPress={() => onDeletedProduct()}
+          style={[styles.buttonItem, { marginVertical: 0 }]}
+        >
+          <FontAwesome5 name="trash" size={20} color={theme.colors.notpink} />
+        </RoundedButton>
+      ) : (
+        <View>
+          <RoundedButton
+            mode="contained"
+            onPress={() => navigation.navigate("Cart")}
+            style={styles.buttonItem}
+          >
+            <Zocial name="cart" size={20} color={theme.colors.notBlack} />
+          </RoundedButton>
+          <RoundedButton
+            mode="contained"
+            onPress={() => navigation.navigate("Messenger Detail")}
+            style={styles.buttonItem}
+          >
+            <AntDesign
+              name="message1"
+              size={20}
+              color={theme.colors.notBlack}
+            />
+          </RoundedButton>
+        </View>
+      )}
     </View>
   );
 };
 const styles = StyleSheet.create({
   root: {
-    width: "90%",
     position: "absolute",
-    bottom: Dimensions.get("window").height * 0.08,
-    flexDirection: "row",
-    justifyContent: "center",
+    top: 15,
+    right: 18,
+    padding: 3,
+    backgroundColor: theme.backgrounds.buttonBack,
   },
-  buttonUpdate: {
-    width: "50%",
-    backgroundColor: theme.colors.primary,
-    marginRight: "2%",
-  },
-  buttonDelete: {
-    width: "50%",
-    backgroundColor: theme.colors.notpink,
-    marginLeft: "2%",
-  },
-  buttonText: {
-    fontFamily: "gilroy-bold",
-    fontSize: 15,
-    color: theme.backgrounds.white,
+  buttonItem: {
+    borderWidth: 0,
+    marginVertical: 5,
   },
 });
 

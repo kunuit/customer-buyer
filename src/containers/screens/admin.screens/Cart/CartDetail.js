@@ -5,7 +5,7 @@ import { View } from "react-native";
 import { theme } from "../../../../common/theme";
 import ButtonBack from "../../../../components/ButtonBack";
 
-const CartDetail = ({ navigation }) => {
+const CartAdminDetail = ({ navigation }) => {
   return (
     <View style={styles.root}>
       <Text>Cart detail</Text>
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CartDetail;
+export default CartAdminDetail;
