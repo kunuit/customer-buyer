@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     borderTopColor: theme.backgrounds.paper,
   },
   paymentMethod: {
-    paddingHorizontal: 5,
+    paddingHorizontal: 10,
     flexDirection: "row",
     height: 40,
     alignItems: "center",
@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   textTitle: {
+    marginLeft: 5,
     fontFamily: "gilroy-medium",
   },
   text: {
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
   elements: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
   },
   priceView: {
     marginVertical: 10,

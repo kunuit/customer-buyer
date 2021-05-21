@@ -20,6 +20,7 @@ export const AddInfoOrder = () => {
           name="message-bulleted"
           size={24}
           color={theme.colors.primary}
+          style={styles.icon}
         />
         <Text style={styles.textTitle}> Message </Text>
         <View style={styles.textInput}>
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
   },
   element: {
     flexDirection: "row",
-    paddingHorizontal: 5,
+    paddingHorizontal: 10,
     alignItems: "center",
     borderBottomWidth: 0.5,
     height: 50,
@@ -85,6 +86,7 @@ const styles = StyleSheet.create({
     fontFamily: "gilroy-medium",
     alignItems: "center",
     justifyContent: "center",
+    marginLeft: 5,
   },
   text: {
     fontFamily: "gilroy-light",

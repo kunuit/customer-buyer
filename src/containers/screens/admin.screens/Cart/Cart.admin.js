@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FlatList, SafeAreaView } from "react-native";
 import { Dimensions } from "react-native";
 import { StyleSheet } from "react-native";
@@ -10,11 +10,19 @@ import TitleScreen from "../../../../components/TitleScreen";
 
 const CartAdmin = ({ navigation }) => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const [searchQuery, setSearchQuery] = useState("");
+  console.log(`searchQuery`, searchQuery);
+  // const { isLoading } = useSelector((state) => state.products);
+  const onChangeSearch = (query) => setSearchQuery(query);
   return (
     <SafeAreaView style={styles.exploreContainer}>
       <TitleScreen isBorder={false} title="My Report" />
 
-      <SearchView holSearch="my report" />
+      <SearchView
+        searchQuery={searchQuery}
+        searchQueryValue={(query) => onChangeSearch(query)}
+        holSearch="my report"
+      />
 
       <FlatList
         style={styles.listCardItemContainer}

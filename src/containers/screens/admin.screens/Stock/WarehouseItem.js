@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FlatList, SafeAreaView } from "react-native";
 import { StyleSheet } from "react-native";
 import { windowHeight } from "../../../../common/Dimensions";
@@ -7,9 +7,17 @@ import SearchView from "../../../../components/SearchView";
 
 const WarehouseItem = ({ navigation }) => {
   const fakeData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const [searchQuery, setSearchQuery] = useState("");
+  console.log(`searchQuery`, searchQuery);
+  // const { isLoading } = useSelector((state) => state.products);
+  const onChangeSearch = (query) => setSearchQuery(query);
   return (
     <SafeAreaView style={styles.exploreContainer}>
-      <SearchView holSearch="my warehouse items" />
+      <SearchView
+        searchQuery={searchQuery}
+        searchQueryValue={(query) => onChangeSearch(query)}
+        holSearch="my warehouse items"
+      />
 
       <FlatList
         style={styles.listCardItemContainer}

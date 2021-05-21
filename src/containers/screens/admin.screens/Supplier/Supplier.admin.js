@@ -19,6 +19,10 @@ const SupplierAdmin = ({ navigation }) => {
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
   const { data, isLoading } = useSelector((state) => state.suppliers);
+  const [searchQuery, setSearchQuery] = useState("");
+  console.log(`searchQuery`, searchQuery);
+  // const { isLoading } = useSelector((state) => state.products);
+  const onChangeSearch = (query) => setSearchQuery(query);
 
   const onRefresh = () => {
     dispatch({
@@ -36,7 +40,11 @@ const SupplierAdmin = ({ navigation }) => {
     <SafeAreaView style={styles.exploreContainer}>
       <TitleScreen isBorder={false} title="My Suppliers" />
 
-      <SearchView holSearch="my supplier" />
+      <SearchView
+        searchQuery={searchQuery}
+        searchQueryValue={(query) => onChangeSearch(query)}
+        holSearch="my supplier"
+      />
 
       {!isLoading ? (
         <FlatList

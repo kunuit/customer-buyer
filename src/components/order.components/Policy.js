@@ -18,6 +18,7 @@ export const Policy = () => {
               alignItems: "flex-end",
             },
           ]}
+          onPress={() => console.log("go to policy")}
         >
           policy
         </Text>
@@ -34,11 +35,11 @@ const styles = StyleSheet.create({
     borderTopWidth: 8,
     borderBottomWidth: 8,
     height: 50,
-    padding: 5,
+    padding: 10,
     marginBottom: 50,
   },
   textTitle: {
     fontFamily: "gilroy-medium",
-    paddingLeft: 3,
+    paddingLeft: 8,
   },
 });

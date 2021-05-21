@@ -55,9 +55,7 @@ const AppDetail = () => {
   const fall = new Animated.Value(1);
   const renderInner = () => (
     <View style={styles.panel}>
-      <View style={{ height: 130 }}>
-        <RequireLogin />
-      </View>
+      <View style={{ height: 130 }}>{/* <RequireLogin /> */}</View>
     </View>
   );
 

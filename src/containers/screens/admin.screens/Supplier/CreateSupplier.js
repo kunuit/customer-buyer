@@ -53,12 +53,12 @@ const CreateSupplier = ({ navigation, route }) => {
 
   const addItem = () => {
     if (item) {
+      console.log(`item item supplier`, item);
       setName({ value: item.name, error: "" });
-      setDescription({ value: item.description, error: "" });
       setEmail({ value: item.email, error: "" });
       setPhone({ value: item.phone, error: "" });
       setAddress({ value: item.address, error: "" });
-      setRePresentative({ value: item.representative, error: "" });
+      setRePresentative({ value: item.representation, error: "" });
     }
   };
 
@@ -71,7 +71,7 @@ const CreateSupplier = ({ navigation, route }) => {
         data: {
           id: item ? item.id : Math.floor(Math.random() * 100000 + 1),
           name: name.value,
-          description: description.value,
+          // description: description.value,
           email: email.value,
           phone: phone.value,
           address: address.value,

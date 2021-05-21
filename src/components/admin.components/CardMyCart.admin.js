@@ -8,14 +8,13 @@ const CardMyCart = ({ item, navigation }) => {
   return (
     <TouchableOpacity
       style={{ elevation: 0 }}
-      onPress={() => navigation.navigate("Cart Detail")}
+      onPress={() => navigation.navigate("Cart admin Detail")}
     >
       <View style={styles.root}>
         <Image
           style={{ height: 60, width: 60, borderRadius: 30 }}
           source={{
-            uri:
-              "https://www.clipartmax.com/png/full/250-2502583_danger31-diddy-kong-transparent.png",
+            uri: "https://www.clipartmax.com/png/full/250-2502583_danger31-diddy-kong-transparent.png",
           }}
         />
         <View style={{ marginLeft: "5%", flex: 1 }}>

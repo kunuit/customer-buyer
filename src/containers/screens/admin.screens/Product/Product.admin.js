@@ -12,21 +12,19 @@ import CardMyProduct from "../../../../components/admin.components/CardMyProduct
 import MainLoading from "../../../../components/Loader/MainLoading";
 import SearchView from "../../../../components/SearchView";
 import TitleScreen from "../../../../components/TitleScreen";
-import {
-  typeProducts,
-} from "../../../../sagas/product.saga";
+import { typeProducts } from "../../../../sagas/product.saga";
 import { useState } from "react";
 import { statusFetch } from "../../../../sagas/utilSagas.saga";
 
 const ProductAdmin = ({ navigation }) => {
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
-  const {
-    data,
-    isLoading,
-    isLoadingFetchAddProduct,
-    productPagination,
-  } = useSelector((state) => state.products);
+  const { data, isLoading, isLoadingFetchAddProduct, productPagination } =
+    useSelector((state) => state.products);
+  const [searchQuery, setSearchQuery] = useState("");
+  console.log(`searchQuery`, searchQuery);
+  // const { isLoading } = useSelector((state) => state.products);
+  const onChangeSearch = (query) => setSearchQuery(query);
 
   const onRefresh = () => {
     dispatch({
@@ -42,7 +40,8 @@ const ProductAdmin = ({ navigation }) => {
       <TitleScreen isBorder={false} title="My Products" />
 
       <SearchView
-        typeAction={typeProducts.queryProductFirebase}
+        searchQuery={searchQuery}
+        searchQueryValue={(query) => onChangeSearch(query)}
         holSearch="my product"
       />
 
@@ -59,7 +58,7 @@ const ProductAdmin = ({ navigation }) => {
           )}
           keyExtractor={(item, index) => index.toString()}
           onEndReached={() => {
-            //! check error in here 
+            //! check error in here
             if (productPagination.totalPage > productPagination.currentPage) {
               dispatch({
                 type: typeProducts.fetchProduct,
