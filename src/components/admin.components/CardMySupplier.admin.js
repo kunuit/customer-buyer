@@ -13,6 +13,7 @@ const CardMySupplier = ({ item, navigation }) => {
       <View style={styles.root}>
         <Image
           style={{ height: 60, width: 60, borderRadius: 30 }}
+          resizeMode="center"
           source={{
             uri: item.imageUrl,
           }}
@@ -43,7 +44,7 @@ const CardMySupplier = ({ item, navigation }) => {
 
 const styles = StyleSheet.create({
   root: {
-    width: "90%",
+    width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
   exploreContainer: {
     flex: 1,
     alignItems: "center",
+    justifyContent: "center",
     backgroundColor: "white",
     paddingBottom: windowHeight * 0.09,
   },

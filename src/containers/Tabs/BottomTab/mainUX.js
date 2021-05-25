@@ -56,7 +56,7 @@ const MainUX = () => {
       />
       <Tab.Screen
         name="Explore"
-        component={ProductDetail}
+        component={Explore}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <MaterialCommunityIcons

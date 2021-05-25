@@ -23,6 +23,7 @@ const HomeBanner = () => {
           <Image
             key={index}
             style={styles.bannerImage}
+            resizeMode="center"
             source={{ uri: item }}
           />
         ))}

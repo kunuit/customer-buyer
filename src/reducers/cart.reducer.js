@@ -34,6 +34,7 @@ const reducer = (state = initialState, { type, payload }) => {
         isLoading: false,
         data: payload.cartItems,
         cartId: payload.cartId,
+        listCheckOutId: [],
       };
     case typeCarts.addtoCartSuccess:
       return {

@@ -8,6 +8,7 @@ import { productSagas } from "./product.saga";
 import { SupplierSagas } from "./supplier.saga";
 import { uploadSagas } from "./upload.saga";
 import { measureSagas } from "./measure.saga";
+import { orderSagas } from "./order.saga";
 
 function* rootSaga() {
   yield all([
@@ -19,6 +20,7 @@ function* rootSaga() {
     ...favoriteSagas,
     ...uploadSagas,
     ...measureSagas,
+    ...orderSagas,
   ]);
 }
 

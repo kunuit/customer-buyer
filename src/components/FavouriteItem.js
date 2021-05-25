@@ -35,6 +35,7 @@ const FavouriteItem = ({ item, navigation }) => {
         <View style={styles.cartImageContainer}>
           <Image
             style={styles.cartImage}
+            resizeMode="center"
             source={{
               uri: item.imageUrls[0],
               // uri: "https://pngimg.com/uploads/pepsi/pepsi_PNG8956.png",

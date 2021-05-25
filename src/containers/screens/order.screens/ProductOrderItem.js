@@ -1,10 +1,10 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import NumberFormat from "react-number-format";
-import { theme } from "../../common/theme";
+import { theme } from "../../../common/theme";
 
-export const OrderItem = ({ item }) => {
-  console.log(`item in order Item`, typeof item, item, item._id, item.quantity);
+const ProductOrderItem = ({ productOrder }) => {
+  const { product, quantity, productId } = productOrder;
   return (
     <View style={styles.cartItemContainer}>
       <View style={styles.cartImageContainer}>
@@ -12,24 +12,20 @@ export const OrderItem = ({ item }) => {
           style={styles.cartImage}
           resizeMode="center"
           source={{
-            uri: item.product.imageUrls[0],
+            uri: product.imageUrls[0],
             // uri: "https://pngimg.com/uploads/pepsi/pepsi_PNG8956.png",
           }}
         />
       </View>
       <View style={styles.cartDetailContainer}>
         <View style={{ marginBottom: 5 }}>
-          <Text style={styles.titleText}>{item.product.name}</Text>
+          <Text style={styles.titleText}>{product.name}</Text>
           <Text style={{ color: theme.colors.notGray }}>1kg, prices</Text>
         </View>
       </View>
       <View style={styles.cartAmount}>
         <NumberFormat
-          value={
-            item.product.price
-              ? Math.round(item.product.price * 100) / 100
-              : 0.0
-          }
+          value={product.price ? Math.round(product.price * 100) / 100 : 0.0}
           displayType={"text"}
           thousandSeparator={true}
           // suffix={" vnd"}
@@ -38,11 +34,13 @@ export const OrderItem = ({ item }) => {
             <Text style={styles.titleText}>{formattedValue}</Text>
           )}
         />
-        <Text>x{item.quantity}</Text>
+        <Text>x{quantity}</Text>
       </View>
     </View>
   );
 };
+
+export default ProductOrderItem;
 
 const styles = StyleSheet.create({
   cartItemContainer: {

@@ -11,13 +11,14 @@ const CardStockSlip = ({ item, navigation }) => {
   return (
     <TouchableOpacity
       style={{ elevation: 0 }}
-      onPress={() => setIconArchived(true)}>
+      onPress={() => setIconArchived(true)}
+    >
       <View style={styles.root}>
         <Image
           style={{ height: 60, width: 60, borderRadius: 30 }}
+          resizeMode="center"
           source={{
-            uri:
-              "https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg",
+            uri: "https://i.pinimg.com/736x/76/07/5c/76075c11bfe509ee9a11d9baa991c40d.jpg",
           }}
         />
         <View style={{ marginLeft: "5%", flex: 1 }}>
@@ -32,10 +33,11 @@ const CardStockSlip = ({ item, navigation }) => {
         <View style={{ width: "11%" }}>
           {iconArchived ? (
             <RoundedButton
-              mode='contained'
+              mode="contained"
               onPress={() => setIconArchived(false)}
-              style={styles.buttonItem}>
-              <FontAwesome name='edit' size={24} color={theme.colors.notpink} />
+              style={styles.buttonItem}
+            >
+              <FontAwesome name="edit" size={24} color={theme.colors.notpink} />
             </RoundedButton>
           ) : (
             <></>

@@ -3,6 +3,10 @@ import React, { useMemo, useRef } from "react";
 import { StatusBar, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStore, applyMiddleware, compose } from "redux";
+import {
+  useRefBottomAlert,
+  BottomAlert,
+} from "react-native-modal-bottom-alert";
 
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./src/sagas";
@@ -99,6 +103,7 @@ export default () => {
       <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
           <AppDetail />
+          <BottomAlert ref={(ref) => useRefBottomAlert(ref)} />
         </NavigationContainer>
       </PersistGate>
     </Provider>

@@ -13,6 +13,7 @@ const CardMyCart = ({ item, navigation }) => {
       <View style={styles.root}>
         <Image
           style={{ height: 60, width: 60, borderRadius: 30 }}
+          resizeMode="center"
           source={{
             uri: "https://www.clipartmax.com/png/full/250-2502583_danger31-diddy-kong-transparent.png",
           }}

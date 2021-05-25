@@ -21,6 +21,7 @@ import { statusFetch } from "../../sagas/utilSagas.saga";
 import { typeFavorites } from "../../sagas/favorite.saga";
 import { typeCarts } from "../../sagas/cart.saga";
 import { OrderScreen } from "../screens/OrderScreen";
+import OrderDetailScreen from "../screens/order.screens/OrderDetailScreen";
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,7 @@ const General = () => {
       },
     });
     dispatch({ type: typeCategories.fetchCategory });
+    // dispatch({ type: typeCarts.fetchCart });
     // dispatch({ type: typeFavorites.fetchFavorite });
   }, []);
 
@@ -64,6 +66,10 @@ const General = () => {
       <Stack.Screen name="Category Detail" component={CategoryDetail} />
       <Stack.Screen name="Messenger Detail" component={MessengerDetail} />
       <Stack.Screen name="Order Detail" component={OrderScreen} />
+      <Stack.Screen
+        name="Order Detail By Status"
+        component={OrderDetailScreen}
+      />
     </Stack.Navigator>
   );
 };

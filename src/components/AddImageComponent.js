@@ -15,11 +15,10 @@ const AddImageComponent = ({ images, onAddImage }) => {
             height: 60,
             width: 60,
             borderRadius: 5,
-            resizeMode: "contain",
           }}
+          resizeMode="center"
           source={{
-            uri:
-              "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg",
+            uri: "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg",
           }}
         />
       );
@@ -28,7 +27,7 @@ const AddImageComponent = ({ images, onAddImage }) => {
         <View style={styles.imageView}>
           {renderImage(images.slice(0, 3))}
           <Feather
-            name='more-horizontal'
+            name="more-horizontal"
             size={24}
             color={theme.colors.notGray}
           />
@@ -63,13 +62,14 @@ const AddImageComponent = ({ images, onAddImage }) => {
       <View style={styles.imageView}>{renderImageView()}</View>
 
       <Button
-        mode='contained'
+        mode="contained"
         style={styles.button}
         onPress={() => {
           onAddImage();
-        }}>
+        }}
+      >
         <MaterialCommunityIcons
-          name='image-plus'
+          name="image-plus"
           size={24}
           color={theme.colors.primary}
         />

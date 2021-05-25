@@ -25,6 +25,7 @@ const GroceryItem = ({ item, navigation }) => {
         <View style={styles.cardImageContainer}>
           <Image
             style={styles.cardImage}
+            resizeMode="center"
             source={{
               uri: item.imageUrl,
             }}

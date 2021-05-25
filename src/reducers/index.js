@@ -9,6 +9,7 @@ import cartReducer from "../reducers/cart.reducer";
 import favoriteReducer from "../reducers/favorite.reducers";
 import uploadReducer from "../reducers/upload.reducer";
 import measureReducer from "../reducers/measure.reducer";
+import orderReducer from "../reducers/order.reducers";
 
 const rootReducer = combineReducers({
   products: productReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   favorites: favoriteReducer,
   uploads: uploadReducer,
   measures: measureReducer,
+  orders: orderReducer,
 });
 
 export default rootReducer;

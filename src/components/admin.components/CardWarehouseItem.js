@@ -11,13 +11,14 @@ const CardWarehouseItem = ({ item, navigation }) => {
   return (
     <TouchableOpacity
       style={{ elevation: 0 }}
-      onPress={() => setIconArchived(true)}>
+      onPress={() => setIconArchived(true)}
+    >
       <View style={styles.root}>
         <Image
           style={{ height: 60, width: 60, borderRadius: 30 }}
+          resizeMode="center"
           source={{
-            uri:
-              "https://s3-hcm-r1.longvan.net/doanweb/2618d06e-1c1a-4493-a9be-e9b42e369fb9202039251257vn000ee3w00-5.png",
+            uri: "https://s3-hcm-r1.longvan.net/doanweb/2618d06e-1c1a-4493-a9be-e9b42e369fb9202039251257vn000ee3w00-5.png",
           }}
         />
         <View style={{ marginLeft: "5%", flex: 1 }}>
@@ -45,10 +46,11 @@ const CardWarehouseItem = ({ item, navigation }) => {
         <View style={{ width: "11%" }}>
           {iconArchived ? (
             <RoundedButton
-              mode='contained'
+              mode="contained"
               onPress={() => setIconArchived(false)}
-              style={styles.buttonItem}>
-              <FontAwesome name='edit' size={24} color={theme.colors.notpink} />
+              style={styles.buttonItem}
+            >
+              <FontAwesome name="edit" size={24} color={theme.colors.notpink} />
             </RoundedButton>
           ) : (
             <></>

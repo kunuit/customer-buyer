@@ -70,6 +70,7 @@ const CartItem = ({
           >
             <Image
               style={styles.cartImage}
+              resizeMode="center"
               source={{
                 uri: item.product.imageUrls[0],
                 // "https://theme.hstatic.net/1000273444/1000452469/14/no-img.png?v=1804",

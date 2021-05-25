@@ -23,6 +23,7 @@ const ProductDetailImageContainer = ({ images }) => {
             <Image
               key={index}
               style={styles.productDetailImage}
+              resizeMode="center"
               source={{ uri: item }}
             />
           ))

@@ -40,6 +40,7 @@ const CardItem = ({
         <View style={styles.cardImageContainer}>
           <Image
             style={styles.cardImage}
+            resizeMode="center"
             source={{
               uri: !item.imageUrls
                 ? "https://i.pinimg.com/originals/eb/d4/de/ebd4deb64c74e2f1246626d5a290274d.png"
@@ -127,7 +128,6 @@ const styles = StyleSheet.create({
   cardImage: {
     width: "100%",
     height: "100%",
-    resizeMode: "contain",
   },
   cardDetailContainer: {
     flexGrow: 1,

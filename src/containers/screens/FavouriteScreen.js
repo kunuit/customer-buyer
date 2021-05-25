@@ -61,6 +61,17 @@ const FavoriteScreen = ({ navigation }) => {
         <FlatList
           style={styles.listCartItemContainer}
           showsVerticalScrollIndicator={false}
+          ListEmptyComponent={
+            <View
+              style={{
+                height: 200,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text>Bạn chưa có sản phẩm yêu thích nào</Text>
+            </View>
+          }
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
