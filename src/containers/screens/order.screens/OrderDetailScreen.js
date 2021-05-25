@@ -31,6 +31,7 @@ export default function OrderDetailScreen({ navigation }) {
       <TitleScreen title="Invoice" isBorder="false" navigation={navigation} />
       <TabTop.Navigator
         tabBarOptions={{
+          scrollEnabled: true,
           activeTintColor: theme.colors.primary,
           labelStyle: {
             fontSize: 13,
@@ -43,7 +44,6 @@ export default function OrderDetailScreen({ navigation }) {
             borderWidth: 1,
             elevation: 0,
           },
-          // scrollEnabled: true,
         }}
       >
         <TabTop.Screen name="Pending Verify" component={PendingVerify} />

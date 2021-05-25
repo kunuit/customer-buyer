@@ -35,7 +35,7 @@ const OrderItem = ({ order, status, ...props }) => {
               <Text>khoong co san pham</Text>
             </View>
           }
-          // ItemSeparatorComponent={Line}
+          ItemSeparatorComponent={Line}
           renderItem={({ item }) => {
             return <ProductOrderItem productOrder={item} />;
           }}
@@ -132,3 +132,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
 });
+
+const Line = () => {
+  return (
+    <View
+      style={{
+        marginHorizontal: 10,
+        borderBottomColor: theme.colors.lineBorder,
+        borderBottomWidth: 1,
+      }}
+    />
+  );
+};
