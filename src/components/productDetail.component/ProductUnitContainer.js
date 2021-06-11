@@ -1,8 +1,8 @@
-import React from "react";
-import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
-import RoundedButton from "../RoundedButton";
-import { View, StyleSheet, Text } from "react-native";
-import { theme } from "../../common/theme";
+import React from 'react'
+import { Entypo, AntDesign, FontAwesome } from '@expo/vector-icons'
+import RoundedButton from '../RoundedButton'
+import { View, StyleSheet, Text } from 'react-native'
+import { theme } from '../../common/theme'
 
 const ProductUnitContainer = ({
   title,
@@ -14,12 +14,12 @@ const ProductUnitContainer = ({
 }) => {
   return (
     <View style={styles.productUnitContainer}>
-      <View>
-        <Text style={styles.titleText}>
-          {title ? title : "Naturel Red Apple"}
+      <View style={{ flex: 0.9 }}>
+        <Text style={styles.titleText} numberOfLines={2}>
+          {title ? title : 'Naturel Red Apple'}
         </Text>
         <Text style={styles.unitText}>
-          {unitText ? unitText : "1kg, Price"}
+          {unitText ? unitText : '1kg, Price'}
         </Text>
       </View>
       <View>
@@ -35,7 +35,7 @@ const ProductUnitContainer = ({
           <RoundedButton
             mode="contained"
             onPress={() => {
-              onSetFavorite();
+              onSetFavorite()
             }}
             style={styles.buttonItem}
           >
@@ -48,31 +48,31 @@ const ProductUnitContainer = ({
         )}
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   productUnitContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: "5%",
-    paddingVertical: "5%",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: '5%',
+    paddingVertical: '5%',
   },
   titleText: {
-    fontFamily: "gilroy-bold",
+    fontFamily: 'gilroy-bold',
     fontSize: 24,
-    color: "#181725",
+    color: '#181725',
   },
   unitText: {
-    fontFamily: "gilroy-light",
+    fontFamily: 'gilroy-light',
     fontSize: 14,
-    color: "#7C7C7C",
+    color: '#7C7C7C',
   },
   buttonItem: {
     borderWidth: 0,
     backgroundColor: theme.backgrounds.white,
   },
-});
+})
 
-export default ProductUnitContainer;
+export default ProductUnitContainer

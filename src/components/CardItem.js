@@ -1,5 +1,5 @@
-import React from "react";
-import Colors from "../constants/colors";
+import React from 'react'
+import Colors from '../constants/colors'
 import {
   View,
   StyleSheet,
@@ -7,13 +7,13 @@ import {
   Image,
   TouchableOpacity,
   TouchableHighlight,
-} from "react-native";
-import { Entypo, AntDesign, FontAwesome } from "@expo/vector-icons";
-import RoundedButton from "../components/RoundedButton";
-import { useDispatch, useSelector } from "react-redux";
-import { typeCarts } from "../sagas/cart.saga";
-import NumberFormat from "react-number-format";
-import { theme } from "../common/theme";
+} from 'react-native'
+import { Entypo, AntDesign, FontAwesome } from '@expo/vector-icons'
+import RoundedButton from '../components/RoundedButton'
+import { useDispatch, useSelector } from 'react-redux'
+import { typeCarts } from '../sagas/cart.saga'
+import NumberFormat from 'react-number-format'
+import { theme } from '../common/theme'
 
 const CardItem = ({
   fontSizeTitle,
@@ -23,13 +23,13 @@ const CardItem = ({
   numberOfLines = 2,
   navigation,
 }) => {
-  const { isAdminLogin } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  const { isAdminLogin } = useSelector((state) => state.auth)
+  const dispatch = useDispatch()
 
   return (
     <TouchableHighlight
       underlayColor={theme.backgrounds.white}
-      onPress={() => navigation.navigate("Product Detail", item)}
+      onPress={() => navigation.navigate('Product Detail', item)}
     >
       <View
         style={[
@@ -40,10 +40,10 @@ const CardItem = ({
         <View style={styles.cardImageContainer}>
           <Image
             style={styles.cardImage}
-            resizeMode="center"
+            resizeMode="contain"
             source={{
               uri: !item.imageUrls
-                ? "https://i.pinimg.com/originals/eb/d4/de/ebd4deb64c74e2f1246626d5a290274d.png"
+                ? 'https://i.pinimg.com/originals/eb/d4/de/ebd4deb64c74e2f1246626d5a290274d.png'
                 : item.imageUrls[0],
             }}
           />
@@ -70,10 +70,10 @@ const CardItem = ({
         <View style={styles.addToCartContainer}>
           <NumberFormat
             value={item.price ? Math.round(item.price * 100) / 100 : 0.0}
-            displayType={"text"}
+            displayType={'text'}
             thousandSeparator={true}
             // suffix={" vnd"}
-            prefix={"$"}
+            prefix={'$'}
             renderText={(formattedValue) => (
               <Text
                 style={[
@@ -101,7 +101,7 @@ const CardItem = ({
             }
           >
             <Entypo
-              name={isAdminLogin ? "pencil" : "plus"}
+              name={isAdminLogin ? 'pencil' : 'plus'}
               size={17}
               color="white"
             />
@@ -109,13 +109,13 @@ const CardItem = ({
         </View>
       </View>
     </TouchableHighlight>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   cardContainer: {
     padding: 10,
-    width: "100%",
+    width: '100%',
     height: 250,
     borderColor: theme.colors.lineBorder,
     borderRadius: 20,
@@ -123,33 +123,33 @@ const styles = StyleSheet.create({
   },
   cardImageContainer: {
     marginBottom: 20,
-    height: "45%",
+    height: '45%',
   },
   cardImage: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
   },
   cardDetailContainer: {
     flexGrow: 1,
-    alignItems: "flex-start",
+    alignItems: 'flex-start',
   },
   titleText: {
-    fontFamily: "gilroy-bold",
+    fontFamily: 'gilroy-bold',
     fontSize: 18,
-    color: "black",
+    color: 'black',
   },
   descriptionText: {
     marginTop: 3,
-    fontFamily: "gilroy-light",
+    fontFamily: 'gilroy-light',
     fontSize: 16,
     color: Colors.gray,
   },
   addToCartContainer: {
     paddingVertical: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
-});
+})
 
-export default CardItem;
+export default CardItem
