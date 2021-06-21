@@ -17,7 +17,7 @@ const SearchView = ({ holSearch }) => {
         value={searchQuery}
         style={styles.searchBar}
         clearIcon={() => <MaterialIcons name="clear" size={20} color="black" />}
-        icon={() => <MaterialIcons name="search" size={20} color="black" />}
+        searchIcon={() => <MaterialIcons name="search" size={20} color="black" />}
         inputStyle={[
           { fontFamily: "gilroy-bold" },
           { fontSize: 13 },

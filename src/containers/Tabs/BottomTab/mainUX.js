@@ -18,6 +18,7 @@ import CartScreen from "../../screens/CartScreen";
 import CardItem from "../../../components/CardItem";
 import ListCardItem from "../../../components/ListCardItem";
 import Home from "../../screens/Home";
+import Filter from "../../screens/FilterScreen"
 
 const Tab = createBottomTabNavigator();
 
@@ -58,7 +59,7 @@ const MainUX = () => {
       />
       <Tab.Screen
         name="Explore"
-        component={ProductDetail}
+        component={Explore}
         options={{
           tabBarIcon: ({ focused, tintColor }) => (
             <MaterialCommunityIcons

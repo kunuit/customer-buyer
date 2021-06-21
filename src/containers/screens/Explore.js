@@ -13,6 +13,9 @@ import { Searchbar } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
 import ListCardItem from "../../components/ListCardItem";
 import Colors from "../../constants/colors";
+import { TouchableOpacity } from "react-native";
+import { useLinkProps } from "@react-navigation/native";
+import FilterScreen from './FilterScreen'
 const Explore = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
 
@@ -22,23 +25,28 @@ const Explore = () => {
       <View style={styles.titleTextContainer}>
         <Text style={styles.titleText}>Find Products</Text>
       </View>
-      <View style={styles.searchContainer}>
-        <Searchbar
-          placeholder="Search Store"
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-          style={styles.searchBar}
-          clearIcon={() => (
-            <MaterialIcons name="clear" size={20} color="black" />
-          )}
-          icon={() => <MaterialIcons name="search" size={20} color="black" />}
-          inputStyle={[
-            { fontFamily: "gilroy-bold" },
-            { fontSize: 13 },
-            { borderWidth: 0 },
-          ]}
-          on
-        />
+      <View style={styles.Container}>
+        <View style={styles.searchContainer}>
+          <Searchbar
+            placeholder="Search Store"
+            onChangeText={onChangeSearch}
+            value={searchQuery}
+            style={styles.searchBar}
+            clearIcon={() => 
+              <MaterialIcons name="clear" size={20} color="black" />
+            }
+            SearchIcon={() => <MaterialIcons name="search" size={20} color="black" />}
+            inputStyle={[
+              { fontFamily: "gilroy-bold" },
+              { fontSize: 13 },
+              { borderWidth: 0 },
+            ]}
+            on
+          />
+        </View>  
+          <TouchableOpacity>
+            <MaterialIcons name="filter-list" size={24} color="black" />  
+          </TouchableOpacity>   
       </View>
       {searchQuery == "" ? <CategoriesList /> : <ListCardItem />}
     </SafeAreaView>
@@ -53,7 +61,7 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     alignItems: "center",
-    width: "100%",
+    width: "90%",
   },
   titleText: {
     fontFamily: "gilroy-bold",
@@ -61,7 +69,7 @@ const styles = StyleSheet.create({
     color: "#181725",
   },
   searchBar: {
-    width: "90%",
+    width: "95%",
     backgroundColor: "#F2F3F2",
     borderRadius: 15,
     marginVertical: "3%",
@@ -74,5 +82,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     paddingVertical: 20,
   },
+  Container:{
+    flexDirection: 'row',
+    alignItems: "center",
+    width: "100%",
+  },
+  
 });
 export default Explore;
