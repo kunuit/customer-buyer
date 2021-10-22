@@ -8345,10 +8345,25 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.1.tgz#5b3531bd76a645a4c9fb6e693ed36419e3301339"
   integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
 
+react-native-android-sms-listener@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/react-native-android-sms-listener/-/react-native-android-sms-listener-0.8.0.tgz#3e69a642b32f8cbec1f28b2b477677b07e6ce89e"
+  integrity sha512-jRAsSjQFeJKTF5ljo67UMzpUUo4P3Doq2n/uyCrBg7MowXyIMY5ALwIzs72w6oalnXUnq9izvYXeU40vLFLz6Q==
+
 react-native-circle-drawer@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-native-circle-drawer/-/react-native-circle-drawer-1.0.0.tgz#e8a59d53227371ff703870c0c3a0524bc7b13ce6"
   integrity sha512-//cMCeQU79pmWzNMh9nSjCNOhs9RCEv0SDFfhZadv4UWK72lFxK9JL3VDGTLrQJGzsANyZy56urYef8PlHw1zQ==
+
+react-native-device-info@^8.4.1:
+  version "8.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-8.4.1.tgz#21d1cf0c7bc8476a20c82f0dde968f1660261674"
+  integrity sha512-O+G0wUXAc3196CUAs/C/ugIvIUvTMPvw7gixStZyXOpOGwGQKWx6if1YV1qLD5oPldxSvg17CdgB91yOLniKEA==
+
+react-native-device-number@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-device-number/-/react-native-device-number-1.0.5.tgz#ffc00e1f5feec30e9b31458517a4facd19fc08e0"
+  integrity sha512-TjGGJz6m+odbotKONO71s8RieBxokYj5Nb7NSKhIW/xHxWzRfRwNFrneYOe13QhJ1D1rsUhRYDL7QBiw2TYRsw==
 
 react-native-elements@^3.3.2:
   version "3.3.2"
@@ -8373,6 +8388,11 @@ react-native-gesture-handler@~1.8.0:
     hoist-non-react-statics "^3.3.0"
     invariant "^2.2.4"
     prop-types "^15.7.2"
+
+react-native-get-sms-android@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-get-sms-android/-/react-native-get-sms-android-2.1.0.tgz#0b04bd017f6e7f8a3c1ac9e61960e73d76750be0"
+  integrity sha512-yYPlJ4DkuC9HnUL0ni644pDjRFnSQkdGHowIY5ab56YFDKHIEZ1rKuBCEbCWF0HALyvH6qCyfdHqwpzTtIj97w==
 
 react-native-iphone-x-helper@^1.3.0, react-native-iphone-x-helper@^1.3.1:
   version "1.3.1"

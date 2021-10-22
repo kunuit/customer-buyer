@@ -192,6 +192,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-android-sms-listener')
     implementation project(':lottie-react-native')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion

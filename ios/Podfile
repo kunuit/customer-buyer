@@ -25,4 +25,6 @@ target 'customerbuyer' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
+  pod 'react-native-device-number', :path => '../node_modules/react-native-device-number'
+
 end
